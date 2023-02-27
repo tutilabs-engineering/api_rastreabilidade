@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { DeletePackageServices } from "../../backup/services/Package/DeletePackageServices"
 
 class DeletePackageController {
 
@@ -7,9 +6,9 @@ class DeletePackageController {
 
         const {id} = req.params
 
-        const deletePackageServices = new DeletePackageServices()
+        // const deletePackageServices = new DeletePackageServices()
 
-        const menssage = await deletePackageServices.delete(id)
+        // const menssage = await deletePackageServices.delete(id)
 
         return res.status(200).json(menssage)
 

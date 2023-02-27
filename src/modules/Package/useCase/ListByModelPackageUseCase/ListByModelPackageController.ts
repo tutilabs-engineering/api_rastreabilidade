@@ -1,19 +1,22 @@
 import { Request, Response} from "express"
-import { ListByModelPackageServices } from "../../backup/services/Package/ListByModelPackageServices"
+import { container } from "tsyringe"
+import { ListByModelPackageUseCase } from "./ListByModelPackageUseCase"
 
 class ListByModelPackageController {
 
-    async list(req: Request, res: Response){
+    async handle(req: Request, res: Response){
 
         const {model} = req.params
+        const { limit, take } = req.query
 
-        if(!model){res.status(200).end()}
+        const listByModelPackageUseCase = container.resolve(ListByModelPackageUseCase)
+        const embalagens = await listByModelPackageUseCase.execute({model}, {limit: Number(limit), take:  Number(take)})
 
         // Instanciando o os serviços de embalagem
-        const listByModelPackageServices = new ListByModelPackageServices()
+        // const listByModelPackageServices = new ListByModelPackageServices()
 
         // buscando as embalagem no banco
-        const embalagens = await listByModelPackageServices.list(String(model))
+        // const embalagens = await listByModelPackageServices.list(String(model))
 
         return res.status(200).json(embalagens)
 
