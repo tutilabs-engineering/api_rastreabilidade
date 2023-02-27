@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { FiltersProvider } from "../../dtos/FiltersProvider";
+import { FiltersProviderDTO } from "../../dtos/FiltersProviderDTO";
 import { IProviderRepository } from "../../repository/IProviderRepository";
 
 @injectable()
@@ -10,7 +10,7 @@ class ListOneProviderUseCase {
         private providerRepository: IProviderRepository
     ){}
 
-    async execute({id ,limit ,status ,take}: FiltersProvider): Promise<void>{
+    async execute({id ,limit ,status ,take}: FiltersProviderDTO): Promise<void>{
         
     }
 

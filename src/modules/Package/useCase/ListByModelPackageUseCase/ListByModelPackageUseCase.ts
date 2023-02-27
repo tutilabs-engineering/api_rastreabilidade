@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { FiltersPackage } from "../../dtos/FiltersPackage";
+import { FiltersPackageDTO } from "../../dtos/FiltersPackageDTO";
+import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../../repositories/IPackageRepository";
 
 
@@ -15,7 +16,7 @@ class ListByModelPackageUseCase {
         private packageRepository: IPackageRepository
     ){}
 
-    async execute({model}:IRequest,{limit, take, status}: FiltersPackage): Promise<Package[]> {
+    async execute({model}:IRequest,{limit, take, status}: FiltersPackageDTO): Promise<Package[]> {
 
     }
 }

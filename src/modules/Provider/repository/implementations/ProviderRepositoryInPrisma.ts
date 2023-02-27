@@ -1,6 +1,6 @@
-import { CreateProvider } from "../../dtos/CreateProvider";
-import { FiltersProvider } from "../../dtos/FiltersProvider";
-import { UpdateProvider } from "../../dtos/UpdateProvider";
+import { CreateProvider } from "../../dtos/CreateProviderDTO";
+import { FiltersProvider } from "../../dtos/FiltersProviderDTO";
+import { UpdateProvider } from "../../dtos/UpdateProviderDTO";
 import { IProviderRepository } from "../IProviderRepository";
 
 class ProviderRepositoryInPrisma implements IProviderRepository {

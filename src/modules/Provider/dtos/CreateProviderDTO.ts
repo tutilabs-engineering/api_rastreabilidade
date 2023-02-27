@@ -1,4 +1,4 @@
-export type CreateProvider = {
+export type CreateProviderDTO = {
     id?: String
     nome: String
     externo: Boolean

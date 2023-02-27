@@ -1,4 +1,4 @@
-export type UpdateProvider = {
+export type UpdateProviderDTO = {
     
     id: String
     nome?: String

@@ -1,4 +1,4 @@
-type UpdatePackage = {
+type UpdatePackageDTO  = {
         id?: string
         serial_number?: string;
         origem?: string
@@ -10,4 +10,4 @@ type UpdatePackage = {
     
 }
 
-export { UpdatePackage }
+export { UpdatePackageDTO  }

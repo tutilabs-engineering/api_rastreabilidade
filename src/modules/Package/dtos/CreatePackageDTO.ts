@@ -1,4 +1,4 @@
-type CreatePackage = {
+type CreatePackageDTO = {
     id?: string
     serial_number: string;
     origem: string
@@ -9,4 +9,4 @@ type CreatePackage = {
     updatedAt?: Date
 }
 
-export { CreatePackage }
+export { CreatePackageDTO }

@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { CreatePackage } from "../../dtos/CreatePackage";
+import { CreatePackageDTO } from "../../dtos/CreatePackageDTO";
 import { IPackageRepository } from "../../repositories/IPackageRepository";
 
 
@@ -10,7 +10,7 @@ class CreatePackageUseCase {
         private packageRepository: IPackageRepository
     ){}
 
-    async execute({FK_destino,FK_modelo,origem,serial_number,status}: CreatePackage): Promise<void> {
+    async execute({FK_destino,FK_modelo,origem,serial_number,status}: CreatePackageDTO): Promise<void> {
 
     }
 

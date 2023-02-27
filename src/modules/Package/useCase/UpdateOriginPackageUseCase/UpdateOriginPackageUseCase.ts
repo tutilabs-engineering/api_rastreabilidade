@@ -1,6 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { FiltersPackage } from "../../dtos/FiltersPackage";
-import { UpdatePackage } from "../../dtos/UpdatePackage";
+import { UpdatePackageDTO } from "../../dtos/UpdatePackageDTO ";
 import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../../repositories/IPackageRepository";
 
@@ -11,7 +10,7 @@ class UpdateOriginPackageUseCase {
         private packageRepository: IPackageRepository
       ) { }
     
-      async execute({serial_number, origem, status }: UpdatePackage): Promise<Package[]> {
+      async execute({serial_number, origem, status }: UpdatePackageDTO): Promise<Package[]> {
     
       }
 

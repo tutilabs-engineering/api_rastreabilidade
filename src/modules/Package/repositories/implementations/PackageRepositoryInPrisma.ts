@@ -1,38 +1,39 @@
-import { CreatePackage } from "../../dtos/CreatePackage";
-import { FiltersPackage } from "../../dtos/FiltersPackage";
-import { UpdatePackage } from "../../dtos/UpdatePackage";
+
+import { CreatePackageDTO } from "../../dtos/CreatePackageDTO";
+import { FiltersPackageDTO } from "../../dtos/FiltersPackageDTO";
+import { UpdatePackageDTO } from "../../dtos/UpdatePackageDTO ";
 import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../IPackageRepository";
 
 class PackageRepositoryInPrisma implements IPackageRepository {
-    create(data: CreatePackage): Promise<void> {
+    create(data: CreatePackageDTO): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    update(data: UpdatePackage): Promise<void> {
+    update(data: UpdatePackageDTO): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    findById(data: FiltersPackage): Promise<Package> {
+    findById(data: FiltersPackageDTO): Promise<Package> {
         throw new Error("Method not implemented.");
     }
-    listByDestino(data: FiltersPackage): Promise<Package[]> {
+    listByDestino(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
-    listByModel(data: FiltersPackage): Promise<Package[]> {
+    listByModel(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
-    listByOrigin(data: FiltersPackage): Promise<Package[]> {
+    listByOrigin(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
-    listByStatusAndProvider(data: FiltersPackage): Promise<Package[]> {
+    listByStatusAndProvider(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
-    listPackage(data: FiltersPackage): Promise<Package[]> {
+    listPackage(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
-    updateOrigin(data: UpdatePackage): Promise<void> {
+    updateOrigin(data: UpdatePackageDTO): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    updatePackage(data: UpdatePackage): Promise<void> {
+    updatePackage(data: UpdatePackageDTO): Promise<void> {
         throw new Error("Method not implemented.");
     }
 

@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { CreateProvider } from "../../dtos/CreateProvider";
+import { CreateProviderDTO } from "../../dtos/CreateProviderDTO";
 import { IProviderRepository } from "../../repository/IProviderRepository";
 
 
@@ -11,7 +11,7 @@ class CreateProviderUseCase {
         private providerRepository: IProviderRepository
     ){}
 
-    async execute({nome, externo}: CreateProvider): Promise<void>{
+    async execute({nome, externo}: CreateProviderDTO): Promise<void>{
 
     }
 
