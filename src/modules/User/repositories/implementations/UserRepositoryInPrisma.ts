@@ -22,8 +22,8 @@ export class UserRepositoryInPrisma implements IUserRepository{
     delete(): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    findById(id: string): Promise<User | null> {
-        const data = prisma.users.findUnique({
+    async findById(id: string): Promise<User | null> {
+        const data = await prisma.users.findUnique({
             where: {
                 id
             }
