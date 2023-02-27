@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+
+  api_rastreabilidade:
+   container_name: api_rastreabilidade
+   build: .
+   restart: always
+   volumes: 
+     - ./:/usr/app
+   ports: 
+     - 5000:5000
+
+  db:
+    image: postgres
+    container_name: database
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=00bfc8c729f5d4d529a412b12c58ddd2
+      - POSTGRES_DB=sdrtcp
+    volumes:
+      - pgdata:/data/postgres
+
+volumes:
+  pgdata:
+    driver: local

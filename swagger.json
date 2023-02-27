@@ -1,0 +1,1330 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Rastreabilidade de Embalagens Retornáveis",
+    "description": "Sistema de monitoramento e controle de embalagens",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:7400/api/",
+      "description": "Base de testes"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar usuários",
+        "description": "Lista todos os usuários ativos cadastrados no banco",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a lista de todos os usuário ativos"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Finaliza a rota"
+          }
+        }
+      },
+      "post": {
+        "tags": ["users"],
+        "summary": "Criar usuário",
+        "description": "Recebe os dados da requisição e valida o email para retornar um novo usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateUser"
+              },
+              "examples": {
+                "RequestUserAdmin": {
+                  "value": {
+                    "nome": "admin",
+                    "matricula": "9999999",
+                    "email": "admin@tuti.com",
+                    "password": "tuti@123",
+                    "admin": true,
+                    "mnt": false
+                  }
+                },
+                "RequestUserMnt": {
+                  "value": {
+                    "nome": "mnt",
+                    "matricula": "88888888",
+                    "email": "mnt@tuti.com",
+                    "password": "tuti@123",
+                    "admin": false,
+                    "mnt": true
+                  }
+                },
+                "RequestUserStandard": {
+                  "value": {
+                    "nome": "standard",
+                    "matricula": "0000001",
+                    "email": "standard@tuti.com",
+                    "password": "tuti@123",
+                    "admin": false,
+                    "mnt": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna usuário criado"
+          },
+          "400": {
+            "description": "Falha: Retorna o erro de dados inválidos"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar usuário",
+        "description": "Recebe uma id pro parametro e retorna um usuário no banco",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "usuário buscado pelo id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o usuário"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "404": {
+            "description": "Parametro inválido"
+          },
+          "500": {
+            "description": "Falha: finaliza a rota"
+          }
+        }
+      },
+      "put": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar usuário",
+        "description": "Recebe uma id por parâmetro, editar seus dados e retorna o usuário editado",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id de usuário que será alterado",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditUser"
+              },
+              "examples": {
+                "RequestUserAdmin": {
+                  "value": {
+                    "nome": "NovoNome",
+                    "matricula": "9999999",
+                    "email": "novoEmail@tuti.com",
+                    "password": "novasenha",
+                    "admin": true,
+                    "mnt": false,
+                    "ativo": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o usuário editado"
+          },
+          "400": {
+            "description": "Falha: Finaliza a rota"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/users_delete/{id}": {
+      "delete": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Deletar usuário",
+        "description": "Recebe um id por parâmetro, busca o usuário e apaga ele do sistema",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do usuário que será apagado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Usuário deletado"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/session": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Autenticação de usuário",
+        "description": "Recebe um email e uma senha e retorna o token do usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestSessionUser"
+              },
+              "examples": {
+                "UserAdmin": {
+                  "value": {
+                    "email": "admin@tuti.com",
+                    "password": "tuti@123"
+                  }
+                },
+                "UserMnt": {
+                  "value": {
+                    "email": "mnt@tuti.com",
+                    "password": "tuti@123"
+                  }
+                },
+                "UserStandard": {
+                  "value": {
+                    "email": "standard@tuti.com",
+                    "password": "tuti@123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o token e informações do usuário logado"
+          },
+          "400": {
+            "description": "Falha: Retorna um erro informando que o usuário não existe no sistema"
+          }
+        }
+      }
+    },
+    "/userLogged": {
+      "get": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "description": "Envia o token pelo na autorizição da rota e verifica se o token do usuário logado é válido",
+        "summary": "Validar Token de Usuário",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o usuário logado"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Finaliza a rota"
+          }
+        }
+      }
+    },
+    "/customers": {
+      "get": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar clientes",
+        "description": "Lista todos os clientes cadastrados no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma lista com todos os clientes"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "post": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar cliente",
+        "description": "Recebe os dados da requisição, faz a validação e cria um novo cliente. (Apenas usuários administradores)",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateCustomer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna o cliente criado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/customers/{id}": {
+      "get": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar cliente",
+        "description": "Busca um cliente especifico",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do cliente que está sendo buscado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o cliente"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "put": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar cliente",
+        "description": "Recebe o id de um cliente, o cnpj no corpo da requisição, e os dados que serão alterados. Então, os dados são válidados e retorna o cliente editado. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do cliente que será editado",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditCustomer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o cliente editado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/customers_delete/{id}": {
+      "delete": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Deletar cliente",
+        "description": "Recebe o id de um cliente e o apaga do banco de dados. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do cliente que será deletado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma mensagem"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/models": {
+      "get": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar modelos",
+        "description": "Lista todos os modelos cadastrados no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a lista de todos os modelos cadastrados"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "post": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar modelo",
+        "description": "Recebe os dados da requisição e cria um novo modelo. (Apenas usuários administradores)",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o modelo criado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/models/{id}": {
+      "put": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar modelo",
+        "description": "Recebe o id de um modelo, os novos dados que serão validos e retorna o modelo editado. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id do modelo que será editado"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o modelo editado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/models_delete/{id}": {
+      "delete": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Deletar modelo",
+        "description": "Recebe o id de um modelo, verifica se existe no banco de dados e deleta o modelo do id. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id do modelo que será deletado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma mensagem"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/packages": {
+      "get": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar embalagens",
+        "description": "Lista todas as embalagens cadastradas no banco",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a lista de todas as embalagens cadastradas"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "post": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar embalagem",
+        "description": "Recebe os dados da requisição, faz a validação e retorna a embalagem criada. (Apenas usuários administradores)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreatePackage"
+              },
+              "examples": {
+                "RequestPackage": {
+                  "value": {
+                    "serial_number": "tuti001",
+                    "origem": "Filial",
+                    "FK_modelo": "Substituir por Id de um modelo",
+                    "FK_destino": "Substituir por Id do cliente com nome da origem"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a embalagem criada"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/packages/{serial_number}": {
+      "get": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar embalagem",
+        "description": "Recebe o serial de uma embalagem, verifica se existe no sistema e retorna embalagem",
+        "parameters": [
+          {
+            "name": "serial_number",
+            "in": "path",
+            "description": "Serial da embalagem",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o cliente"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/packages/{id}": {
+      "put": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar embalagem",
+        "description": "Recebe o id de uma embalagem, os dados da requisição, valida os dados e retorna a embalagem editada (Apenas usuários administradores). Obs.: Status tem 4 níveis diferentes, sendo eles: 0 -> disponível, 1 -> Em uso, 2 -> No cliente, 3 -> Em manutenção",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id da embalagem editada",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditPackage"
+              },
+              "examples": {
+                "RequestPackage": {
+                  "value": {
+                    "serial_number": "tuti001",
+                    "FK_modelo": "Inserir Id do modelo que será alterado",
+                    "FK_destino": "Inserir Id do destino que será usado ou vazio",
+                    "origem": "Inserir razão social do cliente que é dono da embalagem",
+                    "status": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a embalagem editada."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/packages_delete/{id}": {
+      "delete": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Deletar embalagem",
+        "description": "Recebe o id de uma embalagem, identifica no sistema e deleta. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id da embalagem deletada",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma mensagem"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/provider": {
+      "get": {
+        "tags": ["providers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar fornecedores",
+        "description": "Lista de todos os fornecedores cadastrados no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna uma lista de fornecedores"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "post": {
+        "tags": ["providers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar fornecedor",
+        "description": "Recebe os dados da reuisição, valida os dados e cria um novo fornecedor. (Apenas usuários administradores)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateProvider"
+              },
+              "examples": {
+                "RequestProvider": {
+                  "value": {
+                    "nome": "Rogério",
+                    "externo": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o fornecedor criado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/provider/{id}": {
+      "get": {
+        "tags": ["providers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar fornecedor",
+        "description": "Recebe o id de um fornecedor, verifica se ele existe no banco e retorna o fornecedor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do fornecedor",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o fornecedor"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/cpc": {
+      "get": {
+        "tags": ["cpc (Customer Preference Control)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar controle de prefêrencia de clientes",
+        "description": "Lista de prefêrencia de modelos de todos os clientes",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a lista com todas as opções de controle de prefência de cliente"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "post": {
+        "tags": ["cpc (Customer Preference Control)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar cpc",
+        "description": "Recebe o id de um cliente e o id de um modelo pela requisição, valida os dados, e registra a preferência no banco",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateCpc"
+              },
+              "examples": {
+                "RequestCpc": {
+                  "value": {
+                    "FK_customer": "Insira o id de um cliente válido",
+                    "FK_model": "Insira o id de um modelo válido"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o cpc cadastrado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/cpc/{id}": {
+      "put": {
+        "tags": ["cpc (Customer Preference Control)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar cpc",
+        "description": "Recebe o id de um cpc, e o modelo ou cliente que será alterado, verifica se o novo modelo ou cliente existe e retorna o cpc editado",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do cpc",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditCpc"
+              },
+              "examples": {
+                "RequestCpc": {
+                  "value": {
+                    "FK_customer": "Insira o id de um cliente válido",
+                    "FK_model": "Insira o id de um modelo válido"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna cpc editado."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/cpc/{FK_costumer}": {
+      "get": {
+        "tags": ["cpc (Customer Preference Control)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar cpc",
+        "description": "Recebe o id do cpc, verifica se existe no banco de dados e retorna cpc",
+        "parameters": [
+          {
+            "name": "FK_costumer",
+            "in": "path",
+            "description": "Id do controle de preferência cadastrado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o cpc"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/cpc_delete/{id}": {
+      "delete": {
+        "tags": ["cpc (Customer Preference Control)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar cpc",
+        "description": "Recebe o id de um cpc, verifica se existe no banco e deleta o cpc",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do cpc",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma mensagem"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/sme": {
+      "get": {
+        "tags": ["sme (Packing Movement Status)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar sme",
+        "description": "Lista todos os registros de movimentação de embalagens",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna lista com todas as movimentações de embalagens"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "post": {
+        "tags": ["sme (Packing Movement Status)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Registrar sme",
+        "description": "Registra uma nova movimentação de embalagem, recebendo na requisição o nome do usuário, a matricula. um status variando de 0 a 2, sendo eles: 0-Disponível, 1-Em uso, 2-No cliente, o id do cliente que está usando a embalagem e o id da embalagem, retorna um o registro do SME",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateSme"
+              },
+              "examples": {
+                "RequestSme": {
+                  "value": {
+                    "id_customer": "Insira o id de um cliente válido",
+                    "id_package": "Insira o id de uma embalagem válida",
+                    "status": 0,
+                    "matricula": "Insira a matricula do usuário que fez a movimentação",
+                    "username": "Insira o nome do usuário que fez a movimentação"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Registra a movimentação de uma embalagem e retorna o log"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/relatory/sme": {
+      "get": {
+        "tags": ["sme (Packing Movement Status)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Gerar relatório de sme",
+        "description": "Recebe uma data inicial e uma data final por query params e retorna os registros de sme entres essas datas",
+        "parameters": [
+          {
+            "name": "inicio",
+            "in": "query",
+            "description": "Data inicial para relatório",
+            "required": true
+          },
+          {
+            "name": "final",
+            "in": "query",
+            "description": "Data final para relatório",
+            "required": true
+          }
+        ],
+        "responsse": {
+          "200": {
+            "description": "Sucesso: Retorna uma lista com as movimentações entre as datas"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/smm": {
+      "get": {
+        "tags": ["smm (Maintenance Movement Status)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar smm",
+        "description": "Lista todas as movimentações de embalagens para manutenção",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna uma lista com todas as movimentações de manutenção realizadas"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "post": {
+        "tags": ["smm (Maintenance Movement Status)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Registrar smm",
+        "description": "Recebe um usuario, um fornecedor, status do fornecedor que varia de true -> externo e false -> interno e a embalagem, altera o status da embalagem para 0 se for de Manutenção para disponível, 3 se for de disponível para manutenção e registra a movimentação de embalagens para manutenção. (Apenas usuários de manutenção)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateSmm"
+              },
+              "examples": {
+                "RequestSmm": {
+                  "value": {
+                    "user": {
+                      "username": "Inserir o nome do usuário que fez a movimentação",
+                      "matricula": "Inserir matricula do usuário que fez a movimentação"
+                    },
+                    "fornecedor": {
+                      "descricao": "Inserir fornecedor que fez a manututenção",
+                      "statusDoFornecedor": true
+                    },
+                    "embalagem": {
+                      "descricao": "Inserir descrição do problema da embalagem",
+                      "serial_number": "Inserir código da embalagem",
+                      "modeloDaEmbalagem": "Inserir modelo da embalagem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Registra a movimentação de uma embalagem para manutenção e retorna o log"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/relatory/smm": {
+      "get": {
+        "tags": ["smm (Maintenance Movement Status)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Gerar relatório de smm",
+        "description": "Recebe uma data inicial e uma data final por query params e retorna os registros de sm entre essas datas",
+        "parameters": [
+          {
+            "name": "inicio",
+            "in": "query",
+            "description": "Data inicial para relatório",
+            "required": true
+          },
+          {
+            "name": "final",
+            "in": "query",
+            "description": "Data final para relatório",
+            "required": true
+          }
+        ],
+        "responsse": {
+          "200": {
+            "description": "Sucesso: Retorna uma lista com as movimentações entre as datas"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RequestCreateUser": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" },
+          "matricula": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "admin": { "type": "boolean" },
+          "mnt": { "type": "boolean" }
+        }
+      },
+      "RequestEditUser": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" },
+          "matricula": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "admin": { "type": "boolean" },
+          "mnt": { "type": "boolean" },
+          "ativo": { "type": "boolean" }
+        }
+      },
+      "RequestSessionUser": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestCreateCustomer": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Selecionar imagem do cliente"
+          },
+          "cnpj": { "type": "string", "description": "Necessário cnpj válido" },
+          "razao_social": { "type": "string" }
+        }
+      },
+      "RequestEditCustomer": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Selecionar nova imagem do cliente ou enviar vázio para não alterar a imagem"
+          },
+          "cnpj": {
+            "type": "string",
+            "description": "Necessário cnpj válido"
+          },
+          "razao_social": { "type": "string" }
+        }
+      },
+      "RequestCreateModel": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Selecionar imagem do modelo"
+          },
+          "descricao": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestEditModel": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Selecionar uma nova imagem do modelo ou vázio"
+          },
+          "descricao": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestCreatePackage": {
+        "type": "object",
+        "properties": {
+          "serial_number": {
+            "type": "string"
+          },
+          "origem": {
+            "type": "string"
+          },
+          "FK_modelo": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestEditPackage": {
+        "type": "object",
+        "properties": {
+          "serial_number": { "type": "string" },
+          "FK_destino": { "type": "string" },
+          "FK_modelo": { "type": "string" },
+          "origem": { "type": "string" },
+          "status": { "type": "number" }
+        }
+      },
+      "RequestCreateProvider": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "externo": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RequestCreateCpc": {
+        "type": "object",
+        "properties": {
+          "FK_customer": {
+            "type": "string"
+          },
+          "FK_model": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestEditCpc": {
+        "type": "object",
+        "properties": {
+          "FK_customer": {
+            "type": "string"
+          },
+          "FK_model": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestCreateSme": {
+        "type": "object",
+        "propertieis": {
+          "id_customer": { "type": "string" },
+          "id_package": { "type": "string" },
+          "status": { "type": "number" },
+          "matricula": { "type": "string" },
+          "username": { "type": "string" }
+        }
+      },
+      "RequestCreateSmm": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string"
+              },
+              "matricula": {
+                "type": "string"
+              }
+            }
+          },
+          "fornecedor": {
+            "type": "object",
+            "properties": {
+              "descricao": {
+                "type": "string"
+              },
+              "statusDoFornecedor": {
+                "type": "boolean"
+              }
+            }
+          },
+          "embalagem": {
+            "type": "object",
+            "properties": {
+              "descricao": {
+                "type": "string"
+              },
+              "serial_number": {
+                "type": "string"
+              },
+              "modeloDaEmbalagem": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
