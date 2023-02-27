@@ -12,6 +12,17 @@ export class UserRepositoryInPrisma implements IUserRepository{
             },
             orderBy: {
                 updatedAt: 'asc'
+            },
+            select: {
+                admin: true,
+                ativo: true,
+                createdAt: true,
+                email: true,
+                id: true,
+                matricula: true,
+                mnt: true,
+                nome: true,
+                updatedAt: true
             }
         });
         return data;
@@ -26,6 +37,17 @@ export class UserRepositoryInPrisma implements IUserRepository{
         const data = await prisma.users.findUnique({
             where: {
                 id
+            },
+            select: {
+                admin: true,
+                ativo: true,
+                createdAt: true,
+                email: true,
+                id: true,
+                matricula: true,
+                mnt: true,
+                nome: true,
+                updatedAt: true
             }
         })
 
