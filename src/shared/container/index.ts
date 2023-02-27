@@ -6,6 +6,8 @@ import { CustomerRepositoryInPrisma } from "../../modules/Customer/repositories/
 
 import { IModelRepository } from "../../modules/Model/repositories/IModelRepository"
 import { ModelRepositoryInPrisma } from "../../modules/Model/repositories/implementations/ModelRepositoryInPrisma"
+import { PackageRepositoryInPrisma } from "../../modules/Package/repositories/implementations/PackageRepositoryInPrisma"
+import { IPackageRepository } from "../../modules/Package/repositories/IPackageRepository"
 
 container.registerSingleton<IModelRepository>(
     "ModelRepository",
@@ -15,6 +17,12 @@ container.registerSingleton<IModelRepository>(
 container.registerSingleton<ICpcRepository>(
     "CpcRepository",
      CpcRepositoryInPrisma
+)
+
+
+container.registerSingleton<IPackageRepository>(
+    "PackageRepository",
+     PackageRepositoryInPrisma
 )
 
 container.registerSingleton<ICustomerRepository>(
