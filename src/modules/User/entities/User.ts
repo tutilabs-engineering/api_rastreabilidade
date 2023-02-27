@@ -3,7 +3,7 @@ export interface User{
     nome: string,
     matricula: string,
     email: string,
-    password: string,
+    password?: string,
     admin: boolean,
     mnt: boolean,
     ativo: boolean,
