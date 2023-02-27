@@ -6,10 +6,10 @@ import { CustomerRepositoryInPrisma } from "../../modules/Customer/repositories/
 
 import { IModelRepository } from "../../modules/Model/repositories/IModelRepository"
 import { ModelRepositoryInPrisma } from "../../modules/Model/repositories/implementations/ModelRepositoryInPrisma"
-import { PackageRepositoryInPrisma } from "../../modules/Package/repositories/implementations/PackageRepositoryInPrisma"
-import { IPackageRepository } from "../../modules/Package/repositories/IPackageRepository"
 import { ProviderRepositoryInPrisma } from "../../modules/Provider/repository/implementations/ProviderRepositoryInPrisma"
 import { IProviderRepository } from "../../modules/Provider/repository/IProviderRepository"
+import { UserRepositoryInPrisma } from "../../modules/User/repositories/implementations/UserRepositoryInPrisma"
+import { IUserRepository } from "../../modules/User/repositories/IUserRepository"
 
 container.registerSingleton<IModelRepository>(
     "ModelRepository",
@@ -37,3 +37,8 @@ container.registerSingleton<IProviderRepository>(
 )
 
 
+
+container.registerSingleton<IUserRepository>(
+    "UserRepository",
+    UserRepositoryInPrisma
+)
