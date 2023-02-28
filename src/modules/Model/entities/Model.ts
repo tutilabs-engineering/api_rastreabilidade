@@ -1,9 +1,9 @@
 export interface Model {
-    id?: string
+    id: string
     descricao: string
     img_path: string
-    createdAt: Date
-    updatedAt: Date
-    cpc?: any
-    packages?: any
+    createdAt?: Date
+    updatedAt?: Date
+    cpc?: any[]
+    packages?: any[]
 }

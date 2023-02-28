@@ -1,13 +1,33 @@
 import { prisma } from "../../../../config/prisma";
 import { CreateModelDTO } from "../../dtos/CreateModelDTO";
+import { FiltersModelDTO } from "../../dtos/FiltersModelDTO";
+import { UpdateModelDTO } from "../../dtos/UpdateModelDTO";
 import { Model } from "../../entities/Model";
 import { IModelRepository } from "../IModelRepository";
 
 class ModelRepositoryInPrisma implements IModelRepository {
-  
+    async findByDescription(desc: string): Promise<Model> {
+        const model:Model = await prisma.models.findFirst({
+            select: {
+                id: true,
+                descricao: true,
+                img_path: true,
+                createdAt: true,
+                updatedAt: true,
+            },
+            where: {
+                descricao: desc
+            }
+        }).catch((error) => {
+            throw new Error(error)
+        })
+
+        return model
+    }
+
     async create({ descricao, img_path }: CreateModelDTO): Promise<void> {
         await prisma.models.create({
-            data:{
+            data: {
                 descricao,
                 img_path
             }
@@ -16,23 +36,46 @@ class ModelRepositoryInPrisma implements IModelRepository {
         })
 
     }
-    delete(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async delete(id: string): Promise<void> {
+        await prisma.models.delete({
+            where: {
+                id,
+            }
+        }).catch((error) => {
+            throw new Error(error)
+        })
     }
-    findById(id: string): Promise<Model> {
-        throw new Error("Method not implemented.");
+    async findById(id: string): Promise<Model> {
+        const model:Model = await prisma.models.findUnique({
+            select: {
+                id: true,
+                descricao: true,
+                img_path: true,
+                createdAt: true,
+                updatedAt: true,
+            },
+            where: {
+                id,
+            }
+        }).catch((error) => {
+            throw new Error(error)
+        })
+
+        return model
     }
-    async listModel(): Promise<Model[]> {
+    async listModel({skip,take}: FiltersModelDTO): Promise<Model[]> {
 
         const model: Model[] = await prisma.models.findMany({
-            select:{
+            select: {
                 id: true,
-                descricao:true,
+                descricao: true,
                 packages: true,
                 img_path: true,
                 createdAt: true,
                 updatedAt: true,
-            }
+            },
+            take,
+            skip
         }).catch((error) => {
             throw new Error(error)
         })
@@ -42,8 +85,18 @@ class ModelRepositoryInPrisma implements IModelRepository {
 
     }
 
-    update(data: Model): Promise<void> {
-        throw new Error("Method not implemented.");
+    async update({ id, descricao, img_path }: UpdateModelDTO): Promise<void> {
+        await prisma.models.update({
+            data: {
+                descricao,
+                img_path
+            },
+             where: {
+                id
+            }
+        }).catch((error) => {
+            throw new Error(error)
+        })
     }
 
 }

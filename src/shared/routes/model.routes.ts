@@ -1,27 +1,36 @@
 import { Router } from "express";
-// import { ListCpcByCustomerController } from "../../modules/Cpc/useCases/ListCpcByCustomerControllerUseCase/ListCpcByCustomerController";
-// import { CreateModelController } from "../../modules/Model/useCases/CreateModelUseCase/CreateModelController";
-// import { DeleteModelController } from "../../modules/Model/useCases/DeleteModelUseCase/DeleteModelControler";
+import multer from "multer";
+import { multerConfig } from "../../config/multer";
+import { optimizationImage } from "../../config/sharp";
+
+import { CreateModelController } from "../../modules/Model/useCases/CreateModelUseCase/CreateModelController";
+import { DeleteModelController } from "../../modules/Model/useCases/DeleteModelUseCase/DeleteModelControler";
 import { ListModelController } from "../../modules/Model/useCases/ListModelUseCase/ListModelController";
-// import { UpdateModelController } from "../../modules/Model/useCases/UpdateModelUseCase/UpdateModelController";
-// import { AuthenticatedMiddleware } from "../middlewares/AuthenticatedMiddlewares";
+import { UpdateModelController } from "../../modules/Model/useCases/UpdateModelUseCase/UpdateModelController";
 
-// const createModelController = new CreateModelController(); // Criação de modelo para embalagens
-const listModelController = new ListModelController(); // Busca todos os modelos
-// const listCpcByCustomerController = new ListCpcByCustomerController(); // Busca todas as embalagens daquele cliente
-// const updateModelController = new UpdateModelController(); // Atualização de modelos
-// const deleteModelController = new DeleteModelController(); // Exclusão de modelos
-
+const listModelController = new ListModelController();
+const createModelController = new CreateModelController()
+const updateModelController = new UpdateModelController()
+const deleteModelUseCase = new DeleteModelController()
 
 const modelRouter = Router()
 
-// router.get(
-//     "/api/packages/modelo/:model",
-//     AuthenticatedMiddleware,
-//     listByModelPackageController.list
-//   ); // busca embalagens por modelo
-  //modelos
-  modelRouter.get("/", listModelController.handle); //Busca todos os modelos
-  // modelRouter.get("/api/models", AuthenticatedMiddleware, listModelController.list); //Busca todos os modelos
+modelRouter.get("/", listModelController.handle); //Listar todos os modelos
+modelRouter.delete("/:id", deleteModelUseCase.handle); //Listar todos os modelos
 
-export {modelRouter}
+modelRouter.post("/", 
+  multer(multerConfig).single("file"),
+  async (req, res, next) => {
+    await optimizationImage(req.pathImg)
+    return next()
+  }, 
+  createModelController.handle) // Create
+
+  modelRouter.put("/:id", 
+  multer(multerConfig).single("file"),
+  async (req, res, next) => {
+    await optimizationImage(req.pathImg)
+    return next()
+  }, 
+  updateModelController.handle)
+export { modelRouter }
