@@ -8,7 +8,7 @@ datasource db {
 }
 
 model cpc {
-  id          String    @id(map: "PK_4be3463a8bf786f6cd536b0e0b7") @db.Uuid
+  id          String    @id @default(uuid())
   FK_customer String    @db.Uuid
   FK_model    String    @db.Uuid
   createdAt   DateTime  @default(now()) @db.Timestamp(6)
@@ -18,7 +18,7 @@ model cpc {
 }
 
 model customers {
-  id           String     @id(map: "PK_133ec679a801fab5e070f73d3ea") @db.Uuid
+  id           String     @id @default(uuid())
   cnpj         String     @unique(map: "UQ_e25f7bf72237b287e0cc9e60192") @db.VarChar
   razao_social String     @unique(map: "UQ_4f8f291d182888565ba9a6adf5f") @db.VarChar
   img_path     String     @db.VarChar
@@ -29,14 +29,8 @@ model customers {
   packages     packages[]
 }
 
-model migrations {
-  id        Int    @id(map: "PK_8c82d7f526340ab734260ea46be") @default(autoincrement())
-  timestamp BigInt
-  name      String @db.VarChar
-}
-
 model models {
-  id        String     @id(map: "PK_ef9ed7160ea69013636466bf2d5") @db.Uuid
+  id        String     @id @default(uuid())
   descricao String     @db.VarChar
   img_path  String     @db.VarChar
   createdAt DateTime   @default(now()) @db.Timestamp(6)
@@ -46,7 +40,7 @@ model models {
 }
 
 model packages {
-  id            String    @id(map: "PK_020801f620e21f943ead9311c98") @db.Uuid
+  id            String    @id @default(uuid())
   serial_number String    @unique(map: "UQ_519a3366d1454a4b8e63c9d5d1b") @db.VarChar
   origem        String    @db.VarChar
   FK_destino    String    @db.Uuid
@@ -59,7 +53,7 @@ model packages {
 }
 
 model providers {
-  id        String   @id(map: "PK_af13fc2ebf382fe0dad2e4793aa") @db.Uuid
+  id        String   @id @default(uuid())
   nome      String
   externo   Boolean
   createdAt DateTime @default(now()) @db.Timestamp(6)
@@ -67,7 +61,7 @@ model providers {
 }
 
 model sme {
-  id            String  @id(map: "PK_4321903ac5de629bfe9810496b9") @db.Uuid
+  id            String  @id @default(uuid())
   razao_social  String  @db.VarChar
   cnpj          String  @db.VarChar
   ativo         Boolean
@@ -82,7 +76,7 @@ model sme {
 }
 
 model smm {
-  id                   String  @id(map: "PK_e299c8e4f152d5cb17c5ab978d1") @db.Uuid
+  id                   String  @id @default(uuid())
   username             String  @db.VarChar
   matricula            String  @db.VarChar
   fornecedor           String  @db.VarChar
@@ -97,7 +91,7 @@ model smm {
 }
 
 model users {
-  id        String   @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @db.Uuid
+  id        String   @id @default(uuid())
   nome      String   @db.VarChar
   matricula String   @unique(map: "UQ_7d53fc05d1e07b20752d6a89ce6") @db.VarChar
   email     String   @unique(map: "UQ_97672ac88f789774dd47f7c8be3") @db.VarChar
