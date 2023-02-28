@@ -6,6 +6,7 @@ import { IUserRepository } from "../../repositories/IUserRepository";
 
 import utc from 'dayjs/plugin/utc'
 import dayjs from "dayjs";
+import { ValidarSenha } from "../../../../utils/ValidarSenha";
 
 @injectable()
 class CreateUserUseCase{
@@ -17,10 +18,11 @@ class CreateUserUseCase{
 
         if(!email) {throw new Error("Email não existe, informe um email")}
         const emailValido = ValidarEmail(email);
+        
         if(!emailValido) {throw new Error("Email inválido, informe um novo email")}
 
         if(!password) {throw new Error("Senha vazia, insira uma senha")}
-        if(password.length < 6) {throw new Error("Senha muito curta, insira uma nova senha")}
+        ValidarSenha(password);
 
         const emailExists = await this.userRepository.findUserByEmail(email);
         if(emailExists){
