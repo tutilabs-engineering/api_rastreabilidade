@@ -26,6 +26,10 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 app.use("/api-docs-oficial", swaggerUI.serve, swaggerUI.setup(swaggerFileOficial));
 
 
+
+app.use('/api',router);
+// app.use(VerificarErros);
+app.use("/static", express.static(__dirname + "/uploads"));
 //error handling
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) =>  {
@@ -37,10 +41,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) =>  {
     message: `Internal server error - ${err.message}`,
   });
 })
-
-app.use('/api',router);
-// app.use(VerificarErros);
-app.use("/static", express.static(__dirname + "/uploads"));
 
 // Express rodando
 app.listen(port, () => {
