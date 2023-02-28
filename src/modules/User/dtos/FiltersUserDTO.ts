@@ -1,8 +1,8 @@
-type FiltersUserDTO = {
+interface IFiltersUserDTO {
     id?: string,
-    limit?: number,
+    skip?: number,
     take?: number,
     status?: number,
 
 }
-export {FiltersUserDTO}
+export {IFiltersUserDTO}
