@@ -10,7 +10,8 @@ import { router  } from "../../../routes/routes";
 // configurando o swagger
 import swaggerUI from "swagger-ui-express";
 // import { VerificarErros } from "../../../middlewares/VerficarErros";
-// import swaggerFile from "../swagger.json";
+import swaggerFile from "../../../../../swagger.json";
+import swaggerFileOficial from "../../../../../swagger_oficial.json";
 
 // Configurações do express
 const app = express();
@@ -20,7 +21,8 @@ app.use(express.json());
 app.use(cors());
 
 // Middlewares
-// app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
+app.use("/api-docs-oficial", swaggerUI.serve, swaggerUI.setup(swaggerFileOficial));
 
 app.use('/api',router);
 // app.use(VerificarErros);

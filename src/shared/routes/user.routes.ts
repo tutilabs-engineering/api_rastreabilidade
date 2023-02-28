@@ -9,7 +9,7 @@ const updateUserController = new UpdateUserController()
 
 const userRouter = Router()
 
-userRouter.get("/",listUserController.handle)
+userRouter.get("/", listUserController.handle)
 userRouter.get("/:id",findUserByIdController.handle)
 userRouter.post("/:id",updateUserController.handle)
 

@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/users": {
+    "/user": {
       "get": {
         "tags": ["users"],
         "security": [{ "bearerAuth": [] }],
@@ -403,7 +403,7 @@
         }
       }
     },
-    "/models": {
+    "/model": {
       "get": {
         "tags": ["models"],
         "security": [{ "bearerAuth": [] }],
