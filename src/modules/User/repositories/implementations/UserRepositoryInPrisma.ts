@@ -2,9 +2,25 @@ import { IUserRepository } from "../IUserRepository";
 import { prisma } from "../../../../config/prisma"
 import { User } from "../../entities/User";
 import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
+import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
+
 export class UserRepositoryInPrisma implements IUserRepository{
-    create(): Promise<void> {
-        throw new Error("Method not implemented.");
+
+
+   async create({admin, mnt, ativo, email,matricula,nome,password,createdAt,updatedAt}: ICreateUserDTO): Promise<void> {
+        await prisma.users.create({
+            data: {
+                admin,
+                ativo,
+                mnt,
+                email,
+                matricula,
+                nome,
+                password, 
+                createdAt,
+                updatedAt
+            }
+        })
     }
     async list(): Promise<User[]> {
         const data = await prisma.users.findMany({
@@ -64,5 +80,25 @@ export class UserRepositoryInPrisma implements IUserRepository{
         })
 
         return data;
+    }
+
+    async findUserByEmail(email: string): Promise<User | null> {
+        const data = await prisma.users.findUnique({
+            where:{
+                email,
+            }
+        })
+
+        return data
+    }
+
+    async findUserByMatricula(matricula: string): Promise<User | null> {
+        const data = await prisma.users.findUnique({
+            where:{
+                matricula,
+            }
+        })
+
+        return data
     }
 }
