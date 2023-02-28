@@ -1,3 +1,4 @@
+import { IUpdateUserDTO } from "../dtos/IUpdateUserDTO"
 import { User } from "../entities/User"
 
 export interface IUserRepository{

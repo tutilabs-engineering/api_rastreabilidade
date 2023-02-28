@@ -12,6 +12,9 @@ import { IProviderRepository } from "../../modules/Provider/repository/IProvider
 import { UserRepositoryInPrisma } from "../../modules/User/repositories/implementations/UserRepositoryInPrisma"
 import { IUserRepository } from "../../modules/User/repositories/IUserRepository"
 
+
+
+
 container.registerSingleton<IModelRepository>(
     "ModelRepository",
      ModelRepositoryInPrisma

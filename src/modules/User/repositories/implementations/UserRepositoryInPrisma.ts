@@ -28,7 +28,7 @@ export class UserRepositoryInPrisma implements IUserRepository{
         });
         return data;
     }
-    async update(id: string, {admin,email,matricula,nome}: IUpdateUserDTO): Promise<void> {
+    async update(id: string, {admin,email,matricula,nome,updatedAt}: IUpdateUserDTO): Promise<void> {
         await prisma.users.update({
             where: {
                 id
@@ -37,7 +37,8 @@ export class UserRepositoryInPrisma implements IUserRepository{
                 admin,
                 email,
                 matricula,
-                nome
+                nome,
+                updatedAt
             }
         })
     }
