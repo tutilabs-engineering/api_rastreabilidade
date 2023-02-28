@@ -11,15 +11,23 @@ class CreateModelUseCase {
 
     async execute({descricao, img_path}: CreateModelDTO): Promise<void> {
         
-        
+
         if(!descricao) {
             throw new Error("Description required")
         }
+
+        const verifyDesc = await this.modelRepository.findByDescription(descricao)
+
+        if(verifyDesc){
+            throw new Error("Description already exists")
+
+        }
+        
         if(!img_path) {
             throw new Error("Image required")
         }
     
-         await this.modelRepository.create({})
+         await this.modelRepository.create({descricao, img_path})
     
     }
 

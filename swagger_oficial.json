@@ -13,6 +13,35 @@
   ],
   "paths": {
     "/model": {
+      "post": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar modelo",
+        "description": "Recebe os dados da requisição e cria um novo modelo. (Apenas usuários administradores)",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o modelo criado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
       "get": {
         "tags": ["models"],
         "security": [{ "bearerAuth": [] }],
@@ -21,6 +50,73 @@
         "responses": {
           "200": {
             "description": "Sucesso: Retorna a lista de todos os modelos cadastrados"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/model/{id}": {
+      "put": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar modelo",
+        "description": "Recebe o id de um modelo, os novos dados que serão validos e retorna o modelo editado. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id do modelo que será editado"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o modelo editado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Deletar modelo",
+        "description": "Recebe o id de um modelo, verifica se existe no banco de dados e deleta o modelo do id. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id do modelo que será deletado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma mensagem"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Não autorizado"

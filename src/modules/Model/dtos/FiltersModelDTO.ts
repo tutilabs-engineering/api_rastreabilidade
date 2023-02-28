@@ -1,8 +1,6 @@
-type FiltersProviderDTO = {
+export type  FiltersModelDTO = {
     id?: string,
     skip?: number,
     take?: number,
     status?: number,
-
 }
-export {FiltersProviderDTO}
