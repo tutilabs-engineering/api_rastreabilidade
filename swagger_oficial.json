@@ -1,0 +1,242 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Rastreabilidade de Embalagens Retornáveis",
+    "description": "Sistema de monitoramento e controle de embalagens",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:7400/api/",
+      "description": "Base de testes"
+    }
+  ],
+  "paths": {
+    "/model": {
+      "get": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar modelos",
+        "description": "Lista todos os modelos cadastrados no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a lista de todos os modelos cadastrados"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    }
+
+  },
+  "components": {
+    "schemas": {
+      "RequestCreateUser": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" },
+          "matricula": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "admin": { "type": "boolean" },
+          "mnt": { "type": "boolean" }
+        }
+      },
+      "RequestEditUser": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" },
+          "matricula": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "admin": { "type": "boolean" },
+          "mnt": { "type": "boolean" },
+          "ativo": { "type": "boolean" }
+        }
+      },
+      "RequestSessionUser": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestCreateCustomer": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Selecionar imagem do cliente"
+          },
+          "cnpj": { "type": "string", "description": "Necessário cnpj válido" },
+          "razao_social": { "type": "string" }
+        }
+      },
+      "RequestEditCustomer": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Selecionar nova imagem do cliente ou enviar vázio para não alterar a imagem"
+          },
+          "cnpj": {
+            "type": "string",
+            "description": "Necessário cnpj válido"
+          },
+          "razao_social": { "type": "string" }
+        }
+      },
+      "RequestCreateModel": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Selecionar imagem do modelo"
+          },
+          "descricao": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestEditModel": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Selecionar uma nova imagem do modelo ou vázio"
+          },
+          "descricao": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestCreatePackage": {
+        "type": "object",
+        "properties": {
+          "serial_number": {
+            "type": "string"
+          },
+          "origem": {
+            "type": "string"
+          },
+          "FK_modelo": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestEditPackage": {
+        "type": "object",
+        "properties": {
+          "serial_number": { "type": "string" },
+          "FK_destino": { "type": "string" },
+          "FK_modelo": { "type": "string" },
+          "origem": { "type": "string" },
+          "status": { "type": "number" }
+        }
+      },
+      "RequestCreateProvider": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "externo": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RequestCreateCpc": {
+        "type": "object",
+        "properties": {
+          "FK_customer": {
+            "type": "string"
+          },
+          "FK_model": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestEditCpc": {
+        "type": "object",
+        "properties": {
+          "FK_customer": {
+            "type": "string"
+          },
+          "FK_model": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestCreateSme": {
+        "type": "object",
+        "propertieis": {
+          "id_customer": { "type": "string" },
+          "id_package": { "type": "string" },
+          "status": { "type": "number" },
+          "matricula": { "type": "string" },
+          "username": { "type": "string" }
+        }
+      },
+      "RequestCreateSmm": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string"
+              },
+              "matricula": {
+                "type": "string"
+              }
+            }
+          },
+          "fornecedor": {
+            "type": "object",
+            "properties": {
+              "descricao": {
+                "type": "string"
+              },
+              "statusDoFornecedor": {
+                "type": "boolean"
+              }
+            }
+          },
+          "embalagem": {
+            "type": "object",
+            "properties": {
+              "descricao": {
+                "type": "string"
+              },
+              "serial_number": {
+                "type": "string"
+              },
+              "modeloDaEmbalagem": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
