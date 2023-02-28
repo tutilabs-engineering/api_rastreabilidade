@@ -3,4 +3,5 @@ export interface IUpdateUserDTO{
     email?: string,
     matricula?: string,
     admin?: boolean
+    updatedAt?: Date
 }
