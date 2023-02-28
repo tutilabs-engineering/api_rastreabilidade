@@ -24,7 +24,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
         source: ". , !node_modules"
-        target: "api_rastreabilidade"
+        target: "projetos/api_rastreabilidade"
         
      - name: Update API   
        uses: appleboy/ssh-action@master
@@ -34,7 +34,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
         script:
-         cd /home/tutiplast/projetos && yarn 
+         cd /home/app/projetos/api_rastreabilidade && yarn 
    
          
          
