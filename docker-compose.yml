@@ -12,7 +12,7 @@ services:
    volumes: 
      - ./:/usr/app
    ports: 
-     - 15000:5000
+     - 15000:7400
 
   database:
     image: postgres
