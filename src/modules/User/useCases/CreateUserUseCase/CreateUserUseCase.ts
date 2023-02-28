@@ -15,14 +15,14 @@ class CreateUserUseCase{
 
     async execute({nome,ativo,admin, mnt,email,matricula,password}:  ICreateUserDTO){
         
-        if(!nome) {throw new AppError(404,"Nome não existe, informe um nome")}
+        if(!nome) {throw new AppError(400,"Nome não existe, informe um nome")}
 
-        if(!email) {throw new AppError(404,"Email não existe, informe um email")}
+        if(!email) {throw new AppError(400,"Email não existe, informe um email")}
         const emailValido = ValidarEmail(email);
         
-        if(!emailValido) {throw new AppError(404, "Email inválido, informe um novo email")}
+        if(!emailValido) {throw new AppError(400, "Email inválido, informe um novo email")}
 
-        if(!password) {throw new AppError(404,"Senha vazia, insira uma senha")}
+        if(!password) {throw new AppError(400,"Senha vazia, insira uma senha")}
         ValidarSenha(password);
 
         const emailExists = await this.userRepository.findUserByEmail(email);

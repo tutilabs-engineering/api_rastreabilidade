@@ -7,7 +7,7 @@ class DeleteUserUseCase{
     constructor(@inject("UserRepository") private userRepository: IUserRepository){}
 
     async execute(id: string){
-        if(!id){throw new AppError(404,"Id inválido")}
+        if(!id){throw new AppError(400,"Id inválido")}
 
         const user = await this.userRepository.findById(id);
 
