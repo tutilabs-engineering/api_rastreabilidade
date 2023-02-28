@@ -9,45 +9,45 @@ datasource db {
 
 model cpc {
   id          String    @id @default(uuid())
-  FK_customer String    @db.Uuid
-  FK_model    String    @db.Uuid
-  createdAt   DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime  @default(now()) @db.Timestamp(6)
+  FK_customer String   
+  FK_model    String   
+  createdAt   DateTime  @default(now()) 
+  updatedAt   DateTime  @default(now()) 
   customers   customers @relation(fields: [FK_customer], references: [id], onDelete: SetNull, onUpdate: SetNull, map: "FK_customer_customers")
   models      models    @relation(fields: [FK_model], references: [id], onDelete: SetNull, onUpdate: SetNull, map: "FK_model_models")
 }
 
 model customers {
   id           String     @id @default(uuid())
-  cnpj         String     @unique(map: "UQ_e25f7bf72237b287e0cc9e60192") @db.VarChar
-  razao_social String     @unique(map: "UQ_4f8f291d182888565ba9a6adf5f") @db.VarChar
-  img_path     String     @db.VarChar
+  cnpj         String     @unique() 
+  razao_social String     @unique() 
+  img_path     String     
   ativo        Boolean    @default(true)
-  createdAt    DateTime   @default(now()) @db.Timestamp(6)
-  updatedAt    DateTime   @default(now()) @db.Timestamp(6)
+  createdAt    DateTime   @default(now()) 
+  updatedAt    DateTime   @default(now()) 
   cpc          cpc[]
   packages     packages[]
 }
 
 model models {
   id        String     @id @default(uuid())
-  descricao String     @db.VarChar
-  img_path  String     @db.VarChar
-  createdAt DateTime   @default(now()) @db.Timestamp(6)
-  updatedAt DateTime   @default(now()) @db.Timestamp(6)
+  descricao String     
+  img_path  String     
+  createdAt DateTime   @default(now()) 
+  updatedAt DateTime   @default(now()) 
   cpc       cpc[]
   packages  packages[]
 }
 
 model packages {
   id            String    @id @default(uuid())
-  serial_number String    @unique(map: "UQ_519a3366d1454a4b8e63c9d5d1b") @db.VarChar
-  origem        String    @db.VarChar
-  FK_destino    String    @db.Uuid
-  FK_modelo     String    @db.Uuid
+  serial_number String    @unique() 
+  origem        String    
+  FK_destino    String   
+  FK_modelo     String   
   status        Int
-  createdAt     DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt     DateTime  @default(now()) @db.Timestamp(6)
+  createdAt     DateTime  @default(now()) 
+  updatedAt     DateTime  @default(now()) 
   customers     customers @relation(fields: [FK_destino], references: [id], onDelete: SetNull, onUpdate: SetNull, map: "FK_destino_customers")
   models        models    @relation(fields: [FK_modelo], references: [id], onDelete: SetNull, onUpdate: SetNull, map: "FK_modelo_models")
 }
@@ -56,23 +56,23 @@ model providers {
   id        String   @id @default(uuid())
   nome      String
   externo   Boolean
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now()) 
 }
 
 model sme {
   id            String  @id @default(uuid())
-  razao_social  String  @db.VarChar
-  cnpj          String  @db.VarChar
+  razao_social  String  
+  cnpj          String  
   ativo         Boolean
-  serial_number String  @db.VarChar
-  origem        String  @db.VarChar
-  destino       String  @db.VarChar
-  status        String  @db.VarChar
-  modelo        String  @db.VarChar
-  username      String  @db.VarChar
-  matricula     String  @db.VarChar
-  data          String  @db.VarChar
+  serial_number String  
+  origem        String  
+  destino       String  
+  status        String  
+  modelo        String  
+  username      String  
+  matricula     String  
+  data          String  
 }
 
 model smm {
@@ -93,12 +93,12 @@ model smm {
 model users {
   id        String   @id @default(uuid())
   nome      String   @db.VarChar
-  matricula String   @unique(map: "UQ_7d53fc05d1e07b20752d6a89ce6") @db.VarChar
-  email     String   @unique(map: "UQ_97672ac88f789774dd47f7c8be3") @db.VarChar
-  password  String   @db.VarChar
+  matricula String   @unique() 
+  email     String   @unique() 
+  password  String   
   admin     Boolean  @default(false)
   mnt       Boolean  @default(false)
   ativo     Boolean  @default(true)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now()) 
 }

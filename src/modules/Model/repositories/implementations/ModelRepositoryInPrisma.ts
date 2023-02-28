@@ -1,11 +1,20 @@
 import { prisma } from "../../../../config/prisma";
+import { CreateModelDTO } from "../../dtos/CreateModelDTO";
 import { Model } from "../../entities/Model";
 import { IModelRepository } from "../IModelRepository";
 
 class ModelRepositoryInPrisma implements IModelRepository {
   
-    create(data: Model): Promise<void> {
-        throw new Error("Method not implemented.");
+    async create({ descricao, img_path }: CreateModelDTO): Promise<void> {
+        await prisma.models.create({
+            data:{
+                descricao,
+                img_path
+            }
+        }).catch((error) => {
+            throw new Error(error)
+        })
+
     }
     delete(): Promise<void> {
         throw new Error("Method not implemented.");

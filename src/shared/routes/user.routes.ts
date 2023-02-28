@@ -13,7 +13,7 @@ const deleteUserController = new DeleteUserController()
 
 const userRouter = Router()
 
-userRouter.get("/",listUserController.handle)
+userRouter.get("/", listUserController.handle)
 userRouter.get("/:id",findUserByIdController.handle)
 userRouter.put("/:id",updateUserController.handle)
 userRouter.post("/",createUserController.handle)

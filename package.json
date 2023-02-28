@@ -6,6 +6,8 @@
   "author": "hrqcds <hrqcds.dev@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "down": "docker-compose down",
+    "up" : "docker-compose up -d",
     "dev": "ts-node-dev --files --quiet --poll ./src/shared/infra/http/express/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
     "swagger-autogen": "ts-node-dev ./node_modules/swagger-autogen/swagger-autogen.js"

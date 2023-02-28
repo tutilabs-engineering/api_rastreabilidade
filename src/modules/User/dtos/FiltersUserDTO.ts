@@ -1,8 +1,8 @@
-type FiltersProvider = {
+type FiltersUserDTO = {
     id?: string,
     limit?: number,
     take?: number,
     status?: number,
 
 }
-export {FiltersProvider}
+export {FiltersUserDTO}

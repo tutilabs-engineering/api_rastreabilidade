@@ -1,19 +1,19 @@
-import { CreateProvider } from "../../dtos/CreateProvider";
-import { FiltersProvider } from "../../dtos/FiltersProvider";
-import { UpdateProvider } from "../../dtos/UpdateProvider";
+import { CreateProviderDTO } from "../../dtos/CreateProviderDTO";
+import { FiltersProviderDTO } from "../../dtos/FiltersProviderDTO";
+import { UpdateProviderDTO } from "../../dtos/UpdateProviderDTO";
 import { IProviderRepository } from "../IProviderRepository";
 
 class ProviderRepositoryInPrisma implements IProviderRepository {
-    create(data: CreateProvider): Promise<void> {
+    create(data: CreateProviderDTO): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    findById(data: FiltersProvider): Promise<Provider> {
+    findById(data: FiltersProviderDTO): Promise<Provider> {
         throw new Error("Method not implemented.");
     }
     listOne(): Promise<Provider[]> {
         throw new Error("Method not implemented.");
     }
-    update(data: UpdateProvider): Promise<void> {
+    update(data: UpdateProviderDTO): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
