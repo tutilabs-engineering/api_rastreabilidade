@@ -34,7 +34,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
         script:
-         cd /home/app/projetos/api_rastreabilidade && yarn 
+         cd /home/app/projetos/api_rastreabilidade && yarn up
    
          
          
