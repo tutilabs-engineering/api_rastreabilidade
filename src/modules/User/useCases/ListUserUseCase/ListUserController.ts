@@ -7,7 +7,7 @@ class ListUserController{
     async handle(req: Request, res: Response){
 
         const listUserUseCase = container.resolve(ListUserUseCase)
-        const {take, skip} = req.query
+        const {take = 10, skip = 0} = req.query
 
         const data = await listUserUseCase.execute({take: Number(take), skip: Number(skip)})
 
