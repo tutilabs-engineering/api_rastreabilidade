@@ -1,7 +1,8 @@
+import { CreateModelDTO } from "../dtos/CreateModelDTO"
 import { Model } from "../entities/Model"
 
 interface IModelRepository {
-     create(data: Model): Promise<void>
+     create(data: CreateModelDTO): Promise<void>
      delete(): Promise<void>
      findById(id: string): Promise<Model>
      listModel(): Promise<Model[]>
