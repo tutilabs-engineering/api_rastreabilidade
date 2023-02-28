@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe"
+import { FiltersCustomerDTO } from "../../dtos/FiltersCustomerDTO"
 import { Customer } from "../../entities/Customer"
 import { ICustomerRepository } from "../../repositories/ICustomerRepository"
 
@@ -10,8 +11,8 @@ class ListCustomerUseCase {
         private customerRepository: ICustomerRepository
     ){}
 
-    async execute(): Promise<Customer[]>{
-        return await this.customerRepository.list()
+    async execute({ take, skip }: FiltersCustomerDTO): Promise<Customer[]>{
+        return await this.customerRepository.list({skip, take})
     }
 
 }
