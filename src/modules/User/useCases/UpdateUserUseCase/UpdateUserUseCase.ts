@@ -6,6 +6,7 @@ import utc from 'dayjs/plugin/utc'
 import dayjs from "dayjs";
 import { HashPassword } from "../../../../utils/HashPassword";
 import { ValidarSenha } from "../../../../utils/ValidarSenha";
+import { AppError } from "../../../../config/AppError";
 
 @injectable()
 class UpdateUserUseCase{
@@ -20,7 +21,7 @@ class UpdateUserUseCase{
         const updatedAt = new Date(dayjs().utc(true).toISOString());
 
         if(!user){
-            throw new Error("Usuário inválido") 
+            throw new AppError(404,"Usuário inválido") 
         }
 
         if (password) {

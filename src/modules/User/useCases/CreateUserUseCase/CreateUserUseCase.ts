@@ -7,6 +7,7 @@ import { IUserRepository } from "../../repositories/IUserRepository";
 import utc from 'dayjs/plugin/utc'
 import dayjs from "dayjs";
 import { ValidarSenha } from "../../../../utils/ValidarSenha";
+import { AppError } from "../../../../config/AppError";
 
 @injectable()
 class CreateUserUseCase{
@@ -14,24 +15,24 @@ class CreateUserUseCase{
 
     async execute({nome,ativo,admin, mnt,email,matricula,password}:  ICreateUserDTO){
         
-        if(!nome) {throw new Error("Nome não existe, informe um nome")}
+        if(!nome) {throw new AppError(404,"Nome não existe, informe um nome")}
 
-        if(!email) {throw new Error("Email não existe, informe um email")}
+        if(!email) {throw new AppError(404,"Email não existe, informe um email")}
         const emailValido = ValidarEmail(email);
         
-        if(!emailValido) {throw new Error("Email inválido, informe um novo email")}
+        if(!emailValido) {throw new AppError(404, "Email inválido, informe um novo email")}
 
-        if(!password) {throw new Error("Senha vazia, insira uma senha")}
+        if(!password) {throw new AppError(404,"Senha vazia, insira uma senha")}
         ValidarSenha(password);
 
         const emailExists = await this.userRepository.findUserByEmail(email);
         if(emailExists){
-            throw new Error("Usuário já existe, informe um novo email");
+            throw new AppError(404,"Usuário já existe, informe um novo email");
         }
 
         const matriculaExists = await this.userRepository.findUserByMatricula(matricula);
         if(matriculaExists){
-            throw new Error("Usuário com esta matrícula já existe");
+            throw new AppError(404,"Usuário com esta matrícula já existe");
         }
         
         dayjs.extend(utc)
