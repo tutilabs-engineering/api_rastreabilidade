@@ -1,9 +1,10 @@
 import { Request, Response } from "express"
-import { UpdateModelServices } from "../../../../backup/services/Model/UpdateModelServices"
+import { container } from "tsyringe"
+import { UpdateModelUseCase } from "./UpdateModelUseCase"
 
 class UpdateModelController{
 
-    async update(req: Request, res:Response){
+    async handle(req: Request, res:Response){
 
         // Recebendo dados da requisição
         const {id} = req.params
@@ -13,12 +14,9 @@ class UpdateModelController{
         // Buscando caminho da imagem na requisição
         let img_path = req.pathImg
 
-        if(!img_path){img_path = ""}
+        const updateModelUseCase = container.resolve(UpdateModelUseCase) 
 
-        // instanciando classe de atualização de modelos
-        const updateModelServices = new UpdateModelServices()
-
-        const modelo = await updateModelServices.update({id, descricao, img_path})
+        const modelo = await updateModelUseCase.execute({id, descricao, img_path})
 
         return res.status(200).json({modelo})
 

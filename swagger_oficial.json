@@ -13,6 +13,35 @@
   ],
   "paths": {
     "/model": {
+      "post": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar modelo",
+        "description": "Recebe os dados da requisição e cria um novo modelo. (Apenas usuários administradores)",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o modelo criado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
       "get": {
         "tags": ["models"],
         "security": [{ "bearerAuth": [] }],
@@ -21,6 +50,276 @@
         "responses": {
           "200": {
             "description": "Sucesso: Retorna a lista de todos os modelos cadastrados"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/model/{id}": {
+      "put": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar modelo",
+        "description": "Recebe o id de um modelo, os novos dados que serão validos e retorna o modelo editado. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id do modelo que será editado"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o modelo editado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["models"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Deletar modelo",
+        "description": "Recebe o id de um modelo, verifica se existe no banco de dados e deleta o modelo do id. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id do modelo que será deletado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma mensagem"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar usuários",
+        "description": "Lista todos os usuários ativos cadastrados no banco",
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "quantidade de resultados a serem retornados"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "quantidade de resultados a serem pulados"
+          } 
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a lista de todos os usuário ativos"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Finaliza a rota"
+          }
+        }
+      },
+      "post": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar usuário",
+        "description": "Recebe os dados da requisição e valida o email e matricula para criar um novo usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateUser"
+              },
+              "examples": {
+                "RequestUserAdmin": {
+                  "value": {
+                    "nome": "admin",
+                    "matricula": "9999999",
+                    "email": "admin@tuti.com",
+                    "password": "tuti@123",
+                    "admin": true,
+                    "mnt": false
+                  }
+                },
+                "RequestUserMnt": {
+                  "value": {
+                    "nome": "mnt",
+                    "matricula": "88888888",
+                    "email": "mnt@tuti.com",
+                    "password": "tuti@123",
+                    "admin": false,
+                    "mnt": true
+                  }
+                },
+                "RequestUserStandard": {
+                  "value": {
+                    "nome": "standard",
+                    "matricula": "0000001",
+                    "email": "standard@tuti.com",
+                    "password": "tuti@123",
+                    "admin": false,
+                    "mnt": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna usuário criado"
+          },
+          "400": {
+            "description": "Falha: Retorna o erro de dados inválidos"
+          },
+
+          "404": {
+            "description": "Falha: Retorna o erro de recursos nao encontrados"
+          },
+
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+
+    "/users/{id}": {
+      "get": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar usuário",
+        "description": "Recebe uma id pro parametro e retorna um usuário no banco",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "usuário buscado pelo id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o usuário"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "404": {
+            "description": "Parametro inválido"
+          },
+          "500": {
+            "description": "Falha: finaliza a rota"
+          }
+        }
+      },
+      "put": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar usuário",
+        "description": "Recebe uma id por parâmetro e edita seus dados ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id de usuário que será alterado",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditUser"
+              },
+              "examples": {
+                "RequestUserAdmin": {
+                  "value": {
+                    "nome": "NovoNome",
+                    "matricula": "9999999",
+                    "email": "novoEmail@tuti.com",
+                    "password": "novasenha",
+                    "admin": true,
+                    "mnt": false,
+                    "ativo": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o usuário editado"
+          },
+          "400": {
+            "description": "Falha: Finaliza a rota"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["users"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Deletar usuário",
+        "description": "Recebe um id por parâmetro, busca o usuário e apaga ele do sistema",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do usuário que será apagado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Usuário deletado"
           },
           "401": {
             "description": "Não autorizado"

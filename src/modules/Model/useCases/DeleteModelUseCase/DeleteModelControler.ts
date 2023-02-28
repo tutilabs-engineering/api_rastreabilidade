@@ -1,17 +1,18 @@
 import { Request, Response } from "express"
-import { DeleteModelServices } from "../../services/Model/DeleteModelServices" 
+import { container } from "tsyringe"
+import { DeleteModelUseCase } from "./DeleteModelUseCase"
 
 class DeleteModelController{
 
-    async delete(req: Request, res: Response){
+    async handle(req: Request, res: Response){
 
         // Recebendo dados da requisição
         const {id} = req.params 
 
         // instanciando serviços de exclusão de modelos
-        const deleteModelServices = new DeleteModelServices()
+        const deleteModelUseCase = container.resolve(DeleteModelUseCase)
 
-        const menssage = await deleteModelServices.delete(id)
+        const menssage = await deleteModelUseCase.execute(id)
 
         return res.status(200).json(menssage)
 

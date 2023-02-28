@@ -1,11 +1,15 @@
+import { CreateModelDTO } from "../dtos/CreateModelDTO"
+import { FiltersModelDTO } from "../dtos/FiltersModelDTO"
+import { UpdateModelDTO } from "../dtos/UpdateModelDTO"
 import { Model } from "../entities/Model"
 
 interface IModelRepository {
-     create(data: Model): Promise<void>
-     delete(): Promise<void>
+     create(data: CreateModelDTO): Promise<void>
+     delete(id: string): Promise<void>
      findById(id: string): Promise<Model>
-     listModel(): Promise<Model[]>
-     update(data: Model): Promise<void>
+     findByDescription(desc: string): Promise<Model>
+     listModel(data: FiltersModelDTO): Promise<Model[]>
+     update(data: UpdateModelDTO): Promise<void>
 }
 
 export { IModelRepository }
