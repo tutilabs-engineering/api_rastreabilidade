@@ -3,6 +3,7 @@ import { prisma } from "../../../../config/prisma"
 import { User } from "../../entities/User";
 import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
+import { IFiltersUserDTO } from "../../dtos/FiltersUserDTO";
 
 export class UserRepositoryInPrisma implements IUserRepository{
 
@@ -22,11 +23,13 @@ export class UserRepositoryInPrisma implements IUserRepository{
             }
         })
     }
-    async list(): Promise<User[]> {
+    async list({take, skip}: IFiltersUserDTO): Promise<User[]> {
         const data = await prisma.users.findMany({
             where: {
                 ativo: true,
             },
+            take,
+            skip,
             orderBy: {
                 updatedAt: 'asc'
             },
