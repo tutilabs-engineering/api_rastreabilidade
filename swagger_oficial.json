@@ -329,6 +329,123 @@
           }
         }
       }
+    },
+    "/customer": {
+      "get": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar clientes",
+        "description": "Lista todos os clientes cadastrados no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma lista com todos os clientes"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "post": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar cliente",
+        "description": "Recebe os dados da requisição, faz a validação e cria um novo cliente. (Apenas usuários administradores)",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateCustomer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna o cliente criado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+  
+    "/customers/{id}": {
+
+      "put": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar cliente",
+        "description": "Recebe o id de um cliente, o cnpj no corpo da requisição, e os dados que serão alterados. Então, os dados são válidados e retorna o cliente editado. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do cliente que será editado",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditCustomer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o cliente editado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Deletar cliente",
+        "description": "Recebe o id de um cliente e o apaga do banco de dados. (Apenas usuários administradores)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do cliente que será deletado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma mensagem"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
     }
 
   },

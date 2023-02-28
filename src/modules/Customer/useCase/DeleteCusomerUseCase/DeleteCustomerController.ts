@@ -1,21 +1,18 @@
 import { Request, Response } from "express"
-import { DeleteCustomerServices } from "../../backup/services/Customer/DeleteCustomerServices"
+import { container } from "tsyringe"
+import { DeleteCustomerUseCase } from "./DeleteCustomerUseCase"
 
 class DeleteCustomerController {
 
-    async delete(req: Request, res: Response){
+    async handle(req: Request, res: Response) {
 
-        const {id} = req.params
+        const { id } = req.params
 
-        // Instanciando serviço de exclusão de clientes
-        const deleteCustomerServices = new DeleteCustomerServices()
+        const deleteCustomerUseCase = container.resolve(DeleteCustomerUseCase)
+        await deleteCustomerUseCase.execute(id)
+        return res.status(200).json({ menssage: "Cliente deletado com sucesso" })
 
-        // deletando cliente do banco
-        const menssage = await deleteCustomerServices.delete(id)
-
-        return res.status(200).json(menssage)
-
-    }   
+    }
 
 }
 

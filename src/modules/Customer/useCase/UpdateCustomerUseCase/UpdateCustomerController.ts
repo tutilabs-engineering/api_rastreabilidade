@@ -1,9 +1,10 @@
 import { Request, Response } from "express"
-import { UpdateCustomerServices } from "../../backup/services/Customer/UpdateCustomerServices"
+import { container } from "tsyringe"
+import { UpdateCustomerUseCase } from "./UpdateCustomerUseCase"
 
 class UpdateCustomerController {
 
-    async update(req: Request, res: Response){
+    async handle(req: Request, res: Response){
 
         // Buscando id nos parametros
         const {id} = req.params
@@ -15,12 +16,14 @@ class UpdateCustomerController {
         const imgPath = req.pathImg
 
         // Instanciando serviço de atualização de clientes
-        const updateCustomerServices = new UpdateCustomerServices()
+        const updateCustomerUseCase = container.resolve(UpdateCustomerUseCase)
 
         // Atualizando cliente
-        const customer = await updateCustomerServices.update({id, cnpj, razao_social, img_path: imgPath, ativo})
+        const customer = await updateCustomerUseCase.execute(
+            {id, cnpj, razao_social, img_path: imgPath, ativo: Boolean(ativo)}
+        )
 
-        return res.status(200).json(customer)
+        return res.status(200).json({message: "Cliente Atualizado com sucesso"})
 
     }
 

@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { UpdateAticveCustomerServices } from "../../backup/services/Customer/UpdateActiveCustomerServices"
 
 class UpdateAticveCustomerController {
 
