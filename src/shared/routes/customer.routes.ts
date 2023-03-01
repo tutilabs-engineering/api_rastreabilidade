@@ -4,7 +4,9 @@ import { multerConfig } from "../../config/multer";
 import { optimizationImage } from "../../config/sharp";
 import { CreateCustomerController } from "../../modules/Customer/useCase/CreateCustomerUseCase/CreateCustomerController";
 import { DeleteCustomerController } from "../../modules/Customer/useCase/DeleteCusomerUseCase/DeleteCustomerController";
+import { FindByIdCustomerController } from "../../modules/Customer/useCase/FindByIdCustomerUseCase/FindByIdCustomerController";
 import { ListCustomerController } from "../../modules/Customer/useCase/ListCustomerUseCase/ListCustomerController";
+import { UpdateAticveCustomerController } from "../../modules/Customer/useCase/UpdateActiveCustomerUseCase/UpdateActiveCustomerController";
 import { UpdateCustomerController } from "../../modules/Customer/useCase/UpdateCustomerUseCase/UpdateCustomerController";
 
 
@@ -12,10 +14,15 @@ const listCustomerController = new ListCustomerController()
 const lireateCustomerController = new CreateCustomerController()
 const deleteCustomerController = new DeleteCustomerController()
 const updateCustomerController = new UpdateCustomerController()
+const findByIdCustomerController = new FindByIdCustomerController()
+const updateAticveCustomerController = new UpdateAticveCustomerController()
+
 const customerRouter = Router()
 
+customerRouter.get("/:id", findByIdCustomerController.handle)
 customerRouter.get("/", listCustomerController.handle)
 customerRouter.delete("/:id", deleteCustomerController.handle)
+customerRouter.patch("/:id", updateAticveCustomerController.handle)
 customerRouter.post("/",
     multer(multerConfig).single("file"),
     async (req, res, next) => {

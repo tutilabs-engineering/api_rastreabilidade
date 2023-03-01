@@ -1,19 +1,21 @@
 import { Request, Response } from "express"
+import { container } from "tsyringe"
+import { UpdateActiveCustomerUseCase } from "./UpdateActiveCustomerUseCase"
 
 class UpdateAticveCustomerController {
 
-    async active(req: Request,res: Response){
+    async handle(req: Request,res: Response){
 
         // Buscando parametro na requisição
         const {id} = req.params
+        const { status } = req.body
 
         // Iniciando serviço para deletar cliente
-        const updateAticveCustomerServices = new UpdateAticveCustomerServices()
+        const updateActiveCustomerUseCase = container.resolve(UpdateActiveCustomerUseCase)
 
-        // Mudando chave do cliente
-        const mensagem = await updateAticveCustomerServices.active(id)
+       await updateActiveCustomerUseCase.execute(id, status)
 
-        return res.status(200).json(mensagem)
+        return res.status(200).json({mensagem: "Atualizado com sucesso."})
 
     }
 

@@ -11,8 +11,8 @@ class ListCustomerUseCase {
         private customerRepository: ICustomerRepository
     ){}
 
-    async execute({ take, skip }: FiltersCustomerDTO): Promise<Customer[]>{
-        return await this.customerRepository.list({skip, take})
+    async execute({ take, skip, status }: FiltersCustomerDTO): Promise<Customer[]>{
+        return await this.customerRepository.list({skip, take, status})
     }
 
 }

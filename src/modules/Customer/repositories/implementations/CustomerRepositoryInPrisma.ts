@@ -52,7 +52,7 @@ class CustomerRepositoryInPrisma implements ICustomerRepository {
     
          })
     }
-    async list({skip, take}: FiltersCustomerDTO): Promise<Customer[]> {
+    async list({skip, take, status}: FiltersCustomerDTO): Promise<Customer[]> {
      const data: Customer[] = await prisma.customers.findMany({
         select:{
             id: true,  
@@ -68,6 +68,7 @@ class CustomerRepositoryInPrisma implements ICustomerRepository {
         take,
         skip,
         where:{
+            ativo: Boolean(status),
             NOT: [
                 {cnpj:"68088234000176"}, // Jaguarao
                 {cnpj:"84501873000178"},  // Matriz
@@ -106,8 +107,20 @@ class CustomerRepositoryInPrisma implements ICustomerRepository {
          })
          return data
     }
-    updateActive(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async updateActive(id: string,status: boolean): Promise<void> {
+        await prisma.customers.update({
+            data:{
+                ativo: status
+            },
+            where:{
+                id
+            }
+            
+           
+         }).catch((error)=>{
+            throw new Error(error);
+    
+         })
     }
     async update({cnpj,img_path,razao_social,ativo,id}: UpdateCustomerDTO): Promise<void> {
         await prisma.customers.update({

@@ -10,7 +10,7 @@ interface ICustomerRepository {
     listInative(): Promise<void>
     findById(id: string): Promise<Customer>
     findByCNPJ(cnpj: string): Promise<Customer>
-    updateActive(): Promise<void>
+    updateActive(id: string,status: boolean): Promise<void>
     update(data: UpdateCustomerDTO): Promise<void>
 }
 
