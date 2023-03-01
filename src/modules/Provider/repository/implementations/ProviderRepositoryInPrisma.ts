@@ -5,8 +5,15 @@ import { UpdateProviderDTO } from "../../dtos/UpdateProviderDTO";
 import { IProviderRepository } from "../IProviderRepository";
 
 class ProviderRepositoryInPrisma implements IProviderRepository {
-    create(data: CreateProviderDTO): Promise<void> {
-        throw new Error("Method not implemented.");
+    async create({externo,nome,createdAt,updatedAt}: CreateProviderDTO): Promise<void> {
+        await prisma.providers.create({
+            data:{
+                externo,
+                nome,
+                createdAt,
+                updatedAt
+            }
+        })
     }
     findById(data: FiltersProviderDTO): Promise<Provider> {
         throw new Error("Method not implemented.");
