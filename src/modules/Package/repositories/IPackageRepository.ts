@@ -8,6 +8,7 @@ interface IPackageRepository {
     create(data: CreatePackageDTO): Promise<void>
     update(data: UpdatePackageDTO): Promise<void>
     findById(data: FiltersPackageDTO): Promise<Package>
+    findBySerialNumber(serial_number: string): Promise<Package>
     listByDestino(data: FiltersPackageDTO): Promise<Package[]>
     listByModel(data: FiltersPackageDTO): Promise<Package[]>
     listByOrigin(data: FiltersPackageDTO): Promise<Package[]>

@@ -1,4 +1,5 @@
 
+import { prisma } from "../../../../config/prisma";
 import { CreatePackageDTO } from "../../dtos/CreatePackageDTO";
 import { FiltersPackageDTO } from "../../dtos/FiltersPackageDTO";
 import { UpdatePackageDTO } from "../../dtos/UpdatePackageDTO ";
@@ -15,6 +16,24 @@ class PackageRepositoryInPrisma implements IPackageRepository {
     findById(data: FiltersPackageDTO): Promise<Package> {
         throw new Error("Method not implemented.");
     }
+
+    async findBySerialNumber(serial_number: string): Promise<Package> {
+        const data = await prisma.packages.findUnique({
+            where: {
+                serial_number,
+            },
+            include: {
+                models: {
+                    select: {
+                        descricao: true
+                    }
+                }
+            }
+        })
+
+         return data
+    }
+
     listByDestino(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
