@@ -10,7 +10,7 @@ class CreateProviderController {
   
    await createProviderUseCase.execute({ nome, externo })
     
-   return res.status(200).json({message: "Fornecedor criado com sucesso!"});
+   return res.status(201).json({message: "Fornecedor criado com sucesso!"});
   
   }
 }
