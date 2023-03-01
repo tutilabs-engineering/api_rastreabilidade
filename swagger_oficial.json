@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:7400/api/",
+      "url": "http://185.209.179.253:15000/api/",
       "description": "Base de testes"
     }
   ],
