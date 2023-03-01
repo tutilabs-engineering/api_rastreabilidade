@@ -1,13 +1,9 @@
-type UpdatePackageDTO  = {
-        id?: string
-        serial_number?: string;
+interface UpdatePackageDTO {
         origem?: string
+        FK_modelo?: string,
         FK_destino?: string
-        FK_modelo?: string
         status?: number
-        createdAt?: Date
-        updatedAt?: Date
-    
+        updatedAt?: Date    
 }
 
 export { UpdatePackageDTO  }
