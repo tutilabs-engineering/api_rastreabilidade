@@ -15,8 +15,13 @@ class ProviderRepositoryInPrisma implements IProviderRepository {
             }
         })
     }
-    findById(data: FiltersProviderDTO): Promise<Provider> {
-        throw new Error("Method not implemented.");
+    async findById({id}: FiltersProviderDTO): Promise<Provider> {
+       const data = await prisma.providers.findUnique({
+        where:{
+            id
+        }
+       })
+       return data
     }
     async list({skip,take}: FiltersProviderDTO): Promise<Provider[] | null> {
         const data = await prisma.providers.findMany({
@@ -26,8 +31,18 @@ class ProviderRepositoryInPrisma implements IProviderRepository {
 
         return data
     }
-    update(data: UpdateProviderDTO): Promise<void> {
-        throw new Error("Method not implemented.");
+    async update({id,createdAt,externo,nome,updatedAt}: UpdateProviderDTO): Promise<void> {
+        await prisma.providers.update({
+            data:{
+                externo,
+                nome,
+                createdAt,
+                updatedAt
+            },
+            where: {
+                id
+            }
+        })
     }
 
 
