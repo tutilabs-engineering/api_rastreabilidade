@@ -1,15 +1,19 @@
 import { Request, Response } from 'express'
-import { ListCpcServices } from '../../../services/Cpc/ListCpcServices'
+import { container } from 'tsyringe'
+import { ListCpcCUseCase } from './ListCpcUseCase'
 
 class ListCpcController{
 
-    async list(req: Request, res: Response){
+    async handle(req: Request, res: Response){
 
-        // Instanciando serviço de listagem de CPC
-        const listCpcServices = new ListCpcServices()
+        const { take = 10, skip = 0 } = req.query
+
+        const listCpcCUseCase = container.resolve(ListCpcCUseCase)
 
         // buscando no banco
-        const cpc = await listCpcServices.list()
+        const cpc = await listCpcCUseCase.execute(
+            {skip: Number(skip), take: Number(take)}
+        )
 
         return res.status(200).json(cpc)
 
