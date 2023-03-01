@@ -483,7 +483,7 @@
       }
     },
 
-    "/packages/{id}": {
+    "/package/{id}": {
       "put": {
         "tags": ["packages"],
         "security": [{ "bearerAuth": [] }],
@@ -540,20 +540,44 @@
       "get": {
         "tags": ["providers"],
         "security": [{ "bearerAuth": [] }],
-        "summary": "Listar fornecedores",
-        "description": "Lista todos os fornecedores cadastrados no banco de dados",
+        "summary": "Lista fornecedores",
+        "description": "Lista todas as embalagens cadastradas no banco de dados.",
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "quantidade de resultados a serem retornados",
+            "default": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "quantidade de resultados a serem pulados",
+            "default": 0
+          } 
+        ],
         "responses": {
           "200": {
-            "description": "Sucesso: retorna uma lista com todos os fornecedores"
+            "description": "Sucesso. Retorna a lista de todos os fornecedores",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#components/schemas/ResponseListProviders"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
-            "description": "Não autorizado"
+            "description": "Não autorizado."
           },
           "500": {
-            "description": "Falha: Rota finalizada"
+            "description": "Falha: Rota finalizada."
           }
         }
-      },      
+      }
     }
 
   },
@@ -770,6 +794,17 @@
               "type": "string"
             }
           }}
+        }
+      },
+      "ResponseListProviders": {
+        "type":"object",
+        "properties": {
+          "id": {"type": "string"},
+          "nome": {"type": "string"},
+          "externo": {"type": "boolean"},
+          "createdAt": {"type": "string"},
+          "updatedAt": {"type": "string"}
+
         }
       }
     },
