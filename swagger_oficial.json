@@ -446,6 +446,41 @@
           }
         }
       }
+    },
+
+    "/package/{serial_number}": {
+      "get": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar embalagem",
+        "description": "Recebe o serial de uma embalagem, verifica se existe no sistema e retorna embalagem",
+        "parameters": [
+          {
+            "name": "serial_number",
+            "in": "path",
+            "description": "Serial da embalagem",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a embalagem",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#components/schemas/ResponseFindPackageBySerialNumber"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
     }
 
   },
@@ -644,6 +679,25 @@
               }
             }
           }
+        }
+      },
+      "ResponseFindPackageBySerialNumber": {
+        "type":"object",
+        "properties": {
+          "id": {"type": "string"},
+          "serial_number": {"type":"string"},
+          "origem": {"type": "string"},
+          "FK_destino": {"type": "string"},
+          "FK_modelo": {"type": "string"},
+          "status": {"type": "number"},
+          "createdAt": {"type":"string"},
+          "updatedAt": {"type": "string"},
+          "models": {"type": "object", 
+          "properties": {
+            "descricao": {
+              "type": "string"
+            }
+          }}
         }
       }
     },
