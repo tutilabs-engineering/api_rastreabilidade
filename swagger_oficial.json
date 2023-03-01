@@ -577,6 +577,35 @@
             "description": "Falha: Rota finalizada."
           }
         }
+      },
+      "post": {
+        "tags": ["providers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar fornecedor",
+        "description": "Recebe nome e local e cria fornecedor no banco de dados.",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateProvider"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
       }
     }
 
