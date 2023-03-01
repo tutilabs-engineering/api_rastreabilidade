@@ -534,6 +534,26 @@
           }
         }
       }
+    },
+
+    "/provider": {
+      "get": {
+        "tags": ["providers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar fornecedores",
+        "description": "Lista todos os fornecedores cadastrados no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma lista com todos os fornecedores"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },      
     }
 
   },
