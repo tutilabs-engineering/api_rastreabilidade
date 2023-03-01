@@ -607,8 +607,49 @@
           }
         }
       }
+    },
+    "/provider/{id}":{
+      "put": {
+        "tags": ["providers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar fornecedor",
+        "description": "Recebe id, nome ou valor do externo e atualiza no banco",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do fornecedor editada",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUpdateProvider"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Fornecedor não existe no sistema."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "500": {
+            "description": "Falha: Rota finalizada."
+          }
+        }
+      }
     }
-
   },
   "components": {
     "schemas": {
@@ -723,6 +764,17 @@
         }
       },
       "RequestCreateProvider": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "externo": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RequestUpdateProvider": {
         "type": "object",
         "properties": {
           "nome": {
