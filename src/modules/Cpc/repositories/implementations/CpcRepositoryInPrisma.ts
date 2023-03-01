@@ -5,8 +5,18 @@ import { CPC } from "../../entities/CPC";
 import { ICpcRepository } from "../ICpcRepository";
 
 class CpcRepositoryInPrisma implements ICpcRepository {
-    findbyId(id: string): Promise<CPC> {
-        throw new Error("Method not implemented.");
+    
+    async findbyId(id: string): Promise<CPC> {
+        const data: CPC = await prisma.cpc.findUnique({
+            where:{
+              id
+            }
+        }).catch((error)=>{
+            throw new Error(error);
+        })
+
+        return data
+        
     }
     async findbyModelAndCustomer(FK_customer: string, FK_model: string): Promise<CPC> {
         const data: CPC = await prisma.cpc.findFirst({
@@ -70,10 +80,7 @@ class CpcRepositoryInPrisma implements ICpcRepository {
         }).catch((error)=>{
             throw new Error(error);
         })
-
-        console.log({data});
         
-
         return data
         
     }

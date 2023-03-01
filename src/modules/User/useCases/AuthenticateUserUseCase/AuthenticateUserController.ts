@@ -1,5 +1,4 @@
 import {Request, Response} from "express"
-import { AuthenticateUserServices } from "../../backup/services/User/AuthenticateUserServices" 
 
 class AuthenticateUserController {
 

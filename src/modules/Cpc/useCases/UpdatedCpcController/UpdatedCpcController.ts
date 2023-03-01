@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { UpdateCpcServices } from "../../../services/Cpc/UpdateCpcServices"
 
 class UpdateCpcController{
 
@@ -11,12 +10,12 @@ class UpdateCpcController{
         const {FK_customer, FK_model} = req.body
 
         // instanciando atualização de CPC
-        const updateCpcServices = new UpdateCpcServices()
+        // const updateCpcServices = new UpdateCpcServices()
 
         // atualizando no banco 
-        const cpc = await updateCpcServices.update({id, FK_customer, FK_model})
+        // const cpc = await updateCpcServices.update({id, FK_customer, FK_model})
 
-        return res.status(200).json(cpc)
+        return res.status(200).json({message:""})
 
     }
 
