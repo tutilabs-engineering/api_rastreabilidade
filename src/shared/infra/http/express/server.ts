@@ -13,7 +13,7 @@ import { AppError } from "../../../../config/AppError";
 // import { VerificarErros } from "../../../middlewares/VerficarErros";
 import swaggerFile from "../../../../../swagger.json";
 import swaggerFileOficial from "../../../../../swagger_oficial.json";
-
+import path from "path"
 // Configurações do express
 const app = express();
 const port = process.env.PORT || 7400;
@@ -29,7 +29,7 @@ app.use("/api-docs-oficial", swaggerUI.serve, swaggerUI.setup(swaggerFileOficial
 
 app.use('/api',router);
 // app.use(VerificarErros);
-app.use("/static", express.static(__dirname + "/uploads"));
+app.use("/static", express.static(path.resolve(process.cwd(),"src","uploads")));
 //error handling
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) =>  {

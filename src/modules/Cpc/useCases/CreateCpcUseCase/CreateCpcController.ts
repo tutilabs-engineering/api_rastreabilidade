@@ -1,20 +1,21 @@
 import { Request, Response} from "express"
-import { CreateCpcServices } from "../../../../backup/services/Cpc/CreateCpcServices"
+import { container } from "tsyringe"
+import { CreateCpcUseCase } from "./CreateCpcUseCase"
 
 class CreateCpcController{
 
-    async create(req: Request, res: Response){
+    async handle(req: Request, res: Response){
 
         // pegando da requisição
         const {FK_customer, FK_model} = req.body
 
         // instanciando criação de CPC
-        const createCpcServices = new CreateCpcServices()
+         const createCpcUseCase = container.resolve(CreateCpcUseCase)
 
         // salvando no banco
-        const cpc = await createCpcServices.create({FK_customer, FK_model})
+        await createCpcUseCase.execute({FK_customer, FK_model})
 
-        return res.status(200).json(cpc)
+        return res.status(200).json({message: "Cadastrado com sucesso"})
 
     }
     
