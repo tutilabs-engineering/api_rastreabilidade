@@ -506,6 +506,94 @@
           }
         }
       }
+    },
+
+    "/package/{serial_number}": {
+      "get": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar embalagem",
+        "description": "Recebe o serial de uma embalagem, verifica se existe no sistema e retorna embalagem",
+        "parameters": [
+          {
+            "name": "serial_number",
+            "in": "path",
+            "description": "Serial da embalagem",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a embalagem",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#components/schemas/ResponseFindPackageBySerialNumber"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+
+    "/packages/{id}": {
+      "put": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar embalagem",
+        "description": "Recebe o id de uma embalagem, os dados da requisição, valida os dados e atualiza. Obs.: Status tem 4 níveis diferentes, sendo eles: 0 -> disponível, 1 -> Em uso, 2 -> No cliente, 3 -> Em manutenção",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id da embalagem editada",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEditPackage"
+              },
+              "examples": {
+                "RequestPackage": {
+                  "value": {
+                    "FK_modelo": "bc7f875c-1e9c-40db-970c-1b91e15bdf08",
+                    "FK_destino": "bc7f875c-1e9c-40db-970c-1b91e15bdf08",
+                    "origem": "Filial",
+                    "status": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Embalagem não existe no sistema."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "500": {
+            "description": "Falha: Rota finalizada."
+          }
+        }
+      }
     }
 
   },
@@ -615,11 +703,10 @@
       "RequestEditPackage": {
         "type": "object",
         "properties": {
-          "serial_number": { "type": "string" },
-          "FK_destino": { "type": "string" },
-          "FK_modelo": { "type": "string" },
-          "origem": { "type": "string" },
-          "status": { "type": "number" }
+          "FK_destino": { "type": "string", "description": "id do cliente"},
+          "FK_modelo": { "type": "string", "description": "id do modelo" },
+          "origem": { "type": "string", "description": "nome da unidade" },
+          "status": { "type": "number", "description": "status da embalagem", "enum": [0,1,2,3], "example": 3}
         }
       },
       "RequestCreateProvider": {
@@ -704,6 +791,25 @@
               }
             }
           }
+        }
+      },
+      "ResponseFindPackageBySerialNumber": {
+        "type":"object",
+        "properties": {
+          "id": {"type": "string"},
+          "serial_number": {"type":"string"},
+          "origem": {"type": "string"},
+          "FK_destino": {"type": "string"},
+          "FK_modelo": {"type": "string"},
+          "status": {"type": "number"},
+          "createdAt": {"type":"string"},
+          "updatedAt": {"type": "string"},
+          "models": {"type": "object", 
+          "properties": {
+            "descricao": {
+              "type": "string"
+            }
+          }}
         }
       }
     },
