@@ -10,11 +10,16 @@ class PackageRepositoryInPrisma implements IPackageRepository {
     create(data: CreatePackageDTO): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    update(data: UpdatePackageDTO): Promise<void> {
+    async update(data: UpdatePackageDTO): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    findById(data: FiltersPackageDTO): Promise<Package> {
-        throw new Error("Method not implemented.");
+    async findById({id}: FiltersPackageDTO): Promise<Package> {
+        const data = await prisma.packages.findUnique({
+            where:{
+                id
+            }
+        })
+        return data
     }
 
     async findBySerialNumber(serial_number: string): Promise<Package> {
@@ -52,8 +57,19 @@ class PackageRepositoryInPrisma implements IPackageRepository {
     updateOrigin(data: UpdatePackageDTO): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    updatePackage(data: UpdatePackageDTO): Promise<void> {
-        throw new Error("Method not implemented.");
+    async updatePackage(id: string, {FK_destino,FK_modelo,origem,status,updatedAt}: UpdatePackageDTO): Promise<void> {
+        await prisma.packages.update({
+            where:{
+                id,
+            },
+            data:{
+                FK_destino,
+                FK_modelo,
+                origem,
+                status,
+                updatedAt
+            }
+        })
     }
 
 

@@ -15,7 +15,7 @@ interface IPackageRepository {
     listByStatusAndProvider(data: FiltersPackageDTO): Promise<Package[]>
     listPackage(data: FiltersPackageDTO): Promise<Package[]>
     updateOrigin(data: UpdatePackageDTO): Promise<void>
-    updatePackage(data: UpdatePackageDTO): Promise<void>
+    updatePackage(id: string, data: UpdatePackageDTO): Promise<void>
 
 }
 
