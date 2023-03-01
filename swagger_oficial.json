@@ -8,8 +8,13 @@
   "servers": [
     {
       "url": "http://185.209.179.253:15000/api/",
-      "description": "Base de testes"
+      "description": "Base de Teste em Servidor"
+    },
+    {
+      "url": "http://localhost:7400/api/",
+      "description": "Base Local"
     }
+
   ],
   "paths": {
     "/model": {
@@ -46,6 +51,18 @@
         "tags": ["models"],
         "security": [{ "bearerAuth": [] }],
         "summary": "Listar modelos",
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "quantidade de resultados a serem retornados"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "quantidade de resultados a serem pulados"
+          } 
+        ],
         "description": "Lista todos os modelos cadastrados no banco de dados",
         "responses": {
           "200": {
@@ -331,11 +348,29 @@
       }
     },
     "/customer": {
+      
       "get": {
         "tags": ["customers"],
         "security": [{ "bearerAuth": [] }],
         "summary": "Listar clientes",
         "description": "Lista todos os clientes cadastrados no banco de dados",
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "quantidade de resultados a serem retornados"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "quantidade de resultados a serem pulados"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status de resultados a serem pulados"
+          } 
+        ],
         "responses": {
           "200": {
             "description": "Sucesso: retorna uma lista com todos os clientes"
@@ -379,7 +414,32 @@
       }
     },
   
-    "/customers/{id}": {
+    "/customer/{id}": {
+      "get": {
+        "tags": ["customers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar cliente",
+        "description": "Busca um cliente especifico",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do cliente que está sendo buscado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o cliente"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
 
       "put": {
         "tags": ["customers"],
