@@ -594,9 +594,49 @@
           }
         }
       }
+    },
+    "/cpc": {
+      "post": {
+        "tags": ["cpc (Customer Preference Control)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar cpc",
+        "description": "Recebe o id de um cliente e o id de um modelo pela requisição, valida os dados, e registra a preferência no banco",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateCpc"
+              },
+              "examples": {
+                "RequestCpc": {
+                  "value": {
+                    "FK_customer": "Insira o id de um cliente válido",
+                    "FK_model": "Insira o id de um modelo válido"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o cpc cadastrado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
     }
 
   },
+ 
   "components": {
     "schemas": {
       "RequestCreateUser": {
