@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { CreateSmeServices } from "../../backup/services/Sme/CreateSmeServices";
 
 class CreateSmeController {
   async create(req: Request, res: Response) {
@@ -7,8 +6,7 @@ class CreateSmeController {
     const { id_customer, id_package, status, username, matricula, origem } =
       req.body;
 
-    // instanciando serviço de criação de SME
-    const createSmeServices = new CreateSmeServices();
+    
 
     const result = await createSmeServices.create({
       id_customer,

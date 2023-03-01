@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { ListOneSmeServices } from "../../backup/services/Sme/ListOneSmeServices"
 
 class ListOneSmeController {
 

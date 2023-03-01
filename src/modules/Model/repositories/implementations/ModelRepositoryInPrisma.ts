@@ -6,6 +6,7 @@ import { Model } from "../../entities/Model";
 import { IModelRepository } from "../IModelRepository";
 
 class ModelRepositoryInPrisma implements IModelRepository {
+   
     async findByDescription(desc: string): Promise<Model> {
         const model:Model = await prisma.models.findFirst({
             select: {

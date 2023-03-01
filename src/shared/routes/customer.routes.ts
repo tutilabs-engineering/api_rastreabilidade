@@ -6,6 +6,7 @@ import { CreateCustomerController } from "../../modules/Customer/useCase/CreateC
 import { DeleteCustomerController } from "../../modules/Customer/useCase/DeleteCusomerUseCase/DeleteCustomerController";
 import { FindByIdCustomerController } from "../../modules/Customer/useCase/FindByIdCustomerUseCase/FindByIdCustomerController";
 import { ListCustomerController } from "../../modules/Customer/useCase/ListCustomerUseCase/ListCustomerController";
+import { ListCustomerWithModelController } from "../../modules/Customer/useCase/ListCustomerWithModelUseCase/ListCustomerWithModelController";
 import { UpdateAticveCustomerController } from "../../modules/Customer/useCase/UpdateActiveCustomerUseCase/UpdateActiveCustomerController";
 import { UpdateCustomerController } from "../../modules/Customer/useCase/UpdateCustomerUseCase/UpdateCustomerController";
 
@@ -16,9 +17,11 @@ const deleteCustomerController = new DeleteCustomerController()
 const updateCustomerController = new UpdateCustomerController()
 const findByIdCustomerController = new FindByIdCustomerController()
 const updateAticveCustomerController = new UpdateAticveCustomerController()
+const listCustomerWithModelController = new ListCustomerWithModelController()
 
 const customerRouter = Router()
 
+customerRouter.get("/model/:cnpj", listCustomerWithModelController.handle)
 customerRouter.get("/:id", findByIdCustomerController.handle)
 customerRouter.get("/", listCustomerController.handle)
 customerRouter.delete("/:id", deleteCustomerController.handle)
