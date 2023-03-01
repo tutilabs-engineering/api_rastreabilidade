@@ -3,17 +3,19 @@ import { FiltersProviderDTO } from "../../dtos/FiltersProviderDTO";
 import { IProviderRepository } from "../../repository/IProviderRepository";
 
 @injectable()
-class ListOneProviderUseCase {
+class ListProviderUseCase {
 
     constructor(
         @inject("ProviderRepository")
         private providerRepository: IProviderRepository
     ){}
 
-    async execute({id ,limit ,status ,take}: FiltersProviderDTO): Promise<void>{
-        
+    async execute({skip,take}: FiltersProviderDTO): Promise<Provider[]>{
+        const data = await this.providerRepository.list({skip,take});
+
+        return data
     }
 
 }
 
-export { ListOneProviderUseCase }
+export { ListProviderUseCase}
