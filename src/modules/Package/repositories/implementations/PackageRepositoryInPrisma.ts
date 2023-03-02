@@ -7,11 +7,18 @@ import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../IPackageRepository";
 
 class PackageRepositoryInPrisma implements IPackageRepository {
-    create(data: CreatePackageDTO): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    async update(data: UpdatePackageDTO): Promise<void> {
-        throw new Error("Method not implemented.");
+    async create({FK_destino,FK_modelo,origem,serial_number,status, createdAt,updatedAt}: CreatePackageDTO): Promise<void> {
+        await prisma.packages.create({
+            data: {
+                FK_destino,
+                FK_modelo,
+                origem, 
+                serial_number,
+                status,
+                createdAt,
+                updatedAt
+            }
+        })
     }
     async findById({id}: FiltersPackageDTO): Promise<Package> {
         const data = await prisma.packages.findUnique({
