@@ -6,7 +6,6 @@ import { Package } from "../entities/Package"
 
 interface IPackageRepository {
     create(data: CreatePackageDTO): Promise<void>
-    update(data: UpdatePackageDTO): Promise<void>
     findById(data: FiltersPackageDTO): Promise<Package>
     findBySerialNumber(serial_number: string): Promise<Package>
     listByDestino(data: FiltersPackageDTO): Promise<Package[]>
