@@ -7,6 +7,15 @@ import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../IPackageRepository";
 
 class PackageRepositoryInPrisma implements IPackageRepository {
+    async listByStatusAndModel(status: number, FK_modelo: string): Promise<Package[]> {
+        const data = await prisma.packages.findMany({
+            where:{
+                status,
+                FK_modelo
+            }
+        })
+        return data
+    }
     async create({FK_destino,FK_modelo,origem,serial_number,status, createdAt,updatedAt}: CreatePackageDTO): Promise<void> {
         await prisma.packages.create({
             data: {
@@ -45,13 +54,26 @@ class PackageRepositoryInPrisma implements IPackageRepository {
 
          return data
     }
-
     listByDestino(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
-    listByModel(data: FiltersPackageDTO): Promise<Package[]> {
-        throw new Error("Method not implemented.");
+
+    async countByModel(status: number, FK_modelo: string): Promise<any> {
+        const data = await prisma.packages.groupBy({
+            by:["origem"],
+            where: {
+              AND:{
+                status,
+                FK_modelo
+              }
+            },
+            _count: true
+
+        })
+
+        return data
     }
+
     listByOrigin(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
