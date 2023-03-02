@@ -1,12 +1,33 @@
 
 import { prisma } from "../../../../config/prisma";
+import { Model } from "../../../Model/entities/Model";
 import { CreatePackageDTO } from "../../dtos/CreatePackageDTO";
 import { FiltersPackageDTO } from "../../dtos/FiltersPackageDTO";
+import { ListClientByModelDTO } from "../../dtos/ListClientByModelDTO";
 import { UpdatePackageDTO } from "../../dtos/UpdatePackageDTO ";
 import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../IPackageRepository";
 
 class PackageRepositoryInPrisma implements IPackageRepository {
+    async listClientByModel(FK_modelo: string): Promise<ListClientByModelDTO[]> {
+        const data = await prisma.packages.findMany({
+            where: {
+                FK_modelo,
+                customers: {
+                    razao_social: {notIn: ["CD", "Matriz", "Filial", "Jaguarão"]}
+                }
+            },
+            select: {
+                customers: {
+                    select: {
+                        razao_social: true
+                    }
+                }
+            },
+            distinct: ["FK_destino"]
+        })
+        return data
+    }
     async listByStatusAndModel(status: number, FK_modelo: string): Promise<Package[]> {
         const data = await prisma.packages.findMany({
             where:{

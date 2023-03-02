@@ -29,12 +29,14 @@ class ListByModelPackageUseCase {
         const packages_manutencao = await this.packageRepository.listByStatusAndModel(3,model)
         const Manutencao = await ValidarSMM(packages_manutencao,smmNotMoviment)
         
+        const Clientes = await this.packageRepository.listClientByModel(model)
 
         return {
             Disponivel,
             EmUso,
             Externas,
-            Manutencao
+            Manutencao,
+            Clientes
         }
     }
 }
