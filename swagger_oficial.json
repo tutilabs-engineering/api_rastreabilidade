@@ -596,6 +596,52 @@
         }
       }
     },
+
+    "/package":{
+      "post": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar embalagem",
+        "description": "Recebe os dados da requisição, faz a validação e cria embalagem. (Apenas usuários administradores)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreatePackage"
+              },
+              "examples": {
+                "RequestPackage": {
+                  "value": {
+                    "serial_number": "TUTILABS-0002",
+                    "origem": "Filial",
+                    "FK_modelo": "06119762-dc5e-4c85-9119-c766e1f83573",
+                    "FK_destino": "30607e11-d4ae-46ca-95aa-2bec2976096f"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Não encontrado."
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+
     "/cpc/{FK_costumer}": {
       "get": {
         "tags": ["cpc (Customer Preference Control)"],
@@ -918,14 +964,21 @@
         "type": "object",
         "properties": {
           "serial_number": {
-            "type": "string"
+            "type": "string",
+            "description": "Numero de serie da embalagem"
           },
           "origem": {
-            "type": "string"
+            "type": "string",
+            "description": "Unidade da embalagem"
           },
           "FK_modelo": {
-            "type": "string"
-          }
+            "type": "string",
+            "description": "Id do modelo que será vinculado a embalagem"
+          },
+          "FK_destino": {
+            "type": "string",
+            "description": "Id do cliente que será vinculado a embalagem"
+          }          
         }
       },
       "RequestEditPackage": {
