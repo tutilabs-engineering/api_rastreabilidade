@@ -12,14 +12,8 @@ class CreatePackageController {
 
         await createPackageUseCase.execute({serial_number, origem, FK_destino, FK_modelo, status})
 
-        // const createPackageServices = new CreatePackageServices()
-
-        // Criando cliente
-        // const embalagem = await createPackageServices.create({serial_number, origem, FK_destino, FK_modelo, status})
-
-        // return res.status(200).json({
-        //     embalagem
-        // })
+        return res.status(201).json({message: "Embalagem criada!"})
+        
 
     }
 
