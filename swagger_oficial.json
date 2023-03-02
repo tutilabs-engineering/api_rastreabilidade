@@ -415,6 +415,7 @@
     },
   
     "/customer/{id}": {
+
       "get": {
         "tags": ["customers"],
         "security": [{ "bearerAuth": [] }],
@@ -543,7 +544,7 @@
       }
     },
 
-    "/packages/{id}": {
+    "/package/{id}": {
       "put": {
         "tags": ["packages"],
         "security": [{ "bearerAuth": [] }],
@@ -595,7 +596,127 @@
         }
       }
     },
+
+    "/package":{
+      "post": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar embalagem",
+        "description": "Recebe os dados da requisição, faz a validação e cria embalagem. (Apenas usuários administradores)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreatePackage"
+              },
+              "examples": {
+                "RequestPackage": {
+                  "value": {
+                    "serial_number": "TUTILABS-0002",
+                    "origem": "Filial",
+                    "FK_modelo": "06119762-dc5e-4c85-9119-c766e1f83573",
+                    "FK_destino": "30607e11-d4ae-46ca-95aa-2bec2976096f"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Não encontrado."
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+
+    "/cpc/{FK_costumer}": {
+      "get": {
+        "tags": ["cpc (Customer Preference Control)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar cpc",
+        "description": "Recebe o id do cpc, verifica se existe no banco de dados e retorna cpc",
+        "parameters": [
+          {
+            "name": "FK_costumer",
+            "in": "path",
+            "description": "Id do controle de preferência cadastrado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o cpc"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/cpc/{id}":{
+      "delete": {
+        "tags": ["cpc (Customer Preference Control)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar cpc",
+        "description": "Recebe o id de um cpc, verifica se existe no banco e deleta o cpc",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do cpc",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: retorna uma mensagem"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
     "/cpc": {
+      "get": {
+        "tags": ["cpc (Customer Preference Control)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar controle de prefêrencia de clientes",
+        "description": "Lista de prefêrencia de modelos de todos os clientes",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna a lista com todas as opções de controle de prefência de cliente"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      },
       "post": {
         "tags": ["cpc (Customer Preference Control)"],
         "security": [{ "bearerAuth": [] }],
@@ -633,8 +754,121 @@
           }
         }
       }
+    },
+    "/provider": {
+      "get": {
+        "tags": ["providers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Lista fornecedores",
+        "description": "Lista todas as embalagens cadastradas no banco de dados.",
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "quantidade de resultados a serem retornados",
+            "default": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "quantidade de resultados a serem pulados",
+            "default": 0
+          } 
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso. Retorna a lista de todos os fornecedores",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#components/schemas/ResponseListProviders"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "500": {
+            "description": "Falha: Rota finalizada."
+          }
+        }
+      },
+      "post": {
+        "tags": ["providers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Criar fornecedor",
+        "description": "Recebe nome e local e cria fornecedor no banco de dados.",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateProvider"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/provider/{id}":{
+      "put": {
+        "tags": ["providers"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Editar fornecedor",
+        "description": "Recebe id, nome ou valor do externo e atualiza no banco",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do fornecedor editada",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUpdateProvider"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Fornecedor não existe no sistema."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "500": {
+            "description": "Falha: Rota finalizada."
+          }
+        }
+      }
     }
-
   },
  
   "components": {
@@ -730,14 +964,21 @@
         "type": "object",
         "properties": {
           "serial_number": {
-            "type": "string"
+            "type": "string",
+            "description": "Numero de serie da embalagem"
           },
           "origem": {
-            "type": "string"
+            "type": "string",
+            "description": "Unidade da embalagem"
           },
           "FK_modelo": {
-            "type": "string"
-          }
+            "type": "string",
+            "description": "Id do modelo que será vinculado a embalagem"
+          },
+          "FK_destino": {
+            "type": "string",
+            "description": "Id do cliente que será vinculado a embalagem"
+          }          
         }
       },
       "RequestEditPackage": {
@@ -750,6 +991,17 @@
         }
       },
       "RequestCreateProvider": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "externo": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RequestUpdateProvider": {
         "type": "object",
         "properties": {
           "nome": {
@@ -850,6 +1102,17 @@
               "type": "string"
             }
           }}
+        }
+      },
+      "ResponseListProviders": {
+        "type":"object",
+        "properties": {
+          "id": {"type": "string"},
+          "nome": {"type": "string"},
+          "externo": {"type": "boolean"},
+          "createdAt": {"type": "string"},
+          "updatedAt": {"type": "string"}
+
         }
       }
     },

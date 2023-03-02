@@ -1,7 +1,8 @@
-export type CreateProviderDTO = {
-    id?: String
-    nome: String
-    externo: Boolean
+interface CreateProviderDTO{
+    nome: string
+    externo: boolean
     createdAt?: Date
     updatedAt?: Date
 }
+
+export { CreateProviderDTO }

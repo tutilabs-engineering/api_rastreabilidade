@@ -1,20 +1,19 @@
 import { Request, Response } from "express"
-import { DeleteCpcServices } from "../../../services/Cpc/DeleteCpcServices"
+import { container } from "tsyringe"
+import { DeleteCpcUseCase } from "./DeleteCpcUseCase"
 
 class DeleteCpcController{
 
-    async delete(req: Request, res: Response){
+    async handle(req: Request, res: Response){
 
-        // recebendo dados da requisição
         const {id} = req.params 
 
-        // instanciando serviço de exclusão de CPC
-        const deleteCpcServices = new DeleteCpcServices()
+        
+        const deleteCpcUseCase = container.resolve(DeleteCpcUseCase)
+       
+        await deleteCpcUseCase.execute(id)
 
-        // deletando
-        const menssage = await deleteCpcServices.delete(id)
-
-        return res.status(200).json(menssage)
+        return res.status(200).json({menssage: "CPC deletado com sucesso."})
 
     }
 

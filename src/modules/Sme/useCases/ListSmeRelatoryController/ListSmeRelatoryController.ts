@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { ListSmeRelatoryServices } from "../../backup/services/Sme/ListSmeRelatoryServices";
 
 class ListSmeRelatoryController {
   async list(req: Request, res: Response) {

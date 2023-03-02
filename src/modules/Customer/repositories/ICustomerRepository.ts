@@ -12,6 +12,7 @@ interface ICustomerRepository {
     findByCNPJ(cnpj: string): Promise<Customer>
     updateActive(id: string,status: boolean): Promise<void>
     update(data: UpdateCustomerDTO): Promise<void>
+    listCustomerWithModel({skip,take}:FiltersCustomerDTO,cnpj: string): Promise<Customer[]>
 }
 
 export {ICustomerRepository}

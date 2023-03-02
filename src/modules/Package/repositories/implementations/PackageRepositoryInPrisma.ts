@@ -1,17 +1,54 @@
 
 import { prisma } from "../../../../config/prisma";
+import { Model } from "../../../Model/entities/Model";
 import { CreatePackageDTO } from "../../dtos/CreatePackageDTO";
 import { FiltersPackageDTO } from "../../dtos/FiltersPackageDTO";
+import { ListClientByModelDTO } from "../../dtos/ListClientByModelDTO";
 import { UpdatePackageDTO } from "../../dtos/UpdatePackageDTO ";
 import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../IPackageRepository";
 
 class PackageRepositoryInPrisma implements IPackageRepository {
-    create(data: CreatePackageDTO): Promise<void> {
-        throw new Error("Method not implemented.");
+    async listClientByModel(FK_modelo: string): Promise<ListClientByModelDTO[]> {
+        const data = await prisma.packages.findMany({
+            where: {
+                FK_modelo,
+                customers: {
+                    razao_social: {notIn: ["CD", "Matriz", "Filial", "Jaguarão"]}
+                }
+            },
+            select: {
+                customers: {
+                    select: {
+                        razao_social: true
+                    }
+                }
+            },
+            distinct: ["FK_destino"]
+        })
+        return data
     }
-    async update(data: UpdatePackageDTO): Promise<void> {
-        throw new Error("Method not implemented.");
+    async listByStatusAndModel(status: number, FK_modelo: string): Promise<Package[]> {
+        const data = await prisma.packages.findMany({
+            where:{
+                status,
+                FK_modelo
+            }
+        })
+        return data
+    }
+    async create({FK_destino,FK_modelo,origem,serial_number,status, createdAt,updatedAt}: CreatePackageDTO): Promise<void> {
+        await prisma.packages.create({
+            data: {
+                FK_destino,
+                FK_modelo,
+                origem, 
+                serial_number,
+                status,
+                createdAt,
+                updatedAt
+            }
+        })
     }
     async findById({id}: FiltersPackageDTO): Promise<Package> {
         const data = await prisma.packages.findUnique({
@@ -38,13 +75,26 @@ class PackageRepositoryInPrisma implements IPackageRepository {
 
          return data
     }
-
     listByDestino(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
-    listByModel(data: FiltersPackageDTO): Promise<Package[]> {
-        throw new Error("Method not implemented.");
+
+    async countByModel(status: number, FK_modelo: string): Promise<any> {
+        const data = await prisma.packages.groupBy({
+            by:["origem"],
+            where: {
+              AND:{
+                status,
+                FK_modelo
+              }
+            },
+            _count: true
+
+        })
+
+        return data
     }
+
     listByOrigin(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }

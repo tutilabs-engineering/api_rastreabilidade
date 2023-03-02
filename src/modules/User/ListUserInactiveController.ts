@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { ListUserInactiveServices } from "../../backup/services/User/ListUserInactiveServices"
 
 class ListUserInactiveController{
 

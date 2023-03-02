@@ -1,13 +1,12 @@
-import { CreateProvider } from "../dtos/CreateProviderDTO"
-import { FiltersProvider } from "../dtos/FiltersProviderDTO"
-import { UpdateProvider } from "../dtos/UpdateProviderDTO"
+import { CreateProviderDTO } from "../dtos/CreateProviderDTO"
+import { FiltersProviderDTO } from "../dtos/FiltersProviderDTO"
+import { UpdateProviderDTO } from "../dtos/UpdateProviderDTO"
 
 interface IProviderRepository {
-    create(data: CreateProvider): Promise<void>
-    findById(data: FiltersProvider): Promise<Provider>
-    listOne(): Promise<Provider[]>
-    update(data: UpdateProvider):Promise<void>
-
+    create(data: CreateProviderDTO): Promise<void>
+    findById(data: FiltersProviderDTO): Promise<Provider>
+    list(data: FiltersProviderDTO): Promise<Provider[] | null>
+    update(data: UpdateProviderDTO):Promise<void>
 
 }
 

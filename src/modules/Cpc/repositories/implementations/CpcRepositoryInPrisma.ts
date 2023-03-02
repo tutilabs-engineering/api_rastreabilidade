@@ -1,11 +1,22 @@
 import { prisma } from "../../../../config/prisma";
 import { CreateCpcDTO } from "../../dtos/CreateCpcDTO";
+import { FiltersCPCDTO } from "../../dtos/FiltersCpcDTO";
 import { CPC } from "../../entities/CPC";
 import { ICpcRepository } from "../ICpcRepository";
 
 class CpcRepositoryInPrisma implements ICpcRepository {
-    findbyId(id: string): Promise<CPC> {
-        throw new Error("Method not implemented.");
+    
+    async findbyId(id: string): Promise<CPC> {
+        const data: CPC = await prisma.cpc.findUnique({
+            where:{
+              id
+            }
+        }).catch((error)=>{
+            throw new Error(error);
+        })
+
+        return data
+        
     }
     async findbyModelAndCustomer(FK_customer: string, FK_model: string): Promise<CPC> {
         const data: CPC = await prisma.cpc.findFirst({
@@ -42,8 +53,14 @@ class CpcRepositoryInPrisma implements ICpcRepository {
             throw new Error(error);
         })
     }
-    delete(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async delete(id: string): Promise<void> {
+         await prisma.cpc.delete({
+            where:{
+              id
+            }
+        }).catch((error)=>{
+            throw new Error(error);
+        })
     }
     async listCPCByCustomer(id: string): Promise<CPC[]> {
 
@@ -63,16 +80,26 @@ class CpcRepositoryInPrisma implements ICpcRepository {
         }).catch((error)=>{
             throw new Error(error);
         })
-
-        console.log({data});
         
-
         return data
         
     }
-    async list(): Promise<CPC[]> {
-        throw new Error("Method not implemented.");
-
+    async list({skip,take}: FiltersCPCDTO): Promise<CPC[]> {
+        const data: CPC[] = await prisma.cpc.findMany({
+            select:{
+            id: true,
+            FK_customer: true,
+            FK_model: true,
+            createdAt: true,
+            updatedAt: true,
+            customers: true,
+            models: true,
+            }
+        }).catch((error)=>{
+            throw new Error(error);
+        })
+         
+        return data
     }
     update(): Promise<void> {
         throw new Error("Method not implemented.");

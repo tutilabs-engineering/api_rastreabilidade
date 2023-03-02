@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import { container } from "tsyringe"
 import { UpdateProviderUseCase } from "./UpdateProviderUseCase"
 
-export class UpdateProviderController {
+class UpdateProviderController {
 
     async handle(req: Request, res: Response) {
 
@@ -12,8 +12,10 @@ export class UpdateProviderController {
         const updateProviderUseCase = container.resolve(UpdateProviderUseCase)
         await updateProviderUseCase.execute({id, nome, externo})
 
-        return res.status(200).json()
+        return res.status(200).json({message: "Fornecedor atualizado com sucesso!"})
 
     }
 
 }
+
+export { UpdateProviderController }
