@@ -3,8 +3,21 @@ import { FiltersSmmDTO } from "../../dtos/FiltersSmmDTO";
 import { Smm } from "../../entities/Smm";
 import { ISmmRepository } from "../ISmmRepository";
 
-export class SmmRepositoryInPrisma implements ISmmRepository {     
-    async list({skip,take}: FiltersSmmDTO, status: string): Promise<Smm[]> {
+export class SmmRepositoryInPrisma implements ISmmRepository {
+    async listSmmByModel({skip, take}: FiltersSmmDTO, status: string): Promise<{_count: number,modeloDaEmbalagem:string }[]> {
+        const data = await prisma.smm.groupBy({
+             by: ["modeloDaEmbalagem"],
+            where:{
+                statusDoFornecedor: String(status),
+                statusDeMovimentacao: false
+            },
+            _count: true
+            
+        })
+
+        return data
+    }     
+    async list({skip,take}: FiltersSmmDTO, status: string,modeloDaEmbalagem: string): Promise<Smm[]> {
         const data = await prisma.smm.findMany({
             select:{
                 id: true,
@@ -22,6 +35,7 @@ export class SmmRepositoryInPrisma implements ISmmRepository {
             },
             where:{
                 statusDoFornecedor: String(status),
+                modeloDaEmbalagem,
             },
             take,                   
             skip,

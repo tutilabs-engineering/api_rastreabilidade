@@ -125,30 +125,8 @@ class SmeRepositoryInPrisma implements ISmeRepository {
 
         return data
     }
-    async listByDate(dataInicial: Date, dataFinal: Date,{skip, take}: FiltersSmeDTO): Promise<Sme[]> {
-        const data = await prisma.sme.findMany({
-            select:{
-                id: true,
-                razao_social: true,
-                cnpj: true,
-                ativo: true,
-                serial_number: true,
-                origem: true,
-                destino: true,
-                status: true,
-                modelo: true,
-                username: true,
-                matricula: true,
-            },
-            where:{
-                data: {
-                    gte: dataInicial,
-                    lte: dataFinal  
-                }
-            },
-            take,
-            skip
-        })
+    async listByDate(dataInicial: string, dataFinal: string,{skip, take}: FiltersSmeDTO): Promise<any> {
+        const data = prisma.$queryRawUnsafe(`SELECT * FROM sme WHERE DATE(sme.data) BETWEEN DATE('${dataInicial}') AND DATE('${dataFinal}')`)
 
         return data
     }

@@ -761,6 +761,58 @@
         }
       }
     },
+    "package/stopped":{
+      "get": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar quantidade de embalagens paradas por cliente",
+        "description": "Retorna a quantidade de embalagens paradas por cliente",
+        "responses": {
+          "200": {
+            "description": "Sucesso.",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#components/schemas/ReponseListQuantityPackageStoppedByClient"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "package/mnt":{
+      "get": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar quantidade de embalagens em manutenção por modelo",
+        "description": "Retorna a quantidade de embalagens em manutenção por modelo",
+        "responses": {
+          "200": {
+            "description": "Sucesso.",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#components/schemas/ReponseListQuantityPackageMntByModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
     "/cpc/{FK_costumer}": {
       "get": {
         "tags": [
@@ -1676,6 +1728,32 @@
                 }
               }
             }
+          }
+        }
+      },
+      "ReponseListQuantityPackageStoppedByClient":{
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number",
+            "description": "Quantidade de embalagens"
+          },
+          "razao_social": {
+            "type": "string",
+            "description": "Razão social do cliente"            
+          }
+        }
+      },
+      "ReponseListQuantityPackageMntByModel":{
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number",
+            "description": "Quantidade de embalagens"
+          },
+          "descricao": {
+            "type": "string",
+            "description": "Descricao do modelo"            
           }
         }
       }

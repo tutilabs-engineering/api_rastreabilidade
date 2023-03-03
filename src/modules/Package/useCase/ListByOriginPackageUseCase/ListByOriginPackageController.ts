@@ -1,7 +1,5 @@
 import { Request, Response} from "express"
 import { container } from "tsyringe"
-import { ListByOriginsPackageServices } from "../../backup/services/Package/ListByOriginPackageServices"
-import { ListByDestinoPackageUseCase } from "../ListByDestinoPackageUseCase/ListByDestinoPackageUseCase"
 import { ListByOriginPackageUseCase } from "./ListByOriginPackageUseCase"
 
 class ListByOriginPackageController {
@@ -10,14 +8,14 @@ class ListByOriginPackageController {
 
         const {origin} = req.params
 
-        const { limit, take } = req.query
+        const { skip = 0, take = 10, status = 0 } = req.query
         // Instanciando o os serviços de embalagem
         // const listByOriginsPackageServices = new ListByOriginsPackageServices()
         const listByOriginPackageUseCase = container.resolve(ListByOriginPackageUseCase)
        
         const embalagens = await listByOriginPackageUseCase.execute(
             {origin},
-            {limit: Number(limit), take:  Number(take)}
+            {skip: Number(skip), take:  Number(take), status:Number(status)}
             )
         // buscando as embalagem no banco
         // const embalagens = await listByOriginsPackageServices.list(String(origin))

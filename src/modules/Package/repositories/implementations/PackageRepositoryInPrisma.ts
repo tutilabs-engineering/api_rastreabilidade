@@ -1,6 +1,7 @@
 
 import { prisma } from "../../../../config/prisma";
 import { Model } from "../../../Model/entities/Model";
+import { CountByOriginAndModelPackageDTO } from "../../dtos/CountByOriginAndModelPackageDTO";
 import { CreatePackageDTO } from "../../dtos/CreatePackageDTO";
 import { FiltersPackageDTO } from "../../dtos/FiltersPackageDTO";
 import { ListClientByModelDTO } from "../../dtos/ListClientByModelDTO";
@@ -9,6 +10,65 @@ import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../IPackageRepository";
 
 class PackageRepositoryInPrisma implements IPackageRepository {
+    async listPackageByCustomer({skip, take }:FiltersPackageDTO, FK_destino: string): Promise<{serial_number:string}[]> {
+        const data = await prisma.packages.findMany({
+            select:{
+                serial_number: true,
+            },
+        where:{
+            FK_destino
+        },
+        skip,
+        take    
+      })
+      
+      return data
+    }
+    async listByModelByCustomer(FK_destino: string): Promise<any> {
+        const dat2a = await prisma.packages.groupBy({
+            by:['FK_modelo'],
+            where:{
+              status: 2,
+              FK_destino
+            },
+            _count: true,
+
+        
+      })
+      
+      return dat2a
+    }
+
+    async listByCustomerWithModel(data: FiltersPackageDTO): Promise<any> {
+        const dat2a = await prisma.packages.groupBy({
+              by:['FK_destino'],
+              where:{
+                status: 2
+
+              },
+              _count: true,
+
+          
+        })
+        
+        return dat2a
+    }
+    async listByModelAndStatusWitchOrigin(origin: string,{FK_modelo,skip,take,status}: FiltersPackageDTO): Promise<{serial_number: string}[]> {
+        
+        const data = await prisma.packages.findMany({
+            select:{
+                serial_number: true,
+            },
+            where:{
+                status,
+                FK_modelo,
+                origem: origin
+            },
+            skip,
+            take
+        })
+        return data
+    }
     async listClientByModel(FK_modelo: string): Promise<ListClientByModelDTO[]> {
         const data = await prisma.packages.findMany({
             where: {
@@ -95,14 +155,25 @@ class PackageRepositoryInPrisma implements IPackageRepository {
         return data
     }
 
-    listByOrigin(data: FiltersPackageDTO): Promise<Package[]> {
-        throw new Error("Method not implemented.");
+    async listByOrigin({skip, status, take}: FiltersPackageDTO,origin: string): Promise<CountByOriginAndModelPackageDTO[]> {
+        const data = await prisma.packages.groupBy({
+            by:["FK_modelo"],
+            where:{
+                status,
+                origem:  origin
+            },          
+            _count:true
+        })
+        return data
     }
-    listByStatusAndProvider(data: FiltersPackageDTO): Promise<Package[]> {
-        throw new Error("Method not implemented.");
+    async listByStatusAndProvider({status}: FiltersPackageDTO): Promise<any> {
+        const data = await prisma.$queryRawUnsafe(`SELECT COUNT(packages.id), models.descricao FROM packages INNER JOIN models ON models.id = packages."FK_modelo" WHERE DATE(NOW()) - DATE(packages."updatedAt") > 7 AND STATUS = ${status} GROUP BY models.descricao`)
+
+        return data
     }
-    listPackage(data: FiltersPackageDTO): Promise<Package[]> {
-        throw new Error("Method not implemented.");
+    async listPackageStoppedByCustomer(): Promise<any> {
+        const data = await prisma.$queryRawUnsafe('SELECT COUNT(packages.id), customers.razao_social FROM packages INNER JOIN customers ON customers.id = packages."FK_destino" WHERE DATE(NOW()) - DATE(packages."updatedAt") > 7 AND STATUS = 2 GROUP BY customers.razao_social')
+        return data
     }
     updateOrigin(data: UpdatePackageDTO): Promise<void> {
         throw new Error("Method not implemented.");
