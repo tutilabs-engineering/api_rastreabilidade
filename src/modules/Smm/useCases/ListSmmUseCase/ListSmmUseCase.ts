@@ -12,12 +12,19 @@ class ListSmmUseCase {
 
     }
 
-    async execute({skip, take}: FiltersSmmDTO){
+    async execute({skip, take, status }: FiltersSmmDTO){
+
+    let statusEmb = "Interno"
+
+    if(status == 1){statusEmb = "Externo"}
+    
 
     const data = await this.smmRepository.list({
         skip,
-        take
-    })
+        take,
+    },
+    statusEmb
+    )
 
     return data
        

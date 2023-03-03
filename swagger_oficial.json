@@ -1213,6 +1213,75 @@
           }
         }
       }
+    },
+    "/smm": {
+      "get": {
+        "tags": ["smm (Maintenance Movement Status)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar smm",
+        "description": "Lista todas as movimentações de embalagens para manutenção",
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "quantidade de resultados a serem retornados"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "quantidade de resultados a serem pulados"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status 1 - Externo ou 0 - Interno"
+          }
+       
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna uma lista com todas as movimentações de manutenção realizadas"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/smm/relatory": {
+      "get": {
+        "tags": ["smm (Maintenance Movement Status)"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Listar smm",
+        "description": "Lista todas as movimentações de embalagens para manutenção",
+        "parameters": [
+          {
+            "name": "dataInicial",
+            "in": "query",
+            "description": "Data Inicial"
+          },
+          {
+            "name": "dataFinal",
+            "in": "query",
+            "description": "Data Final"
+          }
+       
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna uma lista com todas as movimentações de manutenção realizadas"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
     }
   },
   "components": {

@@ -5,6 +5,7 @@ import { modelRouter } from "./model.routes";
 import { packageRouter } from "./package.routes";
 import { providerRouter } from "./provider.routes";
 import { smeRouter } from "./sme.routes";
+import { smmRouter } from "./smm.routes";
 import { userRouter } from "./user.routes";
 
 const router = Router();
@@ -17,6 +18,7 @@ router.use("/customer", customerRouter)
 router.use("/user", userRouter)
 router.use("/provider",providerRouter)
 router.use("/sme",smeRouter)
+router.use("/smm",smmRouter)
 
 
 export {router}
