@@ -1,5 +1,6 @@
 import { FiltersSmmDTO } from "../dtos/FiltersSmmDTO"
-import { Smm } from "../entities/smm"
+import { Smm } from "../entities/Smm"
+
 
 interface ISmmRepository {
 
@@ -7,7 +8,7 @@ interface ISmmRepository {
     create(): Promise<void>
     list(data: FiltersSmmDTO): Promise<Smm[]>
     listRelatory(dataInicial: Date, dataFinal: Date): Promise<Smm[]>
-
+    findByMovimentStatus(statusDeMovimentacao: boolean):Promise<Smm[]>
 }
 
 export {

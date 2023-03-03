@@ -3,7 +3,7 @@ import { FiltersSmmDTO } from "../../dtos/FiltersSmmDTO";
 import { Smm } from "../../entities/smm";
 import { ISmmRepository } from "../ISmmRepository";
 
-class SmmRepositoryInPrisma implements ISmmRepository {
+export class SmmRepositoryInPrisma implements ISmmRepository {     
     async list({skip,take}: FiltersSmmDTO): Promise<Smm[]> {
         const data = await prisma.smm.findMany({
             take,
@@ -20,17 +20,24 @@ class SmmRepositoryInPrisma implements ISmmRepository {
                     gte: dataInicial,
                     lte: dataFinal
                 }
+            });                 
+        return data
+    }
+
+     
+    async findByMovimentStatus(statusDeMovimentacao: boolean): Promise<Smm[]> {
+        const data = await prisma.smm.findMany({
+            where: {
+                statusDeMovimentacao
             }
         })
 
         return data
     }
+    
     create(): Promise<void> {
         throw new Error("Method not implemented.");
     }
 }
 
 
-export {
-    SmmRepositoryInPrisma
-}
