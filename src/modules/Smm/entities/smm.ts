@@ -1,5 +1,5 @@
 export class Smm {
-    id: string
+    id?: string
     username: string
     matricula: string
     fornecedor: string
@@ -9,6 +9,6 @@ export class Smm {
     statusDaEmbalagem: string
     modeloDaEmbalagem: string
     statusDeMovimentacao: boolean
-    criadoEm: Date
+    criadoEm?: Date
     concluidoEm?: Date
 }

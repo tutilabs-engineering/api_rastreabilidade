@@ -1,7 +1,10 @@
 import { Package } from "../modules/Package/entities/Package"
+import { Smm } from "../modules/Smm/entities/Smm"
+
+                        
 
 interface iEmb {
-    embalagem: Package
+    embalagem: Package  
     modelo: string
     fornecedor: string
     descricao: string
