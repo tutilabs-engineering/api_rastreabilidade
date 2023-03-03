@@ -727,7 +727,40 @@
         }
       }
     },
-
+    "package/model/:id":{
+      "get": {
+        "tags": ["packages"],
+        "security": [{ "bearerAuth": [] }],
+        "summary": "Buscar quantidade de embalagens por modelo",
+        "description": "Recebe o id de um modelo e retorna a quantidade por status em cada unidade",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do modelo",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso.",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#components/schemas/ReponseListQuantityPackageByModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
     "/cpc/{FK_costumer}": {
       "get": {
         "tags": [
@@ -1581,6 +1614,68 @@
           },
           "updatedAt": {
             "type": "string"
+          }
+        }
+      },
+      "ReponseListQuantityPackageByModel":{
+        "type": "object",
+        "properties": {
+          "Disponivel": {
+            "type":"object",
+            "properties": {
+              "_count": {
+                "type": "number"
+              },
+              "origem":{
+                "type": "string"
+              }
+            }
+          },
+          "EmUso": {
+            "type":"object",
+            "properties": {
+              "_count": {
+                "type": "number"
+              },
+              "origem":{
+                "type": "string"
+              }
+            }
+          },
+          "Externas": {
+            "type":"object",
+            "properties": {
+              "_count": {
+                "type": "number"
+              },
+              "origem":{
+                "type": "string"
+              }
+            }
+          },
+          "Manutencao": {
+            "type":"object",
+            "properties":{
+              "embalagensExternas":{
+                "type": "number"
+              },
+              "embalagensInternas":{
+                "type": "number"
+              }
+            }
+          },
+          "Clientes": {
+            "type":"object",
+            "properties":{
+              "customers": {
+                "type": "object",
+                "properties": {
+                  "razao_social":{
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         }
       }
