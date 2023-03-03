@@ -14,7 +14,7 @@ interface IPackageRepository {
     countByModel(status: number, FK_modelo: string): Promise<number>
     listByOrigin(data: FiltersPackageDTO): Promise<Package[]>
     listByStatusAndProvider(data: FiltersPackageDTO): Promise<Package[]>
-    listPackage(data: FiltersPackageDTO): Promise<Package[]>
+    listPackageStoppedByCustomer(): Promise<any>
     listByStatusAndModel(status: number, FK_modelo: string): Promise<Package[]>
     listClientByModel(FK_modelo: string):Promise<ListClientByModelDTO[]>
     updateOrigin(data: UpdatePackageDTO): Promise<void>

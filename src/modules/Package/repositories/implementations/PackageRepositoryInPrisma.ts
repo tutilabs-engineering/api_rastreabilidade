@@ -101,8 +101,9 @@ class PackageRepositoryInPrisma implements IPackageRepository {
     listByStatusAndProvider(data: FiltersPackageDTO): Promise<Package[]> {
         throw new Error("Method not implemented.");
     }
-    listPackage(data: FiltersPackageDTO): Promise<Package[]> {
-        throw new Error("Method not implemented.");
+    async listPackageStoppedByCustomer(): Promise<any> {
+        const data = await prisma.$queryRawUnsafe('SELECT COUNT(packages.id), customers.razao_social FROM packages INNER JOIN customers ON customers.id = packages."FK_destino" WHERE DATE(NOW()) - DATE(packages."updatedAt") > 7 AND STATUS = 2 GROUP BY customers.razao_social')
+        return data
     }
     updateOrigin(data: UpdatePackageDTO): Promise<void> {
         throw new Error("Method not implemented.");
