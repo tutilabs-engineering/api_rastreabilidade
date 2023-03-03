@@ -1,35 +1,23 @@
 import { Request, Response } from "express";
-import { CreateSmmService } from "../../backup/services/Smm/CreateSmmService";
+import { container } from "tsyringe";
+import { CreateSmmDTO } from "../../dtos/CreateSmmDTO";
+import { CreateSmmUseCase } from "./CreateSmmUseCase";
 
-interface iSmmRequest {
-  user: {
-    username: string;
-    matricula: string;
-  };
-  fornecedor: {
-    descricao: string;
-    statusDoFornecedor: boolean;
-  };
-  embalagem: {
-    descricao: string;
-    serial_number: string;
-    modeloDaEmbalagem: string;
-  };
-  localizacao: string
-}
 
 class CreateSmmController {
-  async create(req: Request, res: Response) {
-    const { user, fornecedor, embalagem, localizacao } = req.body as iSmmRequest;  
+  async handle(req: Request, res: Response) {
+    const { user, fornecedor, embalagem, localizacao } = req.body as CreateSmmDTO;  
     
     // instanciando serviço
-    const service = new CreateSmmService();
-
+    const createSmmUseCase = container.resolve(CreateSmmUseCase);
     try {
-      const smm = await service.create({ user, fornecedor, embalagem, localizacao });
+
+      const smm = await createSmmUseCase.execute({ user, fornecedor, embalagem, localizacao });
 
       return res.status(200).json(smm);
+      
     } catch ({ message }) {
+
       return res.status(400).json(message);
     }
   }

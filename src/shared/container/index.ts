@@ -9,6 +9,8 @@ import { PackageRepositoryInPrisma } from "../../modules/Package/repositories/im
 import { IPackageRepository } from "../../modules/Package/repositories/IPackageRepository"
 import { ProviderRepositoryInPrisma } from "../../modules/Provider/repository/implementations/ProviderRepositoryInPrisma"
 import { IProviderRepository } from "../../modules/Provider/repository/IProviderRepository"
+import { SmeRepositoryInPrisma } from "../../modules/Sme/repositories/implementations/SmeRepositoryInPrisma"
+import { ISmeRepository } from "../../modules/Sme/repositories/ISmeRepository"
 import { SmmRepositoryInPrisma } from "../../modules/Smm/repositories/implementations/SmmRepositoryInPrisma"
 import { ISmmRepository } from "../../modules/Smm/repositories/ISmmRepository"
 import { UserRepositoryInPrisma } from "../../modules/User/repositories/implementations/UserRepositoryInPrisma"
@@ -46,8 +48,12 @@ container.registerSingleton<IUserRepository>(
     "UserRepository",
     UserRepositoryInPrisma
 )
-
 container.registerSingleton<ISmmRepository>(
     "SmmRepository",
-    SmmRepositoryInPrisma
+     SmmRepositoryInPrisma
+)
+
+container.registerSingleton<ISmeRepository>(
+    "SmeRepository",
+     SmeRepositoryInPrisma
 )

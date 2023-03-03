@@ -72,27 +72,27 @@ model sme {
   modelo        String  
   username      String  
   matricula     String  
-  data          String  
+  data          DateTime  
 }
 
 model smm {
   id                   String  @id @default(uuid())
-  username             String  @db.VarChar
-  matricula            String  @db.VarChar
-  fornecedor           String  @db.VarChar
-  statusDoFornecedor   String  @db.VarChar
+  username             String  
+  matricula            String  
+  fornecedor           String  
+  statusDoFornecedor   String  
   descricao            String
-  serial_number        String  @db.VarChar
-  statusDaEmbalagem    String  @db.VarChar
-  modeloDaEmbalagem    String  @db.VarChar
+  serial_number        String  
+  statusDaEmbalagem    String  
+  modeloDaEmbalagem    String  
   statusDeMovimentacao Boolean @default(false)
-  criadoEm             String  @db.VarChar
-  concluidoEm          String? @db.VarChar
+  criadoEm             DateTime  
+  concluidoEm          DateTime? 
 }
 
 model users {
   id        String   @id @default(uuid())
-  nome      String   @db.VarChar
+  nome      String   
   matricula String   @unique() 
   email     String   @unique() 
   password  String   
