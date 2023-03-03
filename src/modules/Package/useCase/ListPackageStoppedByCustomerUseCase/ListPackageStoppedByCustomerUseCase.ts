@@ -16,7 +16,7 @@ class ListPackageStoppedByCustomerUseCase{
 
         return JSON.parse(JSON.stringify(
           data,
-          (key, value) => (typeof value === 'bigint' ? value.toString() : value) //serialize bigInt
+          (key, value) => (typeof value === 'bigint' ? Number(value) : value) //serialize bigInt
         ))
 
       }
