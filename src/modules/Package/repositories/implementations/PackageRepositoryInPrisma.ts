@@ -10,6 +10,9 @@ import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../IPackageRepository";
 
 class PackageRepositoryInPrisma implements IPackageRepository {
+    listPackage(data: FiltersPackageDTO): Promise<Package[]> {
+        throw new Error("Method not implemented.");
+    }
     async listPackageByCustomer({skip, take }:FiltersPackageDTO, FK_destino: string): Promise<{serial_number:string}[]> {
         const data = await prisma.packages.findMany({
             select:{
