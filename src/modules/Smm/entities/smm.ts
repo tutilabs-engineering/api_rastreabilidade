@@ -1,4 +1,4 @@
-class Smm{
+export class Smm {
     id: string
     username: string
     matricula: string
@@ -9,6 +9,6 @@ class Smm{
     statusDaEmbalagem: string
     modeloDaEmbalagem: string
     statusDeMovimentacao: boolean
-    criadoEm: string
-    concluidoEm: string
+    criadoEm: Date
+    concluidoEm?: Date
 }

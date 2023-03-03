@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 class CreateSmeController {
-  async create(req: Request, res: Response) {
+  async handle(req: Request, res: Response) {
     // recebendo dados da requisição
     const { id_customer, id_package, status, username, matricula, origem } =
       req.body;

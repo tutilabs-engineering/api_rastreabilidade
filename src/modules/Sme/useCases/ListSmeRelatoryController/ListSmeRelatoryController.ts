@@ -1,15 +1,21 @@
 import { Request, Response } from "express";
+import { container } from "tsyringe";
+import { ListSmeRelatoryUseCase } from "./ListSmeRelatoryUseCase";
 
 class ListSmeRelatoryController {
-  async list(req: Request, res: Response) {
-    const dataInicial = req.query.inicio;
-    const dataFinal = req.query.final;
+  async handle(req: Request, res: Response) {
+
+    const {  take = 10, skip = 0 } = req.query
+    const { inicio, final} = req.body
+
 
     // instanciando serviço
-    const listSmeServices = new ListSmeRelatoryServices();
+
+    const listSmeRelatoryUseCase = container.resolve(ListSmeRelatoryUseCase)
 
     // buscando no banco
-    const result = await listSmeServices.list(dataInicial, dataFinal);
+    const result = await listSmeRelatoryUseCase.execute(inicio, final,
+      {skip:Number(skip),take: Number(take)});
 
     return res.status(200).json(result);
   }

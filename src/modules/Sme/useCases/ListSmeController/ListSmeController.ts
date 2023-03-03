@@ -1,31 +1,19 @@
 import { Request, Response } from "express";
-import { ListSmeServices } from "../../backup/services/Sme/ListSmeServices";
+import { container } from "tsyringe";
+import { ListSmeUseCase } from "./ListSmeUseCase";
 
-interface iForm {
-  id: string;
-  // Usuario
-  nome_do_usuario: string;
-  matricula_do_usuario: string;
-  // Cliente que tá usando o carrinho
-  razao_social: string;
-  cnpj: string;
-  ativo: boolean;
-  // Embalagem
-  serial_number: string;
-  origem: string;
-  destino: string;
-  modelo: string;
-  status: string;
-  data_hora: string;
-}
+
 
 class ListSmeController {
-  async list(req: Request, res: Response) {
+  async handle(req: Request, res: Response) {
+
+    const { take = 10, skip = 0 } = req.query
+
     // instanciando serviço
-    const listSmeServices = new ListSmeServices();
+    const listSmeUseCase = container.resolve(ListSmeUseCase)
 
     // buscando no banco
-    const result = await listSmeServices.list();
+    const result = await listSmeUseCase.execute({skip:Number(skip),take: Number(take)});
 
     return res.status(200).json(result);
   }

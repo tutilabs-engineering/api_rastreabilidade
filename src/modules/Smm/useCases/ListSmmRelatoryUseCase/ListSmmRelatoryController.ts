@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
-import { ListSmmRelatoryService } from "../../backup/services/Smm/ListSmmRelatoryService";
+import { container } from "tsyringe";
+import { ListSmmRelatoryUseCase } from "./ListSmmRelatoryUseCase";
 
 class ListSmmRelatoryController {
-  async list(req: Request, res: Response) {
-    const dataInicial = req.query.inicio;
-    const dataFinal = req.query.final;
+  async handle(req: Request, res: Response) {
 
-    const service = new ListSmmRelatoryService();
+    const {dataInicial,dataFinal } = req.body
 
-    const smm = await service.list(dataInicial, dataFinal);
+    const listSmmRelatoryUseCase = container.resolve(ListSmmRelatoryUseCase)
+
+    const smm = await listSmmRelatoryUseCase.execute(dataInicial, dataFinal);
 
     return res.status(200).json(smm);
   }
