@@ -14,13 +14,18 @@
       "url": "http://localhost:7400/api/",
       "description": "Base Local"
     }
-
   ],
   "paths": {
     "/model": {
       "post": {
-        "tags": ["models"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "models"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Criar modelo",
         "description": "Recebe os dados da requisição e cria um novo modelo. (Apenas usuários administradores)",
         "requestBody": {
@@ -48,8 +53,14 @@
         }
       },
       "get": {
-        "tags": ["models"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "models"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Listar modelos",
         "parameters": [
           {
@@ -61,7 +72,7 @@
             "name": "skip",
             "in": "query",
             "description": "quantidade de resultados a serem pulados"
-          } 
+          }
         ],
         "description": "Lista todos os modelos cadastrados no banco de dados",
         "responses": {
@@ -79,8 +90,14 @@
     },
     "/model/{id}": {
       "put": {
-        "tags": ["models"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "models"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Editar modelo",
         "description": "Recebe o id de um modelo, os novos dados que serão validos e retorna o modelo editado. (Apenas usuários administradores)",
         "parameters": [
@@ -116,8 +133,14 @@
         }
       },
       "delete": {
-        "tags": ["models"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "models"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Deletar modelo",
         "description": "Recebe o id de um modelo, verifica se existe no banco de dados e deleta o modelo do id. (Apenas usuários administradores)",
         "parameters": [
@@ -146,8 +169,14 @@
     },
     "/user": {
       "get": {
-        "tags": ["users"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Listar usuários",
         "description": "Lista todos os usuários ativos cadastrados no banco",
         "parameters": [
@@ -160,7 +189,7 @@
             "name": "skip",
             "in": "query",
             "description": "quantidade de resultados a serem pulados"
-          } 
+          }
         ],
         "responses": {
           "200": {
@@ -175,8 +204,14 @@
         }
       },
       "post": {
-        "tags": ["users"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Criar usuário",
         "description": "Recebe os dados da requisição e valida o email e matricula para criar um novo usuário",
         "requestBody": {
@@ -227,11 +262,9 @@
           "400": {
             "description": "Falha: Retorna o erro de dados inválidos"
           },
-
           "404": {
             "description": "Falha: Retorna o erro de recursos nao encontrados"
           },
-
           "401": {
             "description": "Não autorizado"
           },
@@ -241,11 +274,16 @@
         }
       }
     },
-
     "/users/{id}": {
       "get": {
-        "tags": ["users"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Buscar usuário",
         "description": "Recebe uma id pro parametro e retorna um usuário no banco",
         "parameters": [
@@ -272,8 +310,14 @@
         }
       },
       "put": {
-        "tags": ["users"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Editar usuário",
         "description": "Recebe uma id por parâmetro e edita seus dados ",
         "parameters": [
@@ -322,8 +366,14 @@
         }
       },
       "delete": {
-        "tags": ["users"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Deletar usuário",
         "description": "Recebe um id por parâmetro, busca o usuário e apaga ele do sistema",
         "parameters": [
@@ -348,10 +398,15 @@
       }
     },
     "/customer": {
-      
       "get": {
-        "tags": ["customers"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "customers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Listar clientes",
         "description": "Lista todos os clientes cadastrados no banco de dados",
         "parameters": [
@@ -369,7 +424,7 @@
             "name": "status",
             "in": "query",
             "description": "status de resultados a serem pulados"
-          } 
+          }
         ],
         "responses": {
           "200": {
@@ -384,8 +439,14 @@
         }
       },
       "post": {
-        "tags": ["customers"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "customers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Criar cliente",
         "description": "Recebe os dados da requisição, faz a validação e cria um novo cliente. (Apenas usuários administradores)",
         "requestBody": {
@@ -413,12 +474,16 @@
         }
       }
     },
-  
     "/customer/{id}": {
-
       "get": {
-        "tags": ["customers"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "customers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Buscar cliente",
         "description": "Busca um cliente especifico",
         "parameters": [
@@ -441,10 +506,15 @@
           }
         }
       },
-
       "put": {
-        "tags": ["customers"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "customers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Editar cliente",
         "description": "Recebe o id de um cliente, o cnpj no corpo da requisição, e os dados que serão alterados. Então, os dados são válidados e retorna o cliente editado. (Apenas usuários administradores)",
         "parameters": [
@@ -480,8 +550,14 @@
         }
       },
       "delete": {
-        "tags": ["customers"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "customers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Deletar cliente",
         "description": "Recebe o id de um cliente e o apaga do banco de dados. (Apenas usuários administradores)",
         "parameters": [
@@ -508,11 +584,16 @@
         }
       }
     },
-
     "/package/{serial_number}": {
       "get": {
-        "tags": ["packages"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "packages"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Buscar embalagem",
         "description": "Recebe o serial de uma embalagem, verifica se existe no sistema e retorna embalagem",
         "parameters": [
@@ -528,8 +609,8 @@
             "description": "Sucesso: Retorna a embalagem",
             "content": {
               "application/json": {
-                "schema":{
-                  "$ref":"#components/schemas/ResponseFindPackageBySerialNumber"
+                "schema": {
+                  "$ref": "#components/schemas/ResponseFindPackageBySerialNumber"
                 }
               }
             }
@@ -543,11 +624,16 @@
         }
       }
     },
-
     "/package/{id}": {
       "put": {
-        "tags": ["packages"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "packages"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Editar embalagem",
         "description": "Recebe o id de uma embalagem, os dados da requisição, valida os dados e atualiza. Obs.: Status tem 4 níveis diferentes, sendo eles: 0 -> disponível, 1 -> Em uso, 2 -> No cliente, 3 -> Em manutenção",
         "parameters": [
@@ -598,8 +684,14 @@
     },
     "/cpc/{FK_costumer}": {
       "get": {
-        "tags": ["cpc (Customer Preference Control)"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "cpc (Customer Preference Control)"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Buscar cpc",
         "description": "Recebe o id do cpc, verifica se existe no banco de dados e retorna cpc",
         "parameters": [
@@ -623,10 +715,16 @@
         }
       }
     },
-    "/cpc/{id}":{
+    "/cpc/{id}": {
       "delete": {
-        "tags": ["cpc (Customer Preference Control)"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "cpc (Customer Preference Control)"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Editar cpc",
         "description": "Recebe o id de um cpc, verifica se existe no banco e deleta o cpc",
         "parameters": [
@@ -655,8 +753,14 @@
     },
     "/cpc": {
       "get": {
-        "tags": ["cpc (Customer Preference Control)"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "cpc (Customer Preference Control)"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Listar controle de prefêrencia de clientes",
         "description": "Lista de prefêrencia de modelos de todos os clientes",
         "responses": {
@@ -672,8 +776,14 @@
         }
       },
       "post": {
-        "tags": ["cpc (Customer Preference Control)"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "cpc (Customer Preference Control)"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Criar cpc",
         "description": "Recebe o id de um cliente e o id de um modelo pela requisição, valida os dados, e registra a preferência no banco",
         "requestBody": {
@@ -711,8 +821,14 @@
     },
     "/provider": {
       "get": {
-        "tags": ["providers"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "providers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Lista fornecedores",
         "description": "Lista todas as embalagens cadastradas no banco de dados.",
         "parameters": [
@@ -727,15 +843,15 @@
             "in": "query",
             "description": "quantidade de resultados a serem pulados",
             "default": 0
-          } 
+          }
         ],
         "responses": {
           "200": {
             "description": "Sucesso. Retorna a lista de todos os fornecedores",
             "content": {
               "application/json": {
-                "schema":{
-                  "$ref":"#components/schemas/ResponseListProviders"
+                "schema": {
+                  "$ref": "#components/schemas/ResponseListProviders"
                 }
               }
             }
@@ -752,8 +868,14 @@
         }
       },
       "post": {
-        "tags": ["providers"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "providers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Criar fornecedor",
         "description": "Recebe nome e local e cria fornecedor no banco de dados.",
         "requestBody": {
@@ -781,10 +903,16 @@
         }
       }
     },
-    "/provider/{id}":{
+    "/provider/{id}": {
       "put": {
-        "tags": ["providers"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "providers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Editar fornecedor",
         "description": "Recebe id, nome ou valor do externo e atualiza no banco",
         "parameters": [
@@ -822,32 +950,241 @@
           }
         }
       }
+    },
+    "/sme": {
+      "get": {
+        "tags": [
+          "sme (Packing Movement Status)"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Listar sme",
+        "description": "Lista todos os registros de movimentação de embalagens",
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna lista com todas as movimentações de embalagens"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/sme/find/{id}": {
+      "get": {
+        "tags": [
+          "sme (Packing Movement Status)"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Listar sme",
+        "description": "Lista todos os registros de movimentação de embalagens",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id is required",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna lista com todas as movimentações de embalagens"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/sme/cnpj/{cnpj}": {
+      "get": {
+        "tags": [
+          "sme (Packing Movement Status)"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Listar sme",
+        "description": "Lista todos os registros de movimentação de embalagens",
+        "parameters": [
+          {
+            "name": "cnpj",
+            "in": "path",
+            "description": "cnpj",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna lista com todas as movimentações de embalagens"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/sme/serial/{serial_number}": {
+      "get": {
+        "tags": [
+          "sme (Packing Movement Status)"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Listar sme",
+        "description": "Lista todos os registros de movimentação de embalagens",
+        "parameters": [
+          {
+            "name": "serial_number",
+            "in": "path",
+            "description": "serial_number",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna lista com todas as movimentações de embalagens"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
+    },
+    "/sme/relatory": {
+      "get": {
+        "tags": [
+          "sme (Packing Movement Status)"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Gerar relatório de sme",
+        "description": "Recebe uma data inicial e uma data final por query params e retorna os registros de sme entres essas datas",
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "description": "quantidade de resultados a serem retornados"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "quantidade de resultados a serem pulados"
+          }
+       
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example":{
+                  "inicial": "2023-12-01",
+                  "final": "2023-12-01"
+   
+                },
+                "properties": {
+                  "inicial": {
+                    "type": "Date"
+                  },
+                  "final": {
+                    "type": "Date"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "response": {
+          "200": {
+            "description": "Sucesso: Retorna uma lista com as movimentações entre as datas"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Falha: Rota finalizada"
+          }
+        }
+      }
     }
   },
- 
   "components": {
     "schemas": {
       "RequestCreateUser": {
         "type": "object",
         "properties": {
-          "nome": { "type": "string" },
-          "matricula": { "type": "string" },
-          "email": { "type": "string" },
-          "password": { "type": "string" },
-          "admin": { "type": "boolean" },
-          "mnt": { "type": "boolean" }
+          "nome": {
+            "type": "string"
+          },
+          "matricula": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "admin": {
+            "type": "boolean"
+          },
+          "mnt": {
+            "type": "boolean"
+          }
         }
       },
       "RequestEditUser": {
         "type": "object",
         "properties": {
-          "nome": { "type": "string" },
-          "matricula": { "type": "string" },
-          "email": { "type": "string" },
-          "password": { "type": "string" },
-          "admin": { "type": "boolean" },
-          "mnt": { "type": "boolean" },
-          "ativo": { "type": "boolean" }
+          "nome": {
+            "type": "string"
+          },
+          "matricula": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "admin": {
+            "type": "boolean"
+          },
+          "mnt": {
+            "type": "boolean"
+          },
+          "ativo": {
+            "type": "boolean"
+          }
         }
       },
       "RequestSessionUser": {
@@ -869,8 +1206,13 @@
             "format": "binary",
             "description": "Selecionar imagem do cliente"
           },
-          "cnpj": { "type": "string", "description": "Necessário cnpj válido" },
-          "razao_social": { "type": "string" }
+          "cnpj": {
+            "type": "string",
+            "description": "Necessário cnpj válido"
+          },
+          "razao_social": {
+            "type": "string"
+          }
         }
       },
       "RequestEditCustomer": {
@@ -885,7 +1227,9 @@
             "type": "string",
             "description": "Necessário cnpj válido"
           },
-          "razao_social": { "type": "string" }
+          "razao_social": {
+            "type": "string"
+          }
         }
       },
       "RequestCreateModel": {
@@ -931,10 +1275,29 @@
       "RequestEditPackage": {
         "type": "object",
         "properties": {
-          "FK_destino": { "type": "string", "description": "id do cliente"},
-          "FK_modelo": { "type": "string", "description": "id do modelo" },
-          "origem": { "type": "string", "description": "nome da unidade" },
-          "status": { "type": "number", "description": "status da embalagem", "enum": [0,1,2,3], "example": 3}
+          "FK_destino": {
+            "type": "string",
+            "description": "id do cliente"
+          },
+          "FK_modelo": {
+            "type": "string",
+            "description": "id do modelo"
+          },
+          "origem": {
+            "type": "string",
+            "description": "nome da unidade"
+          },
+          "status": {
+            "type": "number",
+            "description": "status da embalagem",
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "example": 3
+          }
         }
       },
       "RequestCreateProvider": {
@@ -984,11 +1347,21 @@
       "RequestCreateSme": {
         "type": "object",
         "propertieis": {
-          "id_customer": { "type": "string" },
-          "id_package": { "type": "string" },
-          "status": { "type": "number" },
-          "matricula": { "type": "string" },
-          "username": { "type": "string" }
+          "id_customer": {
+            "type": "string"
+          },
+          "id_package": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "matricula": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
         }
       },
       "RequestCreateSmm": {
@@ -1033,33 +1406,60 @@
         }
       },
       "ResponseFindPackageBySerialNumber": {
-        "type":"object",
+        "type": "object",
         "properties": {
-          "id": {"type": "string"},
-          "serial_number": {"type":"string"},
-          "origem": {"type": "string"},
-          "FK_destino": {"type": "string"},
-          "FK_modelo": {"type": "string"},
-          "status": {"type": "number"},
-          "createdAt": {"type":"string"},
-          "updatedAt": {"type": "string"},
-          "models": {"type": "object", 
-          "properties": {
-            "descricao": {
-              "type": "string"
+          "id": {
+            "type": "string"
+          },
+          "serial_number": {
+            "type": "string"
+          },
+          "origem": {
+            "type": "string"
+          },
+          "FK_destino": {
+            "type": "string"
+          },
+          "FK_modelo": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "models": {
+            "type": "object",
+            "properties": {
+              "descricao": {
+                "type": "string"
+              }
             }
-          }}
+          }
         }
       },
       "ResponseListProviders": {
-        "type":"object",
+        "type": "object",
         "properties": {
-          "id": {"type": "string"},
-          "nome": {"type": "string"},
-          "externo": {"type": "boolean"},
-          "createdAt": {"type": "string"},
-          "updatedAt": {"type": "string"}
-
+          "id": {
+            "type": "string"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "externo": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
         }
       }
     },

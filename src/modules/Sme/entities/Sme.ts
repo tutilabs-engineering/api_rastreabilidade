@@ -10,5 +10,5 @@ export interface Sme {
     modelo: string
     username: string
     matricula: string
-    data: string
+    data?: Date
 }

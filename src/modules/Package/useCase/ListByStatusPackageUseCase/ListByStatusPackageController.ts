@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 import { container } from "tsyringe"
-import { ListByStatusPackageServices } from "../../backup/services/Package/ListByStatusPackageServices"
 import { ListByStatusPackageUseCase } from "./ListByStatusPackageUseCase"
 
 class ListByStatusPackageController{

@@ -11,7 +11,7 @@ class ListCustomerController {
         const listCustomerUseCase = container.resolve(ListCustomerUseCase)
         
         return res.status(200).json({data: await listCustomerUseCase.execute(
-            {skip:Number(skip), status: Number(status) ,take: Number(status)})})
+            {skip:Number(skip), status: Number(status) ,take: Number(take)})})
 
     }
 
