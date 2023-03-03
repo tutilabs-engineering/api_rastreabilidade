@@ -12,8 +12,13 @@ class ListByStatusAndProviderUseCase{
         private packageRepository: IPackageRepository
     ){}
 
-    async execute({limit, take, status}: FiltersPackageDTO): Promise<Package[]> {
+    async execute({limit, take, status}: FiltersPackageDTO): Promise<any> {
+        const data = await this.packageRepository.listByStatusAndProvider({status: 3})
 
+        return JSON.parse(JSON.stringify(
+          data,
+          (key, value) => (typeof value === 'bigint' ? Number(value) : value) //serialize bigInt
+        ))
     }
 
 }
