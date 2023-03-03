@@ -10,7 +10,7 @@ interface IQuery {
 class ListSmmRelatoryController {
   async handle(req: Request, res: Response) {
 
-    const {dataInicial , dataFinal } = req.query as unknown as IQuery
+    const {dataInicial , dataFinal } = req.query as unknown as IQuery   
 
     const listSmmRelatoryUseCase = container.resolve(ListSmmRelatoryUseCase)
 

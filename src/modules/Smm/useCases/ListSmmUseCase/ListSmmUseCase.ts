@@ -12,7 +12,7 @@ class ListSmmUseCase {
 
     }
 
-    async execute({skip, take, status }: FiltersSmmDTO){
+    async execute({skip, take, status }: FiltersSmmDTO, modeloDaEmbalagem: string){
 
     let statusEmb = "Interno"
 
@@ -23,7 +23,8 @@ class ListSmmUseCase {
         skip,
         take,
     },
-    statusEmb
+    statusEmb,
+    modeloDaEmbalagem
     )
 
     return data

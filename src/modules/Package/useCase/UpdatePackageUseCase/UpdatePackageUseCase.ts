@@ -23,8 +23,13 @@ class UpdatePackageUseCase {
         dayjs.extend(utc)
 
         const embalagem = this.packageRepository.findById({id})
+
         if(!embalagem){
           throw new AppError(404,"Embalagem não existe no sistema.")
+        }
+
+        if(!origem){
+          throw new AppError(404,"Origem é obrigatorio.")
         }
 
         if(FK_destino){
@@ -33,7 +38,6 @@ class UpdatePackageUseCase {
               throw new AppError(404,"Cliente não encontrado.")
           }
         }
-        
         
         if(FK_modelo){
           const id_modelo = await this.modelRepository.findById(FK_modelo)

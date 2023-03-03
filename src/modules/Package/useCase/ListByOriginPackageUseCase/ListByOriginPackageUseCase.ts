@@ -1,4 +1,7 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../config/AppError";
+import { IModelRepository } from "../../../Model/repositories/IModelRepository";
+import { CountByOriginAndModelPackageDTO } from "../../dtos/CountByOriginAndModelPackageDTO";
 import { FiltersPackageDTO } from "../../dtos/FiltersPackageDTO";
 import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../../repositories/IPackageRepository";
@@ -13,10 +16,42 @@ class ListByOriginPackageUseCase{
     constructor(
         @inject
         ("PackageRepository")
-        private packageRepository: IPackageRepository
+        private packageRepository: IPackageRepository,
+        @inject
+        ("ModelRepository")
+        private modelRepository: IModelRepository
     ){}
 
-    async execute({ origin }:IRequest,{limit, take, status}: FiltersPackageDTO): Promise<Package[]> {
+    async execute({ origin }:IRequest,{skip, take, status}: FiltersPackageDTO): Promise<{all: number, data: CountByOriginAndModelPackageDTO[] }> {
+
+        if(origin != "CD" && origin != "Jaguarão" && origin != "Filial" && origin != "Matriz"){
+            throw new AppError(404, "Origem não encontrada")
+        }
+
+
+        const data = await  this.packageRepository.listByOrigin({skip, take, status}, origin)
+
+        await Promise.all(
+            data.map(async (item)=>{
+               const modelo = await this.modelRepository.findById(item.FK_modelo)
+               item['description_model'] = modelo.descricao
+            })
+        )
+        let all = 0
+        await Promise.all(
+            data.map(async (item)=>{
+                all = item._count + all
+        })
+
+        )
+       
+        const result = {
+            all,
+            data
+        }
+
+
+        return result
 
     }
 
