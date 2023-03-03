@@ -4,9 +4,11 @@ import { FindBySerialNumberController } from "../../modules/Package/useCase/Find
 import { ListByCustomerController } from "../../modules/Package/useCase/ListByCustomerUseCase/ListByCustomerController";
 import { ListByModelPackageController } from "../../modules/Package/useCase/ListByModelPackageUseCase/ListByModelPackageController";
 import { ListByOriginPackageController } from "../../modules/Package/useCase/ListByOriginPackageUseCase/ListByOriginPackageController";
+import { ListByStatusAndProviderController } from "../../modules/Package/useCase/ListByStatusAndProviderUseCase/ListByStatusAndProviderController";
 import { ListPackageByCustomerController } from "../../modules/Package/useCase/ListPackageByCustomer/ListPackageByCustomerController";
 import { ListPackageByCustomerUseCase } from "../../modules/Package/useCase/ListPackageByCustomer/ListPackageByCustomerUseCase";
 import { ListPackageByModelAndOriginController } from "../../modules/Package/useCase/ListPackageByModelAndOriginUseCase/ListPackageByModelAndOriginController";
+import { ListPackageStoppedByCustomerController } from "../../modules/Package/useCase/ListPackageStoppedByCustomerUseCase/ListPackageStoppedByCustomerController";
 import { UpdatePackageController } from "../../modules/Package/useCase/UpdatePackageUseCase/UpdatePackageController";
 
 
@@ -19,7 +21,8 @@ const listByOriginPackageController = new ListByOriginPackageController()
 const listPackageByModelAndOriginController = new ListPackageByModelAndOriginController()
 const listByCustomerController = new ListByCustomerController()
 const listPackageByCustomerController = new ListPackageByCustomerController()
-
+const listPackageStoppedByCustomerController = new ListPackageStoppedByCustomerController()
+const listByStatusAndProviderController = new ListByStatusAndProviderController()
 
 packageRouter.get("/packageByCustomerWithModel",listByCustomerController.handle)
 packageRouter.get("/packagesByCustomer/:FK_destino", listPackageByCustomerController.handle)
@@ -29,6 +32,10 @@ packageRouter.post("/",createPackageController.handle)
 packageRouter.get("/model/:id", listModelByPackageController.handle); //Listar todos os modelos
 packageRouter.get("/origin/:origin", listByOriginPackageController.handle); //Listar todos os modelos
 packageRouter.get("/packagesByModelOriginStatus/:FK_modelo", listPackageByModelAndOriginController.handle); //Listar todos os modelos
+packageRouter.get("/stopped",listPackageStoppedByCustomerController.handle)
+packageRouter.get("/mnt",listByStatusAndProviderController.handle)
+
+
 
 
 export { packageRouter }

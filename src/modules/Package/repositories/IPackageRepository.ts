@@ -14,8 +14,11 @@ interface IPackageRepository {
     listByDestino(data: FiltersPackageDTO): Promise<Package[]>
     countByModel(status: number, FK_modelo: string): Promise<number>
     listByOrigin(data: FiltersPackageDTO, origin: String): Promise<CountByOriginAndModelPackageDTO[]>
-    listByStatusAndProvider(data: FiltersPackageDTO): Promise<Package[]>
+    // listByStatusAndProvider(data: FiltersPackageDTO): Promise<Package[]>
     listPackage(data: FiltersPackageDTO): Promise<Package[]>
+    // listByOrigin(data: FiltersPackageDTO): Promise<Package[]>
+    listByStatusAndProvider(data: FiltersPackageDTO): Promise<any>
+    listPackageStoppedByCustomer(): Promise<any>
     listByStatusAndModel(status: number, FK_modelo: string): Promise<Package[]>
     listByCustomerWithModel(data: FiltersPackageDTO): Promise<any>
     listByModelAndStatusWitchOrigin(origin: string,data: FiltersPackageDTO): Promise<{serial_number: string}[]>

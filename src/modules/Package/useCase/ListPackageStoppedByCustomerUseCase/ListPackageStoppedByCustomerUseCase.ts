@@ -3,24 +3,23 @@ import { FiltersPackageDTO } from "../../dtos/FiltersPackageDTO";
 import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../../repositories/IPackageRepository";
 
-
 @injectable()
-class ListByStatusAndProviderUseCase{
-    constructor(
-        @inject
-        ("PackageRepository")
-        private packageRepository: IPackageRepository
-    ){}
+class ListPackageStoppedByCustomerUseCase{
 
-    async execute({limit, take, status}: FiltersPackageDTO): Promise<any> {
-        const data = await this.packageRepository.listByStatusAndProvider({status: 3})
+    constructor(
+        @inject("PackageRepository")
+        private packageRepository: IPackageRepository
+      ) { }
+    
+      async execute({ limit, take, status }: FiltersPackageDTO): Promise<any> {
+        const data = await this.packageRepository.listPackageStoppedByCustomer()
 
         return JSON.parse(JSON.stringify(
           data,
           (key, value) => (typeof value === 'bigint' ? Number(value) : value) //serialize bigInt
         ))
-    }
 
+      }
 }
 
-export { ListByStatusAndProviderUseCase }
+export {ListPackageStoppedByCustomerUseCase}

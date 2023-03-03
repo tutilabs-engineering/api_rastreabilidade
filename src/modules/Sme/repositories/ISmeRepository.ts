@@ -9,7 +9,7 @@ export interface ISmeRepository{
     list(data: FiltersSmeDTO): Promise<Sme[]>
     listByPackage(serial_number: string, data: FiltersSmeDTO) : Promise<Sme[]>
     findByOne(id: string): Promise<Sme>
-    listByDate(dataInicial: Date, dataFinal: Date,  data: FiltersSmeDTO): Promise<Sme[]>
+    listByDate(dataInicial: string, dataFinal: string,  data: FiltersSmeDTO): Promise<any>
 
 
 
