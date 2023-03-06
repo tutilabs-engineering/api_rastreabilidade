@@ -787,7 +787,7 @@
         }
       }
     },
-    "package/mnt":{
+    "/package/mnt":{
       "get": {
         "tags": ["packages"],
         "security": [{ "bearerAuth": [] }],
