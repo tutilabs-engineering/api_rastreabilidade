@@ -1,5 +1,5 @@
 interface UpdatePackageDTO {
-        origem?: string
+        origem: string
         FK_modelo?: string,
         FK_destino?: string
         status?: number

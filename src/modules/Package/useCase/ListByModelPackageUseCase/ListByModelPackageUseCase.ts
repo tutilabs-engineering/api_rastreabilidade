@@ -20,7 +20,7 @@ class ListByModelPackageUseCase {
         private smmRepository: ISmmRepository
     ){}
 
-    async execute({model}:IRequest,{limit, take, status}: FiltersPackageDTO): Promise<any> {        
+    async execute({model}:IRequest,{skip, take, status}: FiltersPackageDTO): Promise<any> {        
         const Disponivel = await this.packageRepository.countByModel(0,model)
         const EmUso = await this.packageRepository.countByModel(1,model)
         const Externas = await this.packageRepository.countByModel(2,model)

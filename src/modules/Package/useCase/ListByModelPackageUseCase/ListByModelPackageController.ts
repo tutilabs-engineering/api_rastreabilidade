@@ -7,10 +7,10 @@ class ListByModelPackageController {
     async handle(req: Request, res: Response){
 
         const { id } = req.params
-        const { limit = 0, take = 10 } = req.query
+        const { skip = 0, take = 10 } = req.query
 
         const listByModelPackageUseCase = container.resolve(ListByModelPackageUseCase)
-        const embalagens = await listByModelPackageUseCase.execute({model: id}, {limit: Number(limit), take:  Number(take)})
+        const embalagens = await listByModelPackageUseCase.execute({model: id}, {skip: Number(skip), take:  Number(take)})
 
         return res.status(200).json(embalagens)
 

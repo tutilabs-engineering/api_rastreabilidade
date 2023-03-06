@@ -6,8 +6,9 @@ interface ISmmRepository {
         
 
     create(): Promise<void>
-    list(data: FiltersSmmDTO, status: string): Promise<Smm[]>
+    list(data: FiltersSmmDTO, status: string,modeloDaEmbalagem: string): Promise<Smm[]>
     listRelatory(dataInicial: Date, dataFinal: Date): Promise<Smm[]>
+    listSmmByModel(data: FiltersSmmDTO, status: string): Promise<{_count: number,modeloDaEmbalagem:string }[]>
     findByMovimentStatus(statusDeMovimentacao: boolean):Promise<Smm[]>
 }
 
