@@ -83,7 +83,8 @@ class PackageRepositoryInPrisma implements IPackageRepository {
             select: {
                 customers: {
                     select: {
-                        razao_social: true
+                        razao_social: true,
+                        img_path: true
                     }
                 }
             },
