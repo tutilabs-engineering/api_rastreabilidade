@@ -29,8 +29,16 @@ const listByStatusAndProviderController = new ListByStatusAndProviderController(
 // SME
 const createSmeController = new CreateSmeController()
 
+packageRouter.get("/packageByCustomerWithModel",listByCustomerController.handle)
 packageRouter.get("/stopped",listPackageStoppedByCustomerController.handle)
 packageRouter.get("/mnt",listByStatusAndProviderController.handle)
+packageRouter.get("/packagesByCustomer/:FK_destino", listPackageByCustomerController.handle)
+packageRouter.get("/:serial_number", findBySerialNumberController.handle)
+packageRouter.put("/:id",updatePackageController.handle)
+packageRouter.post("/",createPackageController.handle)
+packageRouter.get("/model/:id", listModelByPackageController.handle); //Listar todos os modelos
+packageRouter.get("/origin/:origin", listByOriginPackageController.handle); //Listar todos os modelos
+packageRouter.get("/packagesByModelOriginStatus/:FK_modelo", listPackageByModelAndOriginController.handle); //Listar todos os modelos
 
 packageRouter.get("/packageByCustomerWithModel",listByCustomerController.handle)
 packageRouter.get("/packagesByCustomer/:FK_destino", listPackageByCustomerController.handle)

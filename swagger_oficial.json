@@ -771,7 +771,7 @@
         }
       }
     },
-    "package/model/:id":{
+    "/package/model/:id":{
       "get": {
         "tags": ["packages"],
         "security": [{ "bearerAuth": [] }],
@@ -805,7 +805,7 @@
         }
       }
     },
-    "package/stopped":{
+    "/package/stopped":{
       "get": {
         "tags": ["packages"],
         "security": [{ "bearerAuth": [] }],
@@ -831,7 +831,7 @@
         }
       }
     },
-    "package/mnt":{
+    "/package/mnt":{
       "get": {
         "tags": ["packages"],
         "security": [{ "bearerAuth": [] }],
