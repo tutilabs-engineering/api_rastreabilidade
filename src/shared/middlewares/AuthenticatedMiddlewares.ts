@@ -25,14 +25,13 @@ async function AuthenticatedMiddleware(req: Request, res: Response, next: NextFu
     try {
 
         // Verifica se o token é válido
-        const { sub } = verify(token, "secret") as iPayload
-
-        // Iniciando repositorio de usuário
+        const { sub } = verify(token, process.env.SECRET) as iPayload
+             // Iniciando repositorio de usuário
         const userRepository = new UserRepositoryInPrisma()
 
         // Puxando usuário para verificação
         const {ativo} = await userRepository.findById(sub) as iUserActive
-
+        
         // Verificando se o usuário está ativo
         if(!ativo){return res.status(401).end()}
 

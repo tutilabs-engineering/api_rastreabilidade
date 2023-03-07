@@ -8,6 +8,6 @@ export type CreateSmeAllLogDTO = {
   status: string
   modelo: string
   username: string
-  matricula: string
-  data: Date
+  matricula?: string
+  data?: Date
   }

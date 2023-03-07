@@ -1,10 +1,10 @@
-import { Request, Response } from "express"
+import { Request, Response, NextFunction } from "express"
 import { container } from "tsyringe"
 import { UpdatePackageUseCase } from "./UpdatePackageUseCase"
 
 class UpdatePackageController {
 
-    async handle(req: Request, res: Response){
+    async handle(req: Request, res: Response,next:NextFunction){
         
         // Buscando id nos parametros
         const id = req.params.id
@@ -12,11 +12,16 @@ class UpdatePackageController {
         // Buscando dados da requisição
         const {FK_destino, origem, FK_modelo, status } = req.body
      
-         
+       console.log({id:req.userId});
+       
         const updatePackageUseCase = container.resolve(UpdatePackageUseCase)
-        await updatePackageUseCase.execute(id, {FK_destino, origem, FK_modelo, status })
+        const packageReturn = await updatePackageUseCase.execute(id, {FK_destino, origem, FK_modelo, status })
 
-        return res.status(200).json({message: "Embalagem atualizada com sucesso!"})
+        req.body['packageId'] = packageReturn.id
+
+
+        next()
+        // return res.status(200).json({message: "Embalagem atualizada com sucesso!"})
     }
 
 }

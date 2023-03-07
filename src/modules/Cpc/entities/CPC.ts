@@ -1,3 +1,4 @@
+import { Customer } from "../../Customer/entities/Customer";
 import { Model } from "../../Model/entities/Model";
 
 interface CPC {
@@ -6,7 +7,7 @@ interface CPC {
     FK_model: string,
     createdAt?: Date,
     updatedAt?: Date,
-    customers?: any,
+    customers?: Customer,
     models?: Model,
 }
 

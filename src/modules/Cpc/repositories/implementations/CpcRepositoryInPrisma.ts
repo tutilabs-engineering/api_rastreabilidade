@@ -69,8 +69,8 @@ class CpcRepositoryInPrisma implements ICpcRepository {
             id: true,
             FK_customer: true,
             FK_model: true,
-            createdAt: true,
-            updatedAt: true,
+            // createdAt: true,
+            // updatedAt: true,
             customers: true,
             models: true,
             },
@@ -86,14 +86,31 @@ class CpcRepositoryInPrisma implements ICpcRepository {
     }
     async list({skip,take}: FiltersCPCDTO): Promise<CPC[]> {
         const data: CPC[] = await prisma.cpc.findMany({
+            take,
+            skip,
             select:{
             id: true,
             FK_customer: true,
             FK_model: true,
-            createdAt: true,
-            updatedAt: true,
-            customers: true,
-            models: true,
+            // createdAt: true,
+            // updatedAt: true,
+            customers: {
+                select:{
+                    // id: true,
+                    // cnpj: true,
+                    razao_social: true,
+                    img_path: true,
+                }
+            },
+            models: {
+                select:{
+                    // id: true,
+                    // cnpj: true,
+                    descricao: true,
+                    img_path: true,
+                }
+            },
+            
             }
         }).catch((error)=>{
             throw new Error(error);
