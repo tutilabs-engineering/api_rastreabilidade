@@ -1,5 +1,5 @@
 export interface Model {
-    id: string
+    id?: string
     descricao: string
     img_path: string
     createdAt?: Date
