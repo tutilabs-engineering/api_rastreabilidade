@@ -5,6 +5,7 @@ import { AppError } from "../../../../config/AppError";
 import { ICustomerRepository } from "../../../Customer/repositories/ICustomerRepository";
 import { IModelRepository } from "../../../Model/repositories/IModelRepository";
 import { UpdatePackageDTO } from "../../dtos/UpdatePackageDTO ";
+import { Package } from "../../entities/Package";
 import { IPackageRepository } from "../../repositories/IPackageRepository";
 
 @injectable()
@@ -19,7 +20,7 @@ class UpdatePackageUseCase {
         private modelRepository: IModelRepository
       ) { }
     
-      async execute(id: string, { FK_destino, origem, FK_modelo, status }: UpdatePackageDTO): Promise<void> {
+      async execute(id: string, { FK_destino, origem, FK_modelo, status }: UpdatePackageDTO): Promise<Package> {
         dayjs.extend(utc)
 
         const embalagem = this.packageRepository.findById({id})
@@ -54,7 +55,9 @@ class UpdatePackageUseCase {
 
         const updatedAt = new Date(dayjs().utc(true).toISOString());
         
-        await this.packageRepository.updatePackage(id,{FK_destino, origem, FK_modelo, status, updatedAt})
+        const data = await this.packageRepository.updatePackage(id,{FK_destino, origem, FK_modelo, status, updatedAt})
+
+        return data
       }
 }
 

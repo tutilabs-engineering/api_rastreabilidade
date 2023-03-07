@@ -40,14 +40,15 @@ class ListByCustomerUseCase {
                 item["customer"] = customer.razao_social
                 item["img_path"] = customer.img_path
                 const models = await this.packageRepository.listByModelByCustomer(item.FK_destino)
-                console.log({models});
-                
+          
+                await Promise.all(
                 models.map(async (item2)=>{
                     const model = await this.modelRepository.findById(item2.FK_modelo)
+                    
                     item2["description"] = model.descricao
                     item2["img_path"] = model.img_path
 
-                })
+                }))
 
                 item["models"] = models
                 all = item._count + all

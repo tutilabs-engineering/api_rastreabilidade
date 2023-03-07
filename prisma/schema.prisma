@@ -72,7 +72,7 @@ model sme {
   modelo        String  
   username      String  
   matricula     String  
-  data          DateTime  
+  data          DateTime ? 
 }
 
 model smm {

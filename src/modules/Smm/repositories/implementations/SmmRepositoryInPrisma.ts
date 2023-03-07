@@ -35,6 +35,7 @@ export class SmmRepositoryInPrisma implements ISmmRepository {
             },
             where:{
                 statusDoFornecedor: String(status),
+                statusDeMovimentacao: false,
                 modeloDaEmbalagem,
             },
             take,                   

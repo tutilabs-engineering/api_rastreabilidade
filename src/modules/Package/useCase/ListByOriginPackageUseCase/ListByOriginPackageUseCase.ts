@@ -22,10 +22,16 @@ class ListByOriginPackageUseCase{
         private modelRepository: IModelRepository
     ){}
 
-    async execute({ origin }:IRequest,{skip, take, status}: FiltersPackageDTO): Promise<{all: number, data: CountByOriginAndModelPackageDTO[] }> {
+    async execute({ origin }:IRequest,{skip, take, status = undefined}: FiltersPackageDTO): Promise<{all: number, data: CountByOriginAndModelPackageDTO[] }> {
 
-        if(origin != "CD" && origin != "Jaguarão" && origin != "Filial" && origin != "Matriz"){
+        if(origin != "CD" && origin != "Jaguarão" && origin != "Filial" && origin != "Matriz" && origin != "Geral"){
             throw new AppError(404, "Origem não encontrada")
+        }
+
+
+        if(origin == "Geral"){
+            origin = undefined
+            status = undefined
         }
 
 
@@ -35,6 +41,7 @@ class ListByOriginPackageUseCase{
             data.map(async (item)=>{
                const modelo = await this.modelRepository.findById(item.FK_modelo)
                item['description_model'] = modelo.descricao
+               item['img_path'] = modelo.img_path
             })
         )
         let all = 0

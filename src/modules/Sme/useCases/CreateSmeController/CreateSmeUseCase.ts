@@ -41,7 +41,7 @@ class CreateSmeUseCase {
               ativo: true,
               destino: String(_customer.razao_social),
               razao_social:String(_customer.razao_social),
-              data: new Date(),
+            //   data: new Date(),
               modelo: String(_model.descricao),
               serial_number:String(_package.serial_number),
               status: String(_package.status)

@@ -167,6 +167,50 @@
         }
       }
     },
+    "/user/session": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Autenticação de usuário",
+        "description": "Recebe um email e uma senha e retorna o token do usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestSessionUser"
+              },
+              "examples": {
+                "UserAdmin": {
+                  "value": {
+                    "email": "admin@tuti.com",
+                    "password": "tuti@123"
+                  }
+                },
+                "UserMnt": {
+                  "value": {
+                    "email": "mnt@tuti.com",
+                    "password": "tuti@123"
+                  }
+                },
+                "UserStandard": {
+                  "value": {
+                    "email": "standard@tuti.com",
+                    "password": "tuti@123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso: Retorna o token e informações do usuário logado"
+          },
+          "400": {
+            "description": "Falha: Retorna um erro informando que o usuário não existe no sistema"
+          }
+        }
+      }
+    },
     "/user": {
       "get": {
         "tags": [

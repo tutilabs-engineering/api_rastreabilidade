@@ -26,7 +26,7 @@ interface IPackageRepository {
     listPackageByCustomer({skip, take }:FiltersPackageDTO,FK_destino: string): Promise<{serial_number:string}[]>
     listClientByModel(FK_modelo: string):Promise<ListClientByModelDTO[]>
     updateOrigin(data: UpdatePackageDTO): Promise<void>
-    updatePackage(id: string, data: UpdatePackageDTO): Promise<void>
+    updatePackage(id: string, data: UpdatePackageDTO): Promise<Package>
 
 }
 

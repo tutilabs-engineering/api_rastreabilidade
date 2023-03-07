@@ -37,7 +37,7 @@ class SmeRepositoryInPrisma implements ISmeRepository {
         modelo,
         username,
         matricula,
-        data
+        // data
        }: CreateSmeAllLogDTO): Promise<void> {
         await prisma.sme.create({
             data: {
@@ -51,7 +51,7 @@ class SmeRepositoryInPrisma implements ISmeRepository {
                 modelo,
                 username,
                 matricula,
-                data,
+                data : null
             }
         })
     }

@@ -13,12 +13,15 @@ class ListPackageStoppedByCustomerUseCase{
     
       async execute({ limit, take, status }: FiltersPackageDTO): Promise<any> {
         const data = await this.packageRepository.listPackageStoppedByCustomer()
-
-        return JSON.parse(JSON.stringify(
+        let dataRe = []
+        await Promise.all(
+         dataRe = JSON.parse(JSON.stringify(
           data,
           (key, value) => (typeof value === 'bigint' ? Number(value) : value) //serialize bigInt
         ))
+        )
 
+        return dataRe
       }
 }
 

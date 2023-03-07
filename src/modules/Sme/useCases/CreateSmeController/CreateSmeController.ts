@@ -1,41 +1,25 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import { container } from "tsyringe";
+import { CreateSmeUseCase } from "./CreateSmeUseCase";
 
 class CreateSmeController {
-  async handle(req: Request, res: Response) {
+  async handle(req: Request, res: Response,next:NextFunction) {
     // recebendo dados da requisição
-    const { id_customer, id_package, status, username, matricula, origem } =
-      req.body;
+    const { userId } = req 
+    const { packageId } = req.body
 
     
 
-    const result = await createSmeServices.create({
-      id_customer,
-      id_package,
-      status,
-      username,
-      matricula,
-      origem,
-    });
+    
+    const createSmeUseCase = container.resolve(CreateSmeUseCase)
+    const result = await createSmeUseCase.execute({
+      id_user:String(userId),
+      id_package: String(packageId)   
+     });
 
-    const sme = {
-      id: result.id,
-      // Usuario
-      nome_do_usuario: result.username,
-      matricula_do_usuario: result.matricula,
-      // Cliente que tá usando o carrinho
-      razao_social: result.razao_social,
-      cnpj: result.cnpj,
-      ativo: result.ativo,
-      // Embalagem
-      serial_number: result.serial_number,
-      origem: result.origem,
-      destino: result.destino,
-      modelo: result.modelo,
-      status: result.status,
-      data_hora: result.data,
-    };
-
-    return res.status(200).json(sme);
+  
+    next()
+    // return res.status(200).json();
   }
 }
 

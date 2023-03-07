@@ -42,7 +42,7 @@ class CreatePackageUseCase {
             throw new AppError(400, "Embalagem já existe no banco de dados.")
         }
 
-        if(!status){
+        if(status == undefined || status == null){
             throw new AppError(400, "Status nao informado.")
         }
 
@@ -56,7 +56,7 @@ class CreatePackageUseCase {
             throw new AppError(404,"Modelo não encontrado.")
         }
 
-        if(status > 3 || status < 0){
+        if(!(status >= 0 && status <= 3)){
             throw new AppError(400, "Status deve ser um número entre 0 e 3.")
         }  
 
