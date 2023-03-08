@@ -23,7 +23,7 @@ class UpdatePackageUseCase {
       async execute(id: string, { FK_destino, origem, FK_modelo, status }: UpdatePackageDTO): Promise<Package> {
         dayjs.extend(utc)
 
-        const embalagem = this.packageRepository.findById({id})
+        const embalagem = await this.packageRepository.findById({id})
 
         if(status){
           if(status > 3 || status < 0){
