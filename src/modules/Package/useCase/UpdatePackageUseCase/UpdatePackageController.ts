@@ -11,9 +11,8 @@ class UpdatePackageController {
           
         // Buscando dados da requisição
         const {FK_destino, origem, FK_modelo, status } = req.body
-     
-       console.log({id:req.userId});
-       
+    
+        
         const updatePackageUseCase = container.resolve(UpdatePackageUseCase)
         const packageReturn = await updatePackageUseCase.execute(id, {FK_destino, origem, FK_modelo, status })
 

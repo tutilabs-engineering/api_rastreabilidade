@@ -23,7 +23,7 @@ class UpdatePackageUseCase {
       async execute(id: string, { FK_destino, origem, FK_modelo, status }: UpdatePackageDTO): Promise<Package> {
         dayjs.extend(utc)
 
-        const embalagem = this.packageRepository.findById({id})
+        const embalagem = await this.packageRepository.findById({id})
 
         if(!embalagem){
           throw new AppError(404,"Embalagem não existe no sistema.")
