@@ -18,9 +18,12 @@ class PackageRepositoryInPrisma implements IPackageRepository {
         serial_number: string,
         models: {
             descricao: string
-        }
+        },
     }[]> {
         const data = await prisma.packages.findMany({
+            orderBy:{
+                updatedAt: "desc"
+            },
             select: {
                 serial_number: true,
                 updatedAt: true,
@@ -69,7 +72,7 @@ class PackageRepositoryInPrisma implements IPackageRepository {
         return dat2a
     }
     async listByModelAndStatusWitchOrigin(origin: string, { FK_modelo, skip, take, status }: FiltersPackageDTO): Promise<{ serial_number: string }[]> {
-
+       
         const data = await prisma.packages.findMany({
             select: {
                 serial_number: true,
@@ -139,7 +142,7 @@ class PackageRepositoryInPrisma implements IPackageRepository {
         const data = await prisma.packages.findUnique({
             where: {
                 serial_number,
-            },
+            },                  
             include: {
                 models: {
                     select: {

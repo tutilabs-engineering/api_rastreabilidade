@@ -16,6 +16,8 @@ class ListPackageByModelAndOriginUseCase{
 
         if(origin != "CD" && origin != "Jaguarão" && origin != "Filial" && origin != "Matriz"){
           throw new AppError(404, "Origem não encontrada")
+
+          
         }
 
         const data = await this.packageRepository.listByModelAndStatusWitchOrigin(origin, { skip, take, status,FK_modelo })

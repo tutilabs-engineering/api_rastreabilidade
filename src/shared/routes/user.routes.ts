@@ -5,6 +5,7 @@ import { ListUserController } from "../../modules/User/useCases/ListUserUseCase/
 import { CreateUserController } from "../../modules/User/useCases/CreateUserUseCase/CreateUserController";
 import { DeleteUserController } from "../../modules/User/useCases/DeleteUserUseCase/DeleteUserCotroller";
 import { AuthenticateUserController } from "../../modules/User/useCases/AuthenticateUserUseCase/AuthenticateUserController";
+import { VerifyAuthMiddlewares } from "../middlewares/VerifyAuthMiddlewares";
 
 const listUserController = new ListUserController()
 const findUserByIdController = new FindUserByIdController()
@@ -15,6 +16,7 @@ const authenticateUserController = new AuthenticateUserController()
 const userRouter = Router()
 
 
+userRouter.get("/verify", VerifyAuthMiddlewares)
 userRouter.post("/session", authenticateUserController.handle)
 userRouter.get("/", listUserController.handle)
 userRouter.post("/",createUserController.handle)

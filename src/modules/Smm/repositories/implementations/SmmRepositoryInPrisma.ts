@@ -4,22 +4,59 @@ import { Smm } from "../../entities/Smm";
 import { ISmmRepository } from "../ISmmRepository";
 
 export class SmmRepositoryInPrisma implements ISmmRepository {
-    async listSmmByModel({skip, take}: FiltersSmmDTO, status: string): Promise<{_count: number,modeloDaEmbalagem:string }[]> {
+    async update(serial_number: string): Promise<void> {
+        await prisma.smm.updateMany({
+            data: {
+                statusDeMovimentacao: false
+            },
+            where: {
+                serial_number,
+            }
+        })
+    }
+    async findBySerialNumber(serial_number: string): Promise<Smm> {
+        const data = await prisma.smm.findFirst({
+            select: {
+                id: true,
+                username: true,
+                matricula: true,
+                fornecedor: true,
+                statusDoFornecedor: true,
+                descricao: true,
+                serial_number: true,
+                statusDaEmbalagem: true,
+                modeloDaEmbalagem: true,
+                statusDeMovimentacao: true,
+            },
+            where: {
+                serial_number,
+                statusDeMovimentacao: true
+
+            },
+            orderBy: {
+                criadoEm: "desc"
+            }
+
+        })
+
+        return data
+    }
+    async listSmmByModel({ skip, take }: FiltersSmmDTO, status: string): Promise<{ _count: number, modeloDaEmbalagem: string }[]> {
         const data = await prisma.smm.groupBy({
-             by: ["modeloDaEmbalagem"],
-            where:{
+            by: ["modeloDaEmbalagem"],
+            where: {
                 statusDoFornecedor: String(status),
                 statusDeMovimentacao: false
             },
             _count: true
-            
+
         })
 
         return data
-    }     
-    async list({skip,take}: FiltersSmmDTO, status: string,modeloDaEmbalagem: string): Promise<Smm[]> {
+    }
+    async list({ skip, take }: FiltersSmmDTO, status: string, modeloDaEmbalagem: string): Promise<Smm[]> {
         const data = await prisma.smm.findMany({
-            select:{
+            select: {
                 id: true,
                 username: true,
                 matricula: true,
@@ -33,12 +70,12 @@ export class SmmRepositoryInPrisma implements ISmmRepository {
                 // criadoEm: true,
                 // concluidoEm: true,
             },
-            where:{
+            where: {
                 statusDoFornecedor: String(status),
                 statusDeMovimentacao: false,
                 modeloDaEmbalagem,
             },
-            take,                   
+            take,
             skip,
         })
 
@@ -47,7 +84,7 @@ export class SmmRepositoryInPrisma implements ISmmRepository {
 
     async listRelatory(dataInicial: Date, dataFinal: Date): Promise<Smm[]> {
         const data = await prisma.smm.findMany({
-            select:{
+            select: {
                 id: true,
                 username: true,
                 matricula: true,
@@ -59,7 +96,7 @@ export class SmmRepositoryInPrisma implements ISmmRepository {
                 modeloDaEmbalagem: true,
                 statusDeMovimentacao: true,
             },
-            where:{
+            where: {
                 criadoEm: {
                     gte: dataInicial,
                     lte: dataFinal
@@ -70,21 +107,21 @@ export class SmmRepositoryInPrisma implements ISmmRepository {
         return data
     }
 
-     
+
     async findByMovimentStatus(statusDeMovimentacao: boolean): Promise<Smm[]> {
         const data = await prisma.smm.findMany({
-            select:{
+            select: {
                 id: true,
                 username: true,
                 matricula: true,
-                fornecedor: true,   
+                fornecedor: true,
                 statusDoFornecedor: true,
                 descricao: true,
                 serial_number: true,
                 statusDaEmbalagem: true,
                 modeloDaEmbalagem: true,
                 statusDeMovimentacao: true,
-            },                      
+            },
             where: {
                 statusDeMovimentacao
             }
@@ -93,8 +130,29 @@ export class SmmRepositoryInPrisma implements ISmmRepository {
         return data
     }
 
-    create(): Promise<void> {       
-        throw new Error("Method not implemented.");
+    async create({ username,
+        matricula,
+        fornecedor,
+        statusDoFornecedor,
+        descricao,
+        serial_number,
+        statusDaEmbalagem,
+        modeloDaEmbalagem,
+        statusDeMovimentacao, }: Smm): Promise<void> {
+        await prisma.smm.create({
+            data: {
+                username,
+                matricula,
+                fornecedor,
+                statusDoFornecedor,
+                descricao,
+                serial_number,
+                statusDaEmbalagem,
+                modeloDaEmbalagem,
+                statusDeMovimentacao,
+            }
+
+        })
     }
 }
 

@@ -4,7 +4,7 @@ interface Customer {
     id?: String   
     cnpj?: String   
     razao_social:String    
-    img_path :String     
+    img_path?:String     
     ativo?: boolean   
     createdAt?: Date  
     updatedAt?: Date   

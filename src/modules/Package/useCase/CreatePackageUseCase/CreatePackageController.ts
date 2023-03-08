@@ -10,7 +10,7 @@ class CreatePackageController {
 
         const createPackageUseCase = container.resolve(CreatePackageUseCase)
 
-        await createPackageUseCase.execute({serial_number, origem, FK_destino, FK_modelo, status})
+        await createPackageUseCase.execute({serial_number, origem, FK_modelo, status})
 
         return res.status(201).json({message: "Embalagem criada!"})
         

@@ -70,10 +70,10 @@ class ModelRepositoryInPrisma implements IModelRepository {
             select: {
                 id: true,
                 descricao: true,
-                packages: true,
+                // packages: true,
                 img_path: true,
-                createdAt: true,
-                updatedAt: true,
+                // createdAt: true,
+                // updatedAt: true,
             },
             take,
             skip
