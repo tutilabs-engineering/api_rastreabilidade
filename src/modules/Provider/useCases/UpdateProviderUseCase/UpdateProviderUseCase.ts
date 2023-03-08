@@ -16,7 +16,6 @@ class UpdateProviderUseCase {
     async execute({id,nome, externo}: UpdateProviderDTO) {
 
         dayjs.extend(utc)
-        const createdAt = new Date(dayjs().utc(true).toISOString());
         const updatedAt = new Date(dayjs().utc(true).toISOString());
         
         const provider = await this.providerRepository.findById({id});
@@ -28,7 +27,7 @@ class UpdateProviderUseCase {
             nome = String(provider.nome)    
         }
         
-        await this.providerRepository.update({id,externo,nome,updatedAt,createdAt})
+        await this.providerRepository.update({id,externo,nome,updatedAt})
 
       }
 
