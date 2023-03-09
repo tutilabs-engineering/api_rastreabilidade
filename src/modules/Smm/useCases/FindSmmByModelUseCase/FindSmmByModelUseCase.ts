@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IModelRepository } from "../../../Model/repositories/IModelRepository";
 import { FiltersSmmDTO } from "../../dtos/FiltersSmmDTO";
-import { Smm } from "../../entities/Smm";
+import { Smm } from "../../entities/SmmEntitie";
 import { ISmmRepository } from "../../repositories/ISmmRepository";
 interface IRequest {
     serial_number: string 
