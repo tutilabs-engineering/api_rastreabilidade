@@ -6,6 +6,8 @@ import { CreateUserController } from "../../modules/User/useCases/CreateUserUseC
 import { DeleteUserController } from "../../modules/User/useCases/DeleteUserUseCase/DeleteUserCotroller";
 import { AuthenticateUserController } from "../../modules/User/useCases/AuthenticateUserUseCase/AuthenticateUserController";
 import { VerifyAuthMiddlewares } from "../middlewares/VerifyAuthMiddlewares";
+import { AuthenticatedMiddleware } from "../middlewares/AuthenticatedMiddlewares";
+import { EnsureAdmin } from "../middlewares/EnsureAdmin";
 
 const listUserController = new ListUserController()
 const findUserByIdController = new FindUserByIdController()
@@ -18,9 +20,9 @@ const userRouter = Router()
 
 userRouter.get("/verify", VerifyAuthMiddlewares)
 userRouter.post("/session", authenticateUserController.handle)
-userRouter.get("/", listUserController.handle)
-userRouter.post("/",createUserController.handle)
-userRouter.get("/:id",findUserByIdController.handle)
-userRouter.put("/:id",updateUserController.handle)
-userRouter.delete("/:id",deleteUserController.handle)
+userRouter.get("/",AuthenticatedMiddleware,EnsureAdmin, listUserController.handle)
+userRouter.post("/",AuthenticatedMiddleware,EnsureAdmin, createUserController.handle)
+userRouter.get("/:id",AuthenticatedMiddleware,findUserByIdController.handle)
+userRouter.put("/:id",AuthenticatedMiddleware,EnsureAdmin,updateUserController.handle)
+userRouter.delete("/:id",AuthenticatedMiddleware, EnsureAdmin, deleteUserController.handle)
 export { userRouter }

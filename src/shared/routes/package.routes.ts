@@ -13,6 +13,7 @@ import { UpdatePackageController } from "../../modules/Package/useCase/UpdatePac
 import { CreateSmeController } from "../../modules/Sme/useCases/CreateSmeController/CreateSmeController";
 import { CreateSmmController } from "../../modules/Smm/useCases/CreateSmmUserCase/CreateSmmController";
 import { AuthenticatedMiddleware } from "../middlewares/AuthenticatedMiddlewares";
+import { EnsureMnt } from "../middlewares/EnsureMnt";
 
 
 const packageRouter = Router()
@@ -32,6 +33,7 @@ const createSmeController = new CreateSmeController()
 // SMM
 const createSmmController = new CreateSmmController()
 
+packageRouter.use(AuthenticatedMiddleware)
 packageRouter.get("/packageByCustomerWithModel",listByCustomerController.handle)
 packageRouter.get("/stopped",listPackageStoppedByCustomerController.handle)
 packageRouter.get("/mnt",listByStatusAndProviderController.handle)
@@ -46,6 +48,7 @@ packageRouter.get("/origin/:origin", listByOriginPackageController.handle); //Li
 
 packageRouter.put("/mnt/:id",
      AuthenticatedMiddleware, 
+     EnsureMnt,
      updatePackageController.handle,
      createSmmController.handle,
      (req: Request, res: Response)=>{

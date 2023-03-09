@@ -6,22 +6,19 @@ services:
    container_name: api_rastreabilidade
    build: .
    restart: always
-   command: bash -c "npm install && npx prisma generate && npx prisma db push && npm run dev"
+   command: bash -c "npm install && npx prisma generate && npx prisma db push && npm run build && npm run start"
    environment:
     - TZ=America/Manaus
    volumes: 
      - ./:/usr/app
    ports: 
-     - 15000:7400
-
+     - 7401:7400
   database:
     image: postgres
     depends_on: 
     - api_rastreabilidade
     container_name: database
     restart: always
-    ports:
-      - 15432:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=00bfc8c729f5d4d529a412b12c58ddd2

@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../config/AppError";
 import { ValidarSMM } from "../../../../utils/ValidarSMM";
 import { ICustomerRepository } from "../../../Customer/repositories/ICustomerRepository";
 import { Model } from "../../../Model/entities/Model";
@@ -26,6 +27,10 @@ class ListPackageByCustomerUseCase {
     ){}
 
     async execute({skip, take }: FiltersPackageDTO, FK_destino: string): Promise<{serial_number:string}[]> {  
+
+        if(!FK_destino){
+            throw new AppError(404, "Cliente não selecionado")
+        }
         
         const data = await this.packageRepository.listPackageByCustomer({
           skip,

@@ -9,6 +9,7 @@ import { ListCustomerController } from "../../modules/Customer/useCase/ListCusto
 import { ListCustomerWithModelController } from "../../modules/Customer/useCase/ListCustomerWithModelUseCase/ListCustomerWithModelController";
 import { UpdateAticveCustomerController } from "../../modules/Customer/useCase/UpdateActiveCustomerUseCase/UpdateActiveCustomerController";
 import { UpdateCustomerController } from "../../modules/Customer/useCase/UpdateCustomerUseCase/UpdateCustomerController";
+import { AuthenticatedMiddleware } from "../middlewares/AuthenticatedMiddlewares";
 
 
 const listCustomerController = new ListCustomerController()
@@ -21,12 +22,14 @@ const listCustomerWithModelController = new ListCustomerWithModelController()
 
 const customerRouter = Router()
 
-customerRouter.get("/model/:cnpj", listCustomerWithModelController.handle)
-customerRouter.get("/:id", findByIdCustomerController.handle)
-customerRouter.get("/", listCustomerController.handle)
-customerRouter.delete("/:id", deleteCustomerController.handle)
-customerRouter.patch("/:id", updateAticveCustomerController.handle)
+customerRouter.get("/model/:cnpj",AuthenticatedMiddleware, listCustomerWithModelController.handle)
+customerRouter.get("/:id",AuthenticatedMiddleware, findByIdCustomerController.handle)
+customerRouter.get("/", AuthenticatedMiddleware, listCustomerController.handle)
+customerRouter.delete("/:id",AuthenticatedMiddleware, deleteCustomerController.handle)
+customerRouter.patch("/:id",AuthenticatedMiddleware, updateAticveCustomerController.handle)
+
 customerRouter.post("/",
+    AuthenticatedMiddleware,
     multer(multerConfig).single("file"),
     async (req, res, next) => {
         await optimizationImage(req.pathImg)
@@ -35,6 +38,7 @@ customerRouter.post("/",
     lireateCustomerController.handle)
 
 customerRouter.put("/:id",
+    AuthenticatedMiddleware,
     multer(multerConfig).single("file"),
     async (req, res, next) => {
         await optimizationImage(req.pathImg)

@@ -6,15 +6,26 @@
   "author": "hrqcds <hrqcds.dev@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "down": "docker-compose down",
     "up" : "docker-compose up -d",
     "dev": "ts-node-dev --files --quiet --poll ./src/shared/infra/http/express/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "swagger-autogen": "ts-node-dev ./node_modules/swagger-autogen/swagger-autogen.js"
+    "swagger-autogen": "ts-node-dev ./node_modules/swagger-autogen/swagger-autogen.js",
+    "start" : "node dist/shared/infra/http/express/server.js"
   },
   "dependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.7",
+    "@babel/node": "^7.20.7",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.18.6",
     "@prisma/client": "^4.10.1",
     "@types/sharp": "^0.29.5",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dayjs": "^1.11.7",

@@ -29,7 +29,7 @@ app.use("/api-docs-oficial", swaggerUI.serve, swaggerUI.setup(swaggerFileOficial
 
 app.use('/api',router);
 // app.use(VerificarErros);
-app.use("/static", express.static(path.resolve(process.cwd(),"src","uploads")));
+app.use("/static", express.static(path.resolve(process.cwd(),"uploads")));
 //error handling
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) =>  {

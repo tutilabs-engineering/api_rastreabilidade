@@ -1,6 +1,7 @@
 
 import { Request, Response, NextFunction, request } from "express"
 import { verify } from "jsonwebtoken"
+import { User } from "../../modules/User/entities/User"
 import { UserRepositoryInPrisma } from "../../modules/User/repositories/implementations/UserRepositoryInPrisma"
 
 interface iPayload {
@@ -15,6 +16,7 @@ async function AuthenticatedMiddleware(req: Request, res: Response, next: NextFu
 
     // Recebendo o token da requisição
     const tokenHeader = req.headers.authorization
+    
 
     // Verificando se o token não está vazio
     if (!tokenHeader) { return res.status(401).end() }
@@ -30,10 +32,14 @@ async function AuthenticatedMiddleware(req: Request, res: Response, next: NextFu
         const userRepository = new UserRepositoryInPrisma()
 
         // Puxando usuário para verificação
-        const {ativo} = await userRepository.findById(sub) as iUserActive
+        const user = await userRepository.findById(sub) as User
+        req.body.user = user
         
         // Verificando se o usuário está ativo
-        if(!ativo){return res.status(401).end()}
+        if(!user.ativo){return res.status(401).end()}
+
+        delete user.password
+        delete user.updatedAt
 
         // passando meu id pra acesso ao usuário
         req.userId = sub
