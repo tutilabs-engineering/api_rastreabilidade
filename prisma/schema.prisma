@@ -72,7 +72,7 @@ model sme {
   modelo        String  
   username      String  
   matricula     String  
-  data          DateTime ? 
+  data          DateTime? 
 }
 
 model smm {
@@ -100,5 +100,5 @@ model users {
   mnt       Boolean  @default(false)
   ativo     Boolean  @default(true)
   createdAt DateTime @default(now()) 
-  updatedAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
 }
