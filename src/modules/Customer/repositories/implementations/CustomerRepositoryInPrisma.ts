@@ -6,6 +6,28 @@ import { Customer } from "../../entities/Customer";
 import { ICustomerRepository } from "../ICustomerRepository";
 
 class CustomerRepositoryInPrisma implements ICustomerRepository {
+    async findByRazaoSocial(razao_social: string): Promise<Customer> {
+        const data: Customer = await prisma.customers.findFirst({
+            select:{
+                id: true,  
+                cnpj: true,     
+                razao_social:true,   
+                img_path :true,    
+                ativo: true, 
+                // createdAt :true,
+                // updatedAt:true, 
+                // cpc: true,
+                // packages: true,
+            },
+            where:{
+               razao_social     
+            }
+         }).catch((error)=>{
+            throw new Error(error);
+    
+         })
+         return data
+    }
     async listCustomerWithModel({skip,take}:FiltersCustomerDTO,cnpj: string): Promise<Customer[]> {
         const data: Customer[] = await prisma.customers.findMany({
             select:{

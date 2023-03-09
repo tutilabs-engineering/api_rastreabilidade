@@ -10,7 +10,7 @@ class ListCpcCUseCase{
         @inject("CpcRepository")
         private cpcRepository: ICpcRepository){}
 
-    async execute({skip, take}:FiltersCPCDTO): Promise<CPC[]>{
+    async execute({skip, take}:FiltersCPCDTO): Promise<{data: CPC[], all: Number}> {
 
         const cpc = await this.cpcRepository.list({skip, take})
 

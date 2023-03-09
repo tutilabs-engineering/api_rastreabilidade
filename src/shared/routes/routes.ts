@@ -11,11 +11,12 @@ import { userRouter } from "./user.routes";
 const router = Router();
 
 
+
+router.use("/user", userRouter)
 router.use("/model", modelRouter)
 router.use("/cpc", cpcRouter)
 router.use("/package", packageRouter)
 router.use("/customer", customerRouter)
-router.use("/user", userRouter)
 router.use("/provider",providerRouter)
 router.use("/sme",smeRouter)
 router.use("/smm",smmRouter)

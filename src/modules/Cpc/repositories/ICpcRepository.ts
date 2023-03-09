@@ -8,7 +8,7 @@ interface ICpcRepository{
        findbyId(id: string): Promise<CPC>
        findbyModelAndCustomer(FK_customer: string, FK_model:string): Promise<CPC>
        listCPCByCustomer(id: string): Promise<CPC[]>
-       list(data: FiltersCPCDTO): Promise<CPC[]>
+       list(data: FiltersCPCDTO): Promise<{data: CPC[], all: Number}> 
        update(): Promise<void>
 }
 

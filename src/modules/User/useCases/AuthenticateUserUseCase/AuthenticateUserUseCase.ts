@@ -17,15 +17,17 @@ class AuthenticateUserUseCase{
     async execute({email, password}: IRequest):Promise<{token: string, user: User}> {
 
     const user = await this.userRepository.findUserByEmail(email)
-
+    if(!user){
+      throw new AppError(401, "Usuário não existe");
+    }
      if (!user.ativo) {
-            throw new AppError(401, "User is disabled");
+            throw new AppError(401, "Usuário está desabilitado");
      }
 
     const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new AppError(401, "register or password incorrect");
+      throw new AppError(401, "Senha incorreta");
     }
 
     delete user.password

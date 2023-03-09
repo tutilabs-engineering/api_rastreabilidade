@@ -9,6 +9,7 @@ interface ICustomerRepository {
     list(data:FiltersCustomerDTO): Promise<Customer[]>
     listInative(): Promise<void>
     findById(id: string): Promise<Customer>
+    findByRazaoSocial(razao_social: string): Promise<Customer>
     findByCNPJ(cnpj: string): Promise<Customer>
     updateActive(id: string,status: boolean): Promise<void>
     update(data: UpdateCustomerDTO): Promise<void>

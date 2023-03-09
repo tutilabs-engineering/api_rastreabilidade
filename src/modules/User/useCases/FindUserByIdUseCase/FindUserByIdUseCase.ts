@@ -7,6 +7,8 @@ class FindUserByIdUseCase{
 
     async execute(id: string){
         const data = await this.userRepository.findById(id);
+        delete data.password
+        delete data.matricula
         return data
     }
 }

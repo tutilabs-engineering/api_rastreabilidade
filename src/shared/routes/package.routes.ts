@@ -11,7 +11,9 @@ import { ListPackageByModelAndOriginController } from "../../modules/Package/use
 import { ListPackageStoppedByCustomerController } from "../../modules/Package/useCase/ListPackageStoppedByCustomerUseCase/ListPackageStoppedByCustomerController";
 import { UpdatePackageController } from "../../modules/Package/useCase/UpdatePackageUseCase/UpdatePackageController";
 import { CreateSmeController } from "../../modules/Sme/useCases/CreateSmeController/CreateSmeController";
+import { CreateSmmController } from "../../modules/Smm/useCases/CreateSmmUserCase/CreateSmmController";
 import { AuthenticatedMiddleware } from "../middlewares/AuthenticatedMiddlewares";
+import { EnsureMnt } from "../middlewares/EnsureMnt";
 
 
 const packageRouter = Router()
@@ -28,24 +30,30 @@ const listByStatusAndProviderController = new ListByStatusAndProviderController(
 
 // SME
 const createSmeController = new CreateSmeController()
+// SMM
+const createSmmController = new CreateSmmController()
 
+packageRouter.use(AuthenticatedMiddleware)
 packageRouter.get("/packageByCustomerWithModel",listByCustomerController.handle)
 packageRouter.get("/stopped",listPackageStoppedByCustomerController.handle)
 packageRouter.get("/mnt",listByStatusAndProviderController.handle)
 packageRouter.get("/packagesByCustomer/:FK_destino", listPackageByCustomerController.handle)
 packageRouter.get("/:serial_number", findBySerialNumberController.handle)
-packageRouter.put("/:id",updatePackageController.handle)
+// packageRouter.put("/:id",updatePackageController.handle)
 packageRouter.post("/",createPackageController.handle)
+packageRouter.get("/packagesByModelOriginStatus/:FK_modelo", listPackageByModelAndOriginController.handle); //Listar todos os modelos
 packageRouter.get("/model/:id", listModelByPackageController.handle); //Listar todos os modelos
 packageRouter.get("/origin/:origin", listByOriginPackageController.handle); //Listar todos os modelos
-packageRouter.get("/packagesByModelOriginStatus/:FK_modelo", listPackageByModelAndOriginController.handle); //Listar todos os modelos
 
-packageRouter.get("/packageByCustomerWithModel",listByCustomerController.handle)
-packageRouter.get("/packagesByCustomer/:FK_destino", listPackageByCustomerController.handle)
-packageRouter.get("/packagesByModelOriginStatus/:FK_modelo", listPackageByModelAndOriginController.handle); //Listar todos os modelos
-packageRouter.get("/model/:id", listModelByPackageController.handle); //Listar todos os modelos
-packageRouter.get("/origin/:origin", listByOriginPackageController.handle); //Listar todos os modelos
-packageRouter.get("/:serial_number", findBySerialNumberController.handle)
+
+packageRouter.put("/mnt/:id",
+     AuthenticatedMiddleware, 
+     EnsureMnt,
+     updatePackageController.handle,
+     createSmmController.handle,
+     (req: Request, res: Response)=>{
+    return res.status(200).json({message: "Movimentação realizada!"})
+})
 
 packageRouter.put("/:id",
      AuthenticatedMiddleware, 
@@ -54,6 +62,8 @@ packageRouter.put("/:id",
      (req: Request, res: Response)=>{
     return res.status(200).json({message: "Movimentação realizada!"})
 })
+
+
 
 packageRouter.post("/",createPackageController.handle)
 

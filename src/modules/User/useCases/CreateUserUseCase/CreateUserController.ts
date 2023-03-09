@@ -10,6 +10,7 @@ class CreateUserController{
 
         const {nome, matricula, email, password, admin, mnt, ativo} = req.body
         
+        
         await createUserUseCase.execute({nome,ativo,admin,mnt,email,matricula,password})
 
         return res.status(200).json({message: "Usuário criado com sucesso!"})

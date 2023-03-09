@@ -71,11 +71,15 @@ class CpcRepositoryInPrisma implements ICpcRepository {
             FK_model: true,
             // createdAt: true,
             // updatedAt: true,
-            customers: true,
-            models: true,
+            customers: {
+                select:{
+                    razao_social: true,
+                }
+            },
+            // models: true,
             },
             where:{
-                FK_customer: id
+                FK_model: id
             }
         }).catch((error)=>{
             throw new Error(error);
@@ -84,7 +88,7 @@ class CpcRepositoryInPrisma implements ICpcRepository {
         return data
         
     }
-    async list({skip,take}: FiltersCPCDTO): Promise<CPC[]> {
+    async list({skip,take}: FiltersCPCDTO): Promise<{data: CPC[], all: Number}> {
         const data: CPC[] = await prisma.cpc.findMany({
             take,
             skip,
@@ -112,11 +116,14 @@ class CpcRepositoryInPrisma implements ICpcRepository {
             },
             
             }
+        
         }).catch((error)=>{
             throw new Error(error);
         })
+
+        const all = await prisma.cpc.count({})
          
-        return data
+        return {all, data  }
     }
     update(): Promise<void> {
         throw new Error("Method not implemented.");

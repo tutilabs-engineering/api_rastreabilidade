@@ -1,16 +1,8 @@
 export type CreateSmmDTO = {
-    user: {
-      username: string;
-      matricula: string;
-    };
-    fornecedor: {
-      descricao: string;
-      statusDoFornecedor: boolean;
-    };
-    embalagem: {
-      descricao: string;
-      serial_number: string;
-      modeloDaEmbalagem: string;
-    };
-    localizacao: string
+    status: number,
+    id_user: string,
+    id_package: string,
+    descricao: string,
+    id_provider: string
+    // localizacao: string
 }

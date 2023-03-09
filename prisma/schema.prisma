@@ -86,7 +86,7 @@ model smm {
   statusDaEmbalagem    String  
   modeloDaEmbalagem    String  
   statusDeMovimentacao Boolean @default(false)
-  criadoEm             DateTime  
+  criadoEm             DateTime? 
   concluidoEm          DateTime? 
 }
 

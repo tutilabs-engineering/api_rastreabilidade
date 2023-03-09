@@ -31,12 +31,11 @@ class ProviderRepositoryInPrisma implements IProviderRepository {
 
         return data
     }
-    async update({id,createdAt,externo,nome,updatedAt}: UpdateProviderDTO): Promise<void> {
+    async update({id,externo,nome,updatedAt}: UpdateProviderDTO): Promise<void> {
         await prisma.providers.update({
             data:{
                 externo,
                 nome,
-                createdAt,
                 updatedAt
             },
             where: {

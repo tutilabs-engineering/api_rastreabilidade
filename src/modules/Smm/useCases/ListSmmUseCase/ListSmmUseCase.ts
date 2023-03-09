@@ -17,7 +17,14 @@ class ListSmmUseCase {
     let statusEmb = "Interno"
 
     if(status == 1){statusEmb = "Externo"}
-    
+     console.log({
+        skip,
+        take,
+
+    statusEmb,
+    modeloDaEmbalagem
+     });
+     
 
     const data = await this.smmRepository.list({
         skip,
