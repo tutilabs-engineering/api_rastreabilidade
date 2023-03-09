@@ -1,5 +1,5 @@
 import { FiltersSmmDTO } from "../dtos/FiltersSmmDTO"
-import { Smm } from "../entities/Smm"
+import { Smm } from "../entities/SmmEntitie"
 
 
 interface ISmmRepository {

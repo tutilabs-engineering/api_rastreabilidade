@@ -1,6 +1,6 @@
 import { prisma } from "../../../../config/prisma";
 import { FiltersSmmDTO } from "../../dtos/FiltersSmmDTO";
-import { Smm } from "../../entities/Smm";
+import { Smm } from "../../entities/SmmEntitie";
 import { ISmmRepository } from "../ISmmRepository";
 
 export class SmmRepositoryInPrisma implements ISmmRepository {
