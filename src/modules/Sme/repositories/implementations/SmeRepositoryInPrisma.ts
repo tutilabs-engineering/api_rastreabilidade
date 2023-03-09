@@ -51,7 +51,7 @@ class SmeRepositoryInPrisma implements ISmeRepository {
                 modelo,
                 username,
                 matricula,
-                data : null
+                
             }
         })
     }
